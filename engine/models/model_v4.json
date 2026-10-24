@@ -1,0 +1,247 @@
+{
+  "version": 4,
+  "trained_at": "2026-10-24T01:52:46",
+  "train_info": {
+    "games": 5585,
+    "seasons": [
+      2018,
+      2019,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "oof_margin_mae": 12.338800008532312,
+    "oof_margin_rmse": 15.565092359281564
+  },
+  "config_snapshot": {
+    "_readme": "Every tunable setting lives here. Change values, re-run run_week.py --retrain, and compare the new report card. Keys starting with _ are comments.",
+    "data": {
+      "_note": "Seasons used to train the final model. 2020 (COVID) is skipped by default because schedules and home field were unusual.",
+      "train_seasons": [
+        2018,
+        2019,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025
+      ],
+      "backtest_seasons": [
+        2023,
+        2024,
+        2025
+      ],
+      "include_current_season_in_training": true,
+      "season_type": "regular",
+      "fbs_only": true,
+      "line_provider_preference": [
+        "DraftKings",
+        "ESPN Bet",
+        "Bovada",
+        "consensus",
+        "William Hill (New Jersey)"
+      ],
+      "current_season_cache_hours": 6
+    },
+    "features": {
+      "_note": "Team stats are season-to-date averages from games BEFORE the game being predicted. Early in the season they are blended with last season's numbers: weight = games / (games + prior_games_weight).",
+      "prior_games_weight": 3,
+      "margin_features": [
+        "elo_diff",
+        "talent_diff",
+        "net_ppa_diff",
+        "net_success_diff",
+        "net_explosiveness_diff",
+        "rush_matchup",
+        "pass_matchup",
+        "net_havoc_diff",
+        "net_points_diff",
+        "home_field"
+      ],
+      "total_features": [
+        "off_ppa_sum",
+        "def_ppa_sum",
+        "pace_sum",
+        "points_for_sum",
+        "points_against_sum",
+        "explosiveness_sum"
+      ],
+      "volatility_features": [
+        "expected_total",
+        "pace_sum",
+        "havoc_allowed_sum",
+        "abs_expected_margin",
+        "abs_talent_gap"
+      ],
+      "labels": {
+        "elo_diff": "Elo rating gap",
+        "talent_diff": "Roster talent gap",
+        "net_ppa_diff": "Net EPA per play gap",
+        "net_success_diff": "Net success rate gap",
+        "net_explosiveness_diff": "Net explosiveness gap",
+        "rush_matchup": "Run game matchup",
+        "pass_matchup": "Pass game matchup",
+        "net_havoc_diff": "Havoc (disruption) gap",
+        "net_points_diff": "Scoring margin gap",
+        "home_field": "Home field",
+        "off_ppa_sum": "Combined offensive EPA",
+        "def_ppa_sum": "Combined defensive EPA allowed",
+        "pace_sum": "Combined pace (plays/game)",
+        "points_for_sum": "Combined points scored",
+        "points_against_sum": "Combined points allowed",
+        "explosiveness_sum": "Combined explosiveness",
+        "expected_total": "Expected total points",
+        "havoc_allowed_sum": "Turnover/disruption proneness",
+        "abs_expected_margin": "Size of expected margin",
+        "abs_talent_gap": "Size of talent gap"
+      }
+    },
+    "model": {
+      "_note": "ridge_alpha: higher = more conservative weights. market_blend: 0 = pure model, 1 = pure Vegas line. sigma bounds clamp the per-game volatility.",
+      "ridge_alpha": 10.0,
+      "market_blend": 0.5,
+      "use_market_total_for_volatility": true,
+      "sigma_min": 11.0,
+      "sigma_max": 22.0,
+      "default_sigma": 16.0
+    },
+    "betting": {
+      "_note": "Thresholds used by the report card to simulate bets and by the site to highlight edges.",
+      "blowout_margins": [
+        17.5,
+        21.5
+      ],
+      "alt_dog_spread_range": [
+        2.0,
+        7.0
+      ],
+      "spread_edge_threshold_pts": 3.0,
+      "ml_edge_threshold": 0.04,
+      "remove_vig": true
+    }
+  },
+  "margin_model": {
+    "features": [
+      "elo_diff",
+      "talent_diff",
+      "net_ppa_diff",
+      "net_success_diff",
+      "net_explosiveness_diff",
+      "rush_matchup",
+      "pass_matchup",
+      "net_havoc_diff",
+      "net_points_diff",
+      "home_field"
+    ],
+    "intercept": 4.522470904207699,
+    "means": [
+      0.2496562220232765,
+      0.29003833482542474,
+      0.012761631431750117,
+      0.005122037620143481,
+      0.0026800715684890454,
+      -0.0016044674103836817,
+      -0.000749250622292085,
+      0.0021332058508240818,
+      0.8246530712650146,
+      0.969740376007162
+    ],
+    "stds": [
+      2.967387347573026,
+      1.8060836368022155,
+      0.22798222574515206,
+      0.09256118922167585,
+      0.17978163550869428,
+      0.19173555122618785,
+      0.24639763713857202,
+      0.06361343951228522,
+      15.180454753057132,
+      0.17130084398113388
+    ],
+    "coefs_per_sd": [
+      10.948451360044105,
+      2.8634533192335474,
+      -1.985523673280706,
+      3.417795652079878,
+      0.6886695932666823,
+      0.14106277956799534,
+      0.3958111882765204,
+      0.9961340030664627,
+      -1.6964007795084552,
+      0.42498876667950614
+    ],
+    "alpha": 10.0
+  },
+  "total_model": {
+    "features": [
+      "off_ppa_sum",
+      "def_ppa_sum",
+      "pace_sum",
+      "points_for_sum",
+      "points_against_sum",
+      "explosiveness_sum"
+    ],
+    "intercept": 54.28003581020591,
+    "means": [
+      0.21841049052519973,
+      0.21613065694554812,
+      135.86551602364935,
+      54.61909959539097,
+      54.47649813308095,
+      4.9917963644316075
+    ],
+    "stds": [
+      0.15969326159064373,
+      0.15094241026717464,
+      7.42974432880807,
+      10.147483944602312,
+      10.258419152605265,
+      0.22831668016552747
+    ],
+    "coefs_per_sd": [
+      2.2497934309025847,
+      0.21786801017815088,
+      1.086888837684697,
+      2.6173648688799127,
+      4.817490175122528,
+      0.03854893870934768
+    ],
+    "alpha": 10.0
+  },
+  "volatility_model": {
+    "features": [
+      "expected_total",
+      "pace_sum",
+      "havoc_allowed_sum",
+      "abs_expected_margin",
+      "abs_talent_gap"
+    ],
+    "intercept": 15.464392488202162,
+    "means": [
+      53.99059982094897,
+      135.86551602364935,
+      0.3365263975745119,
+      10.888884153446753,
+      1.3108767725383836
+    ],
+    "stds": [
+      7.7160119823310875,
+      7.42974432880807,
+      0.04925014399015172,
+      8.73984064673062,
+      1.2757987404024107
+    ],
+    "coefs_per_sd": [
+      0.07526201221564498,
+      0.280881242137602,
+      0.2801125206398397,
+      0.1690835314606906,
+      0.0288544925632448
+    ],
+    "alpha": 10.0,
+    "scale": 1.0061698239784262
+  }
+}

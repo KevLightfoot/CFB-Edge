@@ -1,0 +1,11 @@
+# secrets
+.env
+
+# local caches / build junk
+engine/cache/
+__pycache__/
+*.pyc
+node_modules/
+.venv/
+venv/
+.DS_Store

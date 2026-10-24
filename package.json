@@ -1,0 +1,14 @@
+{
+  "name": "cfb-edge",
+  "version": "1.0.0",
+  "private": true,
+  "description": "College football betting research site: model spreads, win probabilities, blowout risk, report card.",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {}
+}
