@@ -21,6 +21,16 @@ const pct = (p, d = 1) => (p == null ? "—" : `${(p * 100).toFixed(d)}%`);
 const sgn = (x, d = 1) => (x == null ? "—" : `${x > 0 ? "+" : ""}${x.toFixed(d)}`);
 const line = (x) => (x == null ? "—" : x === 0 ? "PK" : sgn(x, 1));
 const ml = (o) => (o == null ? "—" : o > 0 ? `+${o}` : `${o}`);
+// QB flag helpers. side = "home" | "away"
+const qbOf = (g, side) => (g.qb && g.qb[side]) || { known: false, flag: 0 };
+const qbSide = (g, team) => (team === g.home ? "home" : "away");
+function qbWarn(g, team, short) {
+  const q = qbOf(g, qbSide(g, team));
+  if (!q.flag) return "";
+  return short
+    ? `<span class="pill bad" title="${esc(q.name)}: ${esc(q.reason)}">⚠ QB</span>`
+    : `<div class="qbwarn">⚠ QB: ${esc(q.name)} · ${esc(q.reason)}</div>`;
+}
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
 // Game helpers (home margin ~ Normal(mu, sigma))
@@ -59,29 +69,63 @@ const store = {
 };
 
 // ---------------------------------------------------------------- data
-async function api(path, opts) {
-  const r = await fetch(path, opts);
+// API_BASE comes from config.js: "" when the Node server also serves the site
+// (local dev), or your Render URL when the site is on GitHub Pages.
+const API_BASE = (window.CFB_EDGE_CONFIG && window.CFB_EDGE_CONFIG.API_BASE || "").replace(/\/+$/, "");
+
+async function getJson(url, opts) {
+  const r = await fetch(url, opts);
   const body = await r.json().catch(() => ({}));
   if (!r.ok) throw new Error(body.error || `HTTP ${r.status}`);
   return body;
 }
+const api = (path, opts) => getJson(API_BASE + path, opts);
+
+function setBadge() {
+  const wb = document.getElementById("weekBadge");
+  if (!S.preds) return;
+  const ls = S.lines.state === "live" ? "lines live" : S.lines.state === "waking" ? "waking live lines…" : "lines snapshot";
+  wb.innerHTML = `<b>${S.preds.season} · Week ${S.preds.week}</b><br>Model v${S.preds.model_version} · ${ls}`;
+}
 
 async function loadAll() {
-  try { S.preds = await api("/api/predictions"); } catch (e) { S.err = e.message; }
-  try { S.card = await api("/api/report-card"); } catch { S.card = null; }
-  try { S.health = await api("/api/health"); } catch { S.health = null; }
-  const wb = document.getElementById("weekBadge");
-  if (S.preds) {
-    wb.innerHTML = `<b>${S.preds.season} · Week ${S.preds.week}</b><br>Model v${S.preds.model_version} · lines ${S.preds.lines_source === "live" ? "live" : "snapshot"}`;
-  }
+  // Predictions and report card are static files: they load instantly from
+  // GitHub Pages without waiting on the server.
+  S.lines = { state: "snapshot", error: null };
+  try { S.preds = await getJson(`data/predictions.json?v=${Date.now()}`); } catch (e) { S.err = `Couldn't load data/predictions.json (${e.message}).`; }
+  try { S.card = await getJson(`data/report_card.json?v=${Date.now()}`); } catch { S.card = null; }
+  setBadge();
   route();
+  if (S.preds && !S.preds.mock) refreshLiveLines();
+  api("/api/health").then((h) => { S.health = h; if (/^#\/game\//.test(location.hash)) route(); }).catch(() => {});
+}
+
+// The server may be asleep (free hosting), so live lines arrive in the background.
+async function refreshLiveLines() {
+  S.lines.state = "waking"; setBadge();
+  try {
+    const d = await api(`/api/lines?season=${S.preds.season}&week=${S.preds.week}`);
+    if (d.lines && Object.keys(d.lines).length) {
+      S.preds.games = S.preds.games.map((g) => {
+        const live = d.lines[g.id];
+        return live ? { ...g, market_snapshot: g.market_snapshot || g.market, market: { ...g.market, ...live } } : g;
+      });
+      S.lines = { state: "live", error: null, updated: d.updated };
+    } else {
+      S.lines = { state: "snapshot", error: d.error || "no live lines returned" };
+    }
+  } catch (e) {
+    S.lines = { state: "snapshot", error: e.message };
+  }
+  setBadge();
+  if (!document.activeElement || document.activeElement.tagName !== "INPUT") route();
 }
 
 function banners() {
   let h = "";
   if (S.preds?.mock) h += `<div class="banner">Showing <b>sample data</b> with fictional teams. Run the engine with your CFBD key to load real games.</div>`;
-  if (S.preds && !S.preds.mock && S.preds.lines_source !== "live") {
-    h += `<div class="banner">Live lines unavailable${S.preds.lines_error ? ` (${esc(S.preds.lines_error)})` : ""}; showing lines from when predictions were generated.</div>`;
+  if (S.preds && !S.preds.mock && S.lines?.state === "snapshot" && S.lines.error) {
+    h += `<div class="banner">Live lines unavailable (${esc(S.lines.error)}); showing lines from when predictions were generated.</div>`;
   }
   return h;
 }
@@ -152,8 +196,8 @@ function gameCard(g, x, m1) {
   const blow = x.pFavBy(m1);
   return `<a class="gcard" href="#/game/${g.id}">
     <div class="teams">
-      <div class="team-line"><span>${esc(g.away.name)}</span><span class="rec">${line(mk.spread != null ? -mk.spread : null)}</span></div>
-      <div class="team-line"><span>${g.neutral ? "vs" : "@"} ${esc(g.home.name)}</span><span class="rec">${line(mk.spread)}</span></div>
+      <div class="team-line"><span>${esc(g.away.name)} ${qbWarn(g, g.away, true)}</span><span class="rec">${line(mk.spread != null ? -mk.spread : null)}</span></div>
+      <div class="team-line"><span>${g.neutral ? "vs" : "@"} ${esc(g.home.name)} ${qbWarn(g, g.home, true)}</span><span class="rec">${line(mk.spread)}</span></div>
       <div class="when">${fmtDate(g.start)}${g.neutral ? " · neutral" : ""}</div>
     </div>
     <div class="stat"><span class="k">Home spread</span><span class="v">${line(mk.spread)}</span><span class="s">ours ${line(round1(x.ourHomeSpread))}</span></div>
@@ -190,7 +234,7 @@ function viewAltDogs() {
     <div class="table-wrap"><table>
       <thead><tr><th>Underdog</th><th>Book</th><th>Our line</th><th>σ</th><th>Cover +${st.alt}</th><th>Fair odds</th><th>Your odds</th><th>EV / unit</th></tr></thead>
       <tbody>${rows.map((r) => `<tr class="click" data-id="${r.g.id}">
-        <td><div class="team">${esc(r.x.dog.name)}</div><div class="opp">${r.x.homeFav ? "at" : "vs"} ${esc(r.x.fav.name)}</div></td>
+        <td><div class="team">${esc(r.x.dog.name)}</div><div class="opp">${r.x.homeFav ? "at" : "vs"} ${esc(r.x.fav.name)}</div>${qbWarn(r.g, r.x.dog, false)}${qbOf(r.g, qbSide(r.g, r.x.fav)).flag ? `<div class="qbgood">Favorite's QB flagged (helps the dog)</div>` : ""}</td>
         <td class="num">${line(Math.abs(r.x.mk.spread))}</td>
         <td class="num">${line(round1(r.x.homeFav ? r.x.mu : -r.x.mu))}</td>
         <td class="num">${r.x.sd.toFixed(1)}</td>
@@ -342,6 +386,7 @@ function viewGame(id) {
       <div class="tile"><div class="k">Volatility (σ)</div><div class="v">${x.sd.toFixed(1)}</div><div class="s">Total: ours ${g.model.total.toFixed(1)} · book ${mk.total ?? "—"}</div></div>
     </div>
 
+    ${qbCard(g)}
     <div class="grid2">
       <div class="card">
         <h3>Spread evaluator</h3>
@@ -435,6 +480,17 @@ function viewGame(id) {
   wireExplain(id);
 }
 
+function qbCard(g) {
+  const row = (side) => {
+    const q = qbOf(g, side), t = g[side];
+    if (!q.known) return `<div class="qbrow"><b class="${side}-c">${esc(t.name)}</b><span class="muted">Starter unknown (no games yet this season)</span></div>`;
+    return `<div class="qbrow"><b class="${side}-c">${esc(t.name)}</b><span>${esc(q.name)} · ${q.starts} career start${q.starts === 1 ? "" : "s"}</span>
+      ${q.flag ? `<span class="pill bad">⚠ ${esc(q.reason)}</span>` : `<span class="pill good">Established starter</span>`}</div>`;
+  };
+  return `<div class="card qbcard"><h3>Quarterbacks (last game's starter)</h3>${row("away")}${row("home")}
+    <p class="small muted" style="margin:8px 0 0">Based on completed games only. A starter change announced this week won't show here, so check Saturday's availability report.</p></div>`;
+}
+
 function distSvg(x, margins) {
   // favorite-perspective margin distribution
   const W = 320, H = 110, lo = x.favMu - 3.2 * x.sd, hi = x.favMu + 3.2 * x.sd;
@@ -462,12 +518,12 @@ function distSvg(x, margins) {
 // ---------------------------------------------------------------- explanations
 function renderExplain(id) {
   const st = S.explain[id];
-  const keyOk = S.health?.openai_key;
+  const keyMissing = S.health && S.health.openai_key === false; // unknown while the server wakes
   if (!st) {
-    return `<p class="muted small">Generates a game-specific read from the numbers above (our margin drivers, volatility drivers, ranks, and the market). ${keyOk ? "" : "<br><b>OPENAI_API_KEY is not set on the server yet.</b>"}</p>
-      <button class="btn" id="aiBtn" ${keyOk ? "" : "disabled"}>Generate analysis</button>`;
+    return `<p class="muted small">Generates a game-specific read from the numbers above (our margin drivers, volatility drivers, ranks, and the market). ${keyMissing ? "<br><b>OPENAI_API_KEY is not set on the server yet.</b>" : ""}</p>
+      <button class="btn" id="aiBtn" ${keyMissing ? "disabled" : ""}>Generate analysis</button>`;
   }
-  if (st.loading) return `<p class="muted">Thinking through the matchup…</p>`;
+  if (st.loading) return `<p class="muted">Thinking through the matchup… (the first request can take up to a minute if the server is asleep)</p>`;
   if (st.error) return `<div class="banner err">${esc(st.error)}</div><button class="btn ghost" id="aiBtn">Try again</button>`;
   const e = st.data.explanation || {};
   const list = (arr) => (Array.isArray(arr) ? arr : []);

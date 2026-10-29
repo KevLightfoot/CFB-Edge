@@ -37,13 +37,26 @@ class MockCFBD:
                         "tov": r.gauss(0.16, 0.025), "hav": r.gauss(0.16, 0.025), "rush": r.gauss(0, 0.05)}
                     for t in self.teams}
         self.elo = {t: 1500 + 12 * (self.lat[t]["off"] + self.lat[t]["def"]) for t in self.teams}
+        self.qb_seq = 1
+        self.starter = {t: self._new_qb(t) for t in self.teams}
         self.data = {}
         self.next_id = 400000000
         for s in range(FIRST_SEASON, MOCK_CURRENT_SEASON + 1):
             self._season(s)
 
+    def _new_qb(self, team):
+        qid = str(10000 + self.qb_seq)
+        self.qb_seq += 1
+        return {"id": qid, "name": f"QB {qid} ({team.split()[0]})"}
+
     def _season(self, s):
         r = self.rng
+        if s > FIRST_SEASON:  # some starters leave each offseason
+            for t in self.teams:
+                if r.random() < 0.35:
+                    self.starter[t] = self._new_qb(t)
+        out_weeks = {t: 0 for t in self.teams}
+        backup = {}
         if s > FIRST_SEASON:  # strength carries over with regression + noise
             for t, L in self.lat.items():
                 L["off"] = 0.65 * L["off"] + r.gauss(0, 4.5)
@@ -55,22 +68,33 @@ class MockCFBD:
                 self.elo[t] = 0.7 * self.elo[t] + 0.3 * 1500
         talent = [{"year": s, "team": t, "talent": round(650 + 9 * (L["off"] + L["def"]) + r.gauss(0, 25), 2)}
                   for t, L in self.lat.items()]
-        games, lines, adv, havoc = [], [], [], []
+        games, lines, adv, havoc, players = [], [], [], [], []
         last_week = MOCK_CURRENT_WEEK if s == MOCK_CURRENT_SEASON else 12
         for week in range(1, last_week + 1):
             order = self.teams[:]
             r.shuffle(order)
+            playing = {}  # team -> (qb, is_backup)
+            for t in self.teams:
+                if out_weeks[t] == 0 and r.random() < 0.04:  # starter injured
+                    out_weeks[t] = r.randint(1, 4)
+                    backup[t] = self._new_qb(t)
+                if out_weeks[t] > 0:
+                    playing[t] = (backup[t], True)
+                    out_weeks[t] -= 1
+                else:
+                    playing[t] = (self.starter[t], False)
             for i in range(0, len(order) - 1, 2):
                 home, away = order[i], order[i + 1]
                 H, A = self.lat[home], self.lat[away]
+                hb, ab = playing[home][1], playing[away][1]
                 neutral = r.random() < 0.03
                 hfa = 0 if neutral else 2.6
                 pace = (H["pace"] + A["pace"]) / 2
                 pf = pace / 70.0
-                eh = (27 + H["off"] - A["def"] + hfa / 2) * pf
-                ea = (27 + A["off"] - H["def"] - hfa / 2) * pf
+                eh = (27 + H["off"] - A["def"] + hfa / 2 - 4 * hb) * pf
+                ea = (27 + A["off"] - H["def"] - hfa / 2 - 4 * ab) * pf
                 exp_margin, exp_total = eh - ea, eh + ea
-                sd = 8 + 0.12 * exp_total + 60 * (H["tov"] + A["tov"] - 0.32) + 0.05 * abs(exp_margin)
+                sd = 8 + 0.12 * exp_total + 60 * (H["tov"] + A["tov"] - 0.32) + 0.05 * abs(exp_margin) + 4 * (hb + ab)
                 gid = self.next_id
                 self.next_id += 1
                 completed = not (s == MOCK_CURRENT_SEASON and week == MOCK_CURRENT_WEEK)
@@ -111,6 +135,10 @@ class MockCFBD:
                                        "explosiveness": round(1.25 + 0.006 * dev + r.gauss(0, 0.12), 3),
                                        "rushingPlays": {"ppa": round(ppa + T["rush"] + r.gauss(0, 0.06), 3)},
                                        "passingPlays": {"ppa": round(ppa - T["rush"] + r.gauss(0, 0.08), 3)}}
+                    players.append({"id": gid, "week": week, "teams": [
+                        {"team": t, "categories": [{"name": "passing", "types": [{"name": "C/ATT", "athletes": [
+                            {"id": playing[t][0]["id"], "name": playing[t][0]["name"], "stat": f"{r.randint(12, 26)}/{r.randint(28, 42)}"},
+                            {"id": "-1", "name": "Team", "stat": "0/0"}]}]}]} for t in (home, away)]})
                     for team, opp, T, O in ((home, away, H, A), (away, home, A, H)):
                         adv.append({"gameId": gid, "season": s, "week": week, "team": team, "opponent": opp,
                                     "offense": sides[team], "defense": sides[opp]})
@@ -119,8 +147,11 @@ class MockCFBD:
                                       "defense": {"havocRate": round(max(0.02, T["hav"] + r.gauss(0, 0.04)), 3)}})
                 games.append(game)
         self.data[s] = {"/games": games, "/lines": lines, "/stats/game/advanced": adv,
-                        "/stats/game/havoc": havoc, "/talent": talent}
+                        "/stats/game/havoc": havoc, "/talent": talent, "/games/players": players}
 
     def get(self, path, params):
         s = int(params.get("year"))
-        return self.data.get(s, {}).get(path, [])
+        rows = self.data.get(s, {}).get(path, [])
+        if path == "/games/players":
+            return [x for x in rows if x["week"] == int(params["week"])]
+        return rows

@@ -124,6 +124,33 @@ def summarize(items, cfg):
             "alt_dog_hit_rate_lowest_third": round(1 - terciles[0]["actual"], 3) if terciles else None,
             "terciles": terciles,
         })
+    # QB flag check: do games where the UNDERDOG's QB is flagged blow out more often?
+    split = {}
+    for name in ("dog_qb_flagged", "dog_qb_ok"):
+        split[name] = {"n": 0, "blowouts": {str(m): 0 for m in bc["blowout_margins"]}, "pred": {str(m): 0.0 for m in bc["blowout_margins"]}}
+    for it in band:
+        r = it["row"]
+        if "home_qb" not in r:
+            continue
+        home_fav = r["market"]["spread"] < 0
+        dq = r["away_qb" if home_fav else "home_qb"]
+        if not dq.get("known"):
+            continue
+        key = "dog_qb_flagged" if dq.get("flag") else "dog_qb_ok"
+        fav_actual = r["margin"] if home_fav else -r["margin"]
+        fav_mu = it["pred"]["margin"] if home_fav else -it["pred"]["margin"]
+        split[key]["n"] += 1
+        for m in bc["blowout_margins"]:
+            split[key]["blowouts"][str(m)] += 1 if fav_actual > m else 0
+            split[key]["pred"][str(m)] += p_fav_by_more_than(fav_mu, it["pred"]["sigma"], m)
+    if split["dog_qb_flagged"]["n"] or split["dog_qb_ok"]["n"]:
+        blow["qb_split"] = []
+        for name, label in (("dog_qb_flagged", "Underdog QB flagged"), ("dog_qb_ok", "Underdog QB normal")):
+            d = split[name]
+            if d["n"]:
+                blow["qb_split"].append({"group": label, "n": d["n"], **{
+                    f"actual_{m}": round(d["blowouts"][str(m)] / d["n"], 3) for m in bc["blowout_margins"]}, **{
+                    f"pred_{m}": round(d["pred"][str(m)] / d["n"], 3) for m in bc["blowout_margins"]}})
     out["blowout"] = blow
 
     # --- simulated spread bets vs the market line (-110)

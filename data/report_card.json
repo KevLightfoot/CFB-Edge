@@ -6,40 +6,40 @@
    "margin_mae_market": 12.03,
    "total_mae_model": 12.9,
    "total_mae_market": 12.66,
-   "log_loss_model": 0.5198,
+   "log_loss_model": 0.5197,
    "brier_model": 0.1794,
    "brier_market": 0.1776,
    "brier_games": 2209,
    "calibration": [
     {
      "bin": "50-60%",
-     "n": 551,
-     "predicted": 0.555,
-     "actual": 0.532
+     "n": 557,
+     "predicted": 0.556,
+     "actual": 0.53
     },
     {
      "bin": "60-70%",
-     "n": 573,
+     "n": 567,
      "predicted": 0.648,
-     "actual": 0.67
+     "actual": 0.668
     },
     {
      "bin": "70-80%",
-     "n": 440,
+     "n": 441,
      "predicted": 0.747,
-     "actual": 0.732
+     "actual": 0.737
     },
     {
      "bin": "80-90%",
-     "n": 381,
+     "n": 377,
      "predicted": 0.846,
-     "actual": 0.908
+     "actual": 0.91
     },
     {
      "bin": "90-100%",
-     "n": 319,
+     "n": 322,
      "predicted": 0.947,
-     "actual": 0.962
+     "actual": 0.957
     }
    ],
    "within_1_sigma": 0.687,
@@ -53,19 +53,19 @@
       "actual_rate": 0.204,
       "flat_sigma_baseline": 0.207,
       "alt_dog_hit_rate_all": 0.796,
-      "alt_dog_hit_rate_lowest_third": 0.848,
+      "alt_dog_hit_rate_lowest_third": 0.845,
       "terciles": [
        {
         "group": "Lowest risk third",
         "n": 310,
         "predicted": 0.15,
-        "actual": 0.152
+        "actual": 0.155
        },
        {
         "group": "Middle third",
         "n": 310,
         "predicted": 0.189,
-        "actual": 0.21
+        "actual": 0.206
        },
        {
         "group": "Highest risk third",
@@ -81,46 +81,64 @@
       "actual_rate": 0.137,
       "flat_sigma_baseline": 0.143,
       "alt_dog_hit_rate_all": 0.863,
-      "alt_dog_hit_rate_lowest_third": 0.897,
+      "alt_dog_hit_rate_lowest_third": 0.894,
       "terciles": [
        {
         "group": "Lowest risk third",
         "n": 310,
         "predicted": 0.096,
-        "actual": 0.103
+        "actual": 0.106
        },
        {
         "group": "Middle third",
         "n": 310,
         "predicted": 0.126,
-        "actual": 0.139
+        "actual": 0.132
        },
        {
         "group": "Highest risk third",
         "n": 312,
         "predicted": 0.163,
-        "actual": 0.17
+        "actual": 0.173
        }
       ]
+     }
+    ],
+    "qb_split": [
+     {
+      "group": "Underdog QB flagged",
+      "n": 165,
+      "actual_17.5": 0.2,
+      "actual_21.5": 0.133,
+      "pred_17.5": 0.201,
+      "pred_21.5": 0.136
+     },
+     {
+      "group": "Underdog QB normal",
+      "n": 736,
+      "actual_17.5": 0.201,
+      "actual_21.5": 0.135,
+      "pred_17.5": 0.19,
+      "pred_21.5": 0.127
      }
     ]
    },
    "ats": {
     "threshold_pts": 3.0,
-    "wins": 38,
-    "losses": 45,
-    "pushes": 1,
-    "win_pct": 0.458,
-    "units": -10.45
+    "wins": 36,
+    "losses": 41,
+    "pushes": 2,
+    "win_pct": 0.468,
+    "units": -8.27
    },
    "moneyline": {
     "threshold": 0.04,
-    "bets": 479,
-    "wins": 189,
-    "units": -33.7,
-    "fav_bets": 140,
-    "fav_units": 1.49,
-    "roi": -0.07
+    "bets": 469,
+    "wins": 180,
+    "units": -46.66,
+    "fav_bets": 137,
+    "fav_units": -2.07,
+    "roi": -0.099
    }
   },
   "by_season": {
@@ -130,40 +148,40 @@
     "margin_mae_market": 12.01,
     "total_mae_model": 13.29,
     "total_mae_market": 12.86,
-    "log_loss_model": 0.5081,
+    "log_loss_model": 0.5079,
     "brier_model": 0.174,
     "brier_market": 0.1707,
     "brier_games": 731,
     "calibration": [
      {
       "bin": "50-60%",
-      "n": 183,
-      "predicted": 0.557,
-      "actual": 0.552
+      "n": 185,
+      "predicted": 0.558,
+      "actual": 0.535
      },
      {
       "bin": "60-70%",
-      "n": 189,
-      "predicted": 0.648,
-      "actual": 0.683
+      "n": 188,
+      "predicted": 0.65,
+      "actual": 0.686
      },
      {
       "bin": "70-80%",
-      "n": 140,
-      "predicted": 0.747,
-      "actual": 0.75
+      "n": 137,
+      "predicted": 0.748,
+      "actual": 0.759
      },
      {
       "bin": "80-90%",
-      "n": 130,
+      "n": 132,
       "predicted": 0.845,
-      "actual": 0.938
+      "actual": 0.939
      },
      {
       "bin": "90-100%",
       "n": 108,
-      "predicted": 0.945,
-      "actual": 0.954
+      "predicted": 0.946,
+      "actual": 0.944
      }
     ],
     "within_1_sigma": 0.68,
@@ -189,35 +207,35 @@
          "group": "Middle third",
          "n": 103,
          "predicted": 0.19,
-         "actual": 0.272
+         "actual": 0.282
         },
         {
          "group": "Highest risk third",
          "n": 103,
-         "predicted": 0.236,
-         "actual": 0.194
+         "predicted": 0.237,
+         "actual": 0.184
         }
        ]
       },
       {
        "margin": 21.5,
-       "predicted_rate": 0.129,
+       "predicted_rate": 0.13,
        "actual_rate": 0.12,
        "flat_sigma_baseline": 0.144,
        "alt_dog_hit_rate_all": 0.88,
-       "alt_dog_hit_rate_lowest_third": 0.932,
+       "alt_dog_hit_rate_lowest_third": 0.922,
        "terciles": [
         {
          "group": "Lowest risk third",
          "n": 103,
-         "predicted": 0.098,
-         "actual": 0.068
+         "predicted": 0.097,
+         "actual": 0.078
         },
         {
          "group": "Middle third",
          "n": 103,
-         "predicted": 0.126,
-         "actual": 0.184
+         "predicted": 0.127,
+         "actual": 0.175
         },
         {
          "group": "Highest risk third",
@@ -227,69 +245,87 @@
         }
        ]
       }
+     ],
+     "qb_split": [
+      {
+       "group": "Underdog QB flagged",
+       "n": 60,
+       "actual_17.5": 0.15,
+       "actual_21.5": 0.083,
+       "pred_17.5": 0.206,
+       "pred_21.5": 0.141
+      },
+      {
+       "group": "Underdog QB normal",
+       "n": 240,
+       "actual_17.5": 0.2,
+       "actual_21.5": 0.129,
+       "pred_17.5": 0.19,
+       "pred_21.5": 0.127
+      }
      ]
     },
     "ats": {
      "threshold_pts": 3.0,
      "wins": 5,
      "losses": 10,
-     "pushes": 1,
+     "pushes": 2,
      "win_pct": 0.333,
      "units": -5.45
     },
     "moneyline": {
      "threshold": 0.04,
-     "bets": 189,
-     "wins": 73,
-     "units": -19.54,
-     "fav_bets": 53,
-     "fav_units": 5.69,
-     "roi": -0.103
+     "bets": 181,
+     "wins": 68,
+     "units": -27.36,
+     "fav_bets": 50,
+     "fav_units": 5.92,
+     "roi": -0.151
     }
    },
    "2024": {
     "games": 752,
-    "margin_mae_model": 12.36,
+    "margin_mae_model": 12.35,
     "margin_mae_market": 12.23,
     "total_mae_model": 12.76,
     "total_mae_market": 12.74,
     "log_loss_model": 0.5353,
-    "brier_model": 0.1845,
+    "brier_model": 0.1844,
     "brier_market": 0.1828,
     "brier_games": 741,
     "calibration": [
      {
       "bin": "50-60%",
-      "n": 188,
-      "predicted": 0.552,
-      "actual": 0.479
+      "n": 191,
+      "predicted": 0.554,
+      "actual": 0.482
      },
      {
       "bin": "60-70%",
-      "n": 179,
-      "predicted": 0.648,
-      "actual": 0.676
+      "n": 176,
+      "predicted": 0.649,
+      "actual": 0.67
      },
      {
       "bin": "70-80%",
-      "n": 149,
-      "predicted": 0.747,
-      "actual": 0.671
+      "n": 151,
+      "predicted": 0.748,
+      "actual": 0.675
      },
      {
       "bin": "80-90%",
-      "n": 129,
-      "predicted": 0.848,
-      "actual": 0.907
+      "n": 124,
+      "predicted": 0.849,
+      "actual": 0.911
      },
      {
       "bin": "90-100%",
-      "n": 107,
-      "predicted": 0.944,
-      "actual": 0.963
+      "n": 110,
+      "predicted": 0.943,
+      "actual": 0.955
      }
     ],
-    "within_1_sigma": 0.686,
+    "within_1_sigma": 0.688,
     "avg_sigma": 15.16,
     "blowout": {
      "games": 305,
@@ -300,24 +336,24 @@
        "actual_rate": 0.19,
        "flat_sigma_baseline": 0.204,
        "alt_dog_hit_rate_all": 0.81,
-       "alt_dog_hit_rate_lowest_third": 0.851,
+       "alt_dog_hit_rate_lowest_third": 0.842,
        "terciles": [
         {
          "group": "Lowest risk third",
          "n": 101,
          "predicted": 0.144,
-         "actual": 0.149
+         "actual": 0.158
         },
         {
          "group": "Middle third",
          "n": 101,
          "predicted": 0.184,
-         "actual": 0.129
+         "actual": 0.119
         },
         {
          "group": "Highest risk third",
          "n": 103,
-         "predicted": 0.235,
+         "predicted": 0.234,
          "actual": 0.291
         }
        ]
@@ -340,34 +376,52 @@
          "group": "Middle third",
          "n": 101,
          "predicted": 0.122,
-         "actual": 0.089
+         "actual": 0.099
         },
         {
          "group": "Highest risk third",
          "n": 103,
-         "predicted": 0.162,
-         "actual": 0.204
+         "predicted": 0.161,
+         "actual": 0.194
         }
        ]
+      }
+     ],
+     "qb_split": [
+      {
+       "group": "Underdog QB flagged",
+       "n": 54,
+       "actual_17.5": 0.167,
+       "actual_21.5": 0.111,
+       "pred_17.5": 0.189,
+       "pred_21.5": 0.126
+      },
+      {
+       "group": "Underdog QB normal",
+       "n": 242,
+       "actual_17.5": 0.194,
+       "actual_21.5": 0.14,
+       "pred_17.5": 0.188,
+       "pred_21.5": 0.125
       }
      ]
     },
     "ats": {
      "threshold_pts": 3.0,
-     "wins": 18,
-     "losses": 17,
+     "wins": 16,
+     "losses": 15,
      "pushes": 0,
-     "win_pct": 0.514,
-     "units": -0.64
+     "win_pct": 0.516,
+     "units": -0.45
     },
     "moneyline": {
      "threshold": 0.04,
-     "bets": 150,
-     "wins": 64,
-     "units": -7.85,
-     "fav_bets": 59,
+     "bets": 147,
+     "wins": 60,
+     "units": -12.3,
+     "fav_bets": 57,
      "fav_units": -7.76,
-     "roi": -0.052
+     "roi": -0.084
     }
    },
    "2025": {
@@ -376,34 +430,34 @@
     "margin_mae_market": 11.84,
     "total_mae_model": 12.66,
     "total_mae_market": 12.39,
-    "log_loss_model": 0.5159,
+    "log_loss_model": 0.516,
     "brier_model": 0.1796,
     "brier_market": 0.1791,
     "brier_games": 737,
     "calibration": [
      {
       "bin": "50-60%",
-      "n": 180,
+      "n": 181,
       "predicted": 0.556,
-      "actual": 0.567
+      "actual": 0.575
      },
      {
       "bin": "60-70%",
-      "n": 205,
-      "predicted": 0.646,
-      "actual": 0.654
+      "n": 203,
+      "predicted": 0.647,
+      "actual": 0.65
      },
      {
       "bin": "70-80%",
-      "n": 151,
+      "n": 153,
       "predicted": 0.747,
-      "actual": 0.775
+      "actual": 0.778
      },
      {
       "bin": "80-90%",
-      "n": 122,
+      "n": 121,
       "predicted": 0.845,
-      "actual": 0.877
+      "actual": 0.876
      },
      {
       "bin": "90-100%",
@@ -412,8 +466,8 @@
       "actual": 0.971
      }
     ],
-    "within_1_sigma": 0.696,
-    "avg_sigma": 15.3,
+    "within_1_sigma": 0.694,
+    "avg_sigma": 15.29,
     "blowout": {
      "games": 318,
      "by_margin": [
@@ -423,25 +477,25 @@
        "actual_rate": 0.23,
        "flat_sigma_baseline": 0.208,
        "alt_dog_hit_rate_all": 0.77,
-       "alt_dog_hit_rate_lowest_third": 0.802,
+       "alt_dog_hit_rate_lowest_third": 0.811,
        "terciles": [
         {
          "group": "Lowest risk third",
          "n": 106,
          "predicted": 0.154,
-         "actual": 0.198
+         "actual": 0.189
         },
         {
          "group": "Middle third",
          "n": 106,
-         "predicted": 0.192,
+         "predicted": 0.193,
          "actual": 0.245
         },
         {
          "group": "Highest risk third",
          "n": 106,
          "predicted": 0.237,
-         "actual": 0.245
+         "actual": 0.255
         }
        ]
       },
@@ -456,7 +510,7 @@
         {
          "group": "Lowest risk third",
          "n": 106,
-         "predicted": 0.1,
+         "predicted": 0.099,
          "actual": 0.123
         },
         {
@@ -473,24 +527,42 @@
         }
        ]
       }
+     ],
+     "qb_split": [
+      {
+       "group": "Underdog QB flagged",
+       "n": 51,
+       "actual_17.5": 0.294,
+       "actual_21.5": 0.216,
+       "pred_17.5": 0.208,
+       "pred_21.5": 0.142
+      },
+      {
+       "group": "Underdog QB normal",
+       "n": 254,
+       "actual_17.5": 0.209,
+       "actual_21.5": 0.134,
+       "pred_17.5": 0.192,
+       "pred_21.5": 0.129
+      }
      ]
     },
     "ats": {
      "threshold_pts": 3.0,
      "wins": 15,
-     "losses": 18,
+     "losses": 16,
      "pushes": 0,
-     "win_pct": 0.455,
-     "units": -4.36
+     "win_pct": 0.484,
+     "units": -2.36
     },
     "moneyline": {
      "threshold": 0.04,
-     "bets": 140,
+     "bets": 141,
      "wins": 52,
-     "units": -6.31,
-     "fav_bets": 28,
-     "fav_units": 3.56,
-     "roi": -0.045
+     "units": -7.0,
+     "fav_bets": 30,
+     "fav_units": -0.23,
+     "roi": -0.05
     }
    }
   },
@@ -503,14 +575,220 @@
  "live": {
   "season": 2026,
   "overall": {
-   "games": 0
+   "games": 56,
+   "margin_mae_model": 10.84,
+   "margin_mae_market": 10.76,
+   "total_mae_model": 15.44,
+   "total_mae_market": 14.75,
+   "log_loss_model": 0.6589,
+   "brier_model": 0.2334,
+   "brier_market": 0.2338,
+   "brier_games": 56,
+   "calibration": [
+    {
+     "bin": "50-60%",
+     "n": 14,
+     "predicted": 0.55,
+     "actual": 0.5
+    },
+    {
+     "bin": "60-70%",
+     "n": 12,
+     "predicted": 0.627,
+     "actual": 0.75
+    },
+    {
+     "bin": "70-80%",
+     "n": 22,
+     "predicted": 0.747,
+     "actual": 0.545
+    },
+    {
+     "bin": "80-90%",
+     "n": 7,
+     "predicted": 0.828,
+     "actual": 0.857
+    },
+    {
+     "bin": "90-100%",
+     "n": 1,
+     "predicted": 0.906,
+     "actual": 1.0
+    }
+   ],
+   "within_1_sigma": 0.732,
+   "avg_sigma": 15.14,
+   "blowout": {
+    "games": 22,
+    "by_margin": [
+     {
+      "margin": 17.5,
+      "predicted_rate": 0.185,
+      "actual_rate": 0.182,
+      "flat_sigma_baseline": 0.197,
+      "alt_dog_hit_rate_all": 0.818,
+      "alt_dog_hit_rate_lowest_third": 0.857,
+      "terciles": [
+       {
+        "group": "Lowest risk third",
+        "n": 7,
+        "predicted": 0.154,
+        "actual": 0.143
+       },
+       {
+        "group": "Middle third",
+        "n": 7,
+        "predicted": 0.178,
+        "actual": 0.0
+       },
+       {
+        "group": "Highest risk third",
+        "n": 8,
+        "predicted": 0.219,
+        "actual": 0.375
+       }
+      ]
+     },
+     {
+      "margin": 21.5,
+      "predicted_rate": 0.123,
+      "actual_rate": 0.136,
+      "flat_sigma_baseline": 0.136,
+      "alt_dog_hit_rate_all": 0.864,
+      "alt_dog_hit_rate_lowest_third": 0.857,
+      "terciles": [
+       {
+        "group": "Lowest risk third",
+        "n": 7,
+        "predicted": 0.1,
+        "actual": 0.143
+       },
+       {
+        "group": "Middle third",
+        "n": 7,
+        "predicted": 0.117,
+        "actual": 0.0
+       },
+       {
+        "group": "Highest risk third",
+        "n": 8,
+        "predicted": 0.149,
+        "actual": 0.25
+       }
+      ]
+     }
+    ]
+   },
+   "ats": {
+    "threshold_pts": 3.0,
+    "wins": 0,
+    "losses": 0,
+    "pushes": 0,
+    "win_pct": null,
+    "units": 0.0
+   },
+   "moneyline": {
+    "threshold": 0.04,
+    "bets": 7,
+    "wins": 3,
+    "units": -0.35,
+    "fav_bets": 3,
+    "fav_units": 0.55,
+    "roi": -0.05
+   }
   },
-  "weeks": []
+  "weeks": [
+   {
+    "week": 8,
+    "games": 56,
+    "margin_mae_model": 10.84,
+    "margin_mae_market": 10.76,
+    "within_1_sigma": 0.732,
+    "blowout": {
+     "games": 22,
+     "by_margin": [
+      {
+       "margin": 17.5,
+       "predicted_rate": 0.185,
+       "actual_rate": 0.182,
+       "flat_sigma_baseline": 0.197,
+       "alt_dog_hit_rate_all": 0.818,
+       "alt_dog_hit_rate_lowest_third": 0.857,
+       "terciles": [
+        {
+         "group": "Lowest risk third",
+         "n": 7,
+         "predicted": 0.154,
+         "actual": 0.143
+        },
+        {
+         "group": "Middle third",
+         "n": 7,
+         "predicted": 0.178,
+         "actual": 0.0
+        },
+        {
+         "group": "Highest risk third",
+         "n": 8,
+         "predicted": 0.219,
+         "actual": 0.375
+        }
+       ]
+      },
+      {
+       "margin": 21.5,
+       "predicted_rate": 0.123,
+       "actual_rate": 0.136,
+       "flat_sigma_baseline": 0.136,
+       "alt_dog_hit_rate_all": 0.864,
+       "alt_dog_hit_rate_lowest_third": 0.857,
+       "terciles": [
+        {
+         "group": "Lowest risk third",
+         "n": 7,
+         "predicted": 0.1,
+         "actual": 0.143
+        },
+        {
+         "group": "Middle third",
+         "n": 7,
+         "predicted": 0.117,
+         "actual": 0.0
+        },
+        {
+         "group": "Highest risk third",
+         "n": 8,
+         "predicted": 0.149,
+         "actual": 0.25
+        }
+       ]
+      }
+     ]
+    },
+    "ats": {
+     "threshold_pts": 3.0,
+     "wins": 0,
+     "losses": 0,
+     "pushes": 0,
+     "win_pct": null,
+     "units": 0.0
+    },
+    "moneyline": {
+     "threshold": 0.04,
+     "bets": 7,
+     "wins": 3,
+     "units": -0.35,
+     "fav_bets": 3,
+     "fav_units": 0.55,
+     "roi": -0.05
+    }
+   }
+  ]
  },
- "model_version": 5,
- "trained_at": "2026-10-24T01:55:42",
+ "model_version": 6,
+ "trained_at": "2026-10-29T05:07:04",
  "train_info": {
-  "games": 5585,
+  "games": 5641,
   "seasons": [
    2018,
    2019,
@@ -521,61 +799,66 @@
    2025,
    2026
   ],
-  "oof_margin_mae": 12.188377842045409,
-  "oof_margin_rmse": 15.406911164902182
+  "oof_margin_mae": 12.173994735031162,
+  "oof_margin_rmse": 15.38791678209502
  },
- "updated_at": "2026-10-24T01:55:42",
+ "updated_at": "2026-10-29T05:07:04",
  "mock": false,
  "feature_weights": [
   {
    "key": "elo_diff",
    "label": "Elo rating gap",
-   "points_per_sd": 10.95
+   "points_per_sd": 10.75
   },
   {
    "key": "net_success_diff",
    "label": "Net success rate gap",
-   "points_per_sd": 3.42
+   "points_per_sd": 3.47
   },
   {
    "key": "talent_diff",
    "label": "Roster talent gap",
-   "points_per_sd": 2.86
+   "points_per_sd": 2.87
   },
   {
    "key": "net_ppa_diff",
    "label": "Net EPA per play gap",
-   "points_per_sd": -1.99
+   "points_per_sd": -2.19
   },
   {
    "key": "net_points_diff",
    "label": "Scoring margin gap",
-   "points_per_sd": -1.7
+   "points_per_sd": -1.6
   },
   {
    "key": "net_havoc_diff",
    "label": "Havoc (disruption) gap",
-   "points_per_sd": 1.0
+   "points_per_sd": 1.06
   },
   {
    "key": "net_explosiveness_diff",
    "label": "Net explosiveness gap",
-   "points_per_sd": 0.69
+   "points_per_sd": 0.73
+  },
+  {
+   "key": "qb_flag_diff",
+   "label": "QB situation (new/inexperienced starter)",
+   "points_per_sd": 0.71
   },
   {
    "key": "home_field",
    "label": "Home field",
-   "points_per_sd": 0.42
+   "points_per_sd": 0.43
   },
   {
    "key": "pass_matchup",
    "label": "Pass game matchup",
-   "points_per_sd": 0.4
+   "points_per_sd": 0.37
   },
   {
    "key": "rush_matchup",
    "label": "Run game matchup",
-   "points_per_sd": 0.14
+   "points_per_sd": 0.15
   }
  ],
  "settings": {

@@ -169,3 +169,11 @@ td.num, .num { font-family: var(--mono); font-size: 16px; font-weight: 600; }
   .cmp-row .lv, .cmp-row .rv { font-size: 15px; }
   .grid2 { grid-template-columns: 1fr; }
 }
+
+/* QB flag */
+.qbwarn { margin-top: 4px; font-size: 12px; font-weight: 600; color: var(--bad); white-space: normal; }
+.qbgood { margin-top: 4px; font-size: 12px; color: var(--good); white-space: normal; }
+.qbcard { margin-bottom: 12px; }
+.qbrow { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.qbrow:last-of-type { border-bottom: 0; }
+.qbrow b { min-width: 150px; font-family: var(--mono); font-size: 17px; }

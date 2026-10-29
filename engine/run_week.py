@@ -26,7 +26,7 @@ sys.path.insert(0, str(ENGINE))
 
 from cfbd_client import CFBDClient, CFBDError  # noqa: E402
 from data import load_season  # noqa: E402
-from features import SeasonIndex, build_rows  # noqa: E402
+from features import SeasonIndex, QBIndex, build_rows  # noqa: E402
 from model import Engine, norm_cdf  # noqa: E402
 from evaluate import summarize, market_probs, american_to_prob  # noqa: E402
 
@@ -81,7 +81,20 @@ def game_entry(row, pred):
         "market": row["market"],
         "factors": pred["factors"],
         "vol_factors": pred["vol_factors"],
+        "qb": {"home": qb_out(row.get("home_qb")), "away": qb_out(row.get("away_qb"))},
     }
+
+
+def qb_out(q):
+    if not q or not q.get("known"):
+        return {"known": False, "flag": 0}
+    return {k: q.get(k) for k in ("known", "name", "starts", "new", "inexperienced", "flag", "reason")}
+
+
+def dog_qb_note(entry, home_fav):
+    """Text warning if the underdog's QB is flagged (the risk for alt-dog bets)."""
+    q = (entry.get("qb") or {}).get("away" if home_fav else "home") or {}
+    return f" [QB FLAG: {q.get('name')}, {q.get('reason')}]" if q.get("flag") else ""
 
 
 def blowout_info(entry, m):
@@ -144,11 +157,16 @@ def main():
                 continue
             seasons[s] = sd
             idx[s] = SeasonIndex(sd)
-            print(f"  {s}: {len(sd['games'])} games, {len(sd['lines'])} lines, {len(sd['adv'])} team-game stat rows")
+            print(f"  {s}: {len(sd['games'])} games, {len(sd['lines'])} lines, {len(sd['adv'])} team-game stat rows, "
+                  f"{len(sd.get('qb') or {})} QB starts")
     except CFBDError as e:
         sys.exit(f"\nERROR: {e}")
     if not args.mock:
         print(f"CFBD API calls used this run: {client.calls_made}")
+    qcfg = cfg.get("qb", {})
+    qbi = QBIndex(seasons, qcfg.get("inexperienced_starts", 3)) if qcfg.get("enabled", True) else None
+    if qbi is not None and not qbi.has_data:
+        print("  (no QB data returned; QB flag features will be 0)")
     if season not in seasons:
         sys.exit(f"No data for season {season}.")
 
@@ -165,8 +183,8 @@ def main():
         for T in cfg["data"]["backtest_seasons"]:
             if T not in seasons:
                 continue
-            tr = build_rows(seasons, idx, cfg, season_filter={s for s in train_seasons if s < T})
-            te = build_rows(seasons, idx, cfg, season_filter={T})
+            tr = build_rows(seasons, idx, cfg, qb=qbi, season_filter={s for s in train_seasons if s < T})
+            te = build_rows(seasons, idx, cfg, qb=qbi, season_filter={T})
             if len(tr) < 200 or not te:
                 continue
             eng = Engine(cfg).fit(tr)
@@ -178,9 +196,9 @@ def main():
                     "seasons": cfg["data"]["backtest_seasons"]}
 
         print("Training final model ...")
-        rows = build_rows(seasons, idx, cfg, season_filter=set(train_seasons))
+        rows = build_rows(seasons, idx, cfg, qb=qbi, season_filter=set(train_seasons))
         if cfg["data"]["include_current_season_in_training"]:
-            cur = build_rows(seasons, idx, cfg, season_filter={season})
+            cur = build_rows(seasons, idx, cfg, qb=qbi, season_filter={season})
             rows += [r for r in cur if r["game"]["week"] < week]
         eng = Engine(cfg).fit(rows)
         version = (int(re.findall(r"v(\d+)", mp.name)[0]) + 1) if mp else 1
@@ -236,7 +254,7 @@ def main():
     }
 
     # ---- predict this week ---------------------------------------------------
-    rows = build_rows(seasons, idx, cfg, only_completed=False, week=week, season_filter={season})
+    rows = build_rows(seasons, idx, cfg, qb=qbi, only_completed=False, week=week, season_filter={season})
     entries = [game_entry(r, eng.predict_row(r)) for r in rows]
     entries.sort(key=lambda e: (e["start"] or "", e["home"]["name"]))
 
@@ -328,6 +346,10 @@ def write_report(season, week, cfg, model_json, card, graded_last, entries, retr
                      f"our lowest-risk third {pct(b['alt_dog_hit_rate_lowest_third'])}")
             for t in b["terciles"]:
                 L.append(f"  - {t['group']}: predicted {pct(t['predicted'])}, actual {pct(t['actual'])} (n={t['n']})")
+        for q in s.get("blowout", {}).get("qb_split", []):
+            L.append(f"- {q['group']} ({q['n']} band games): " + ", ".join(
+                f"fav by more than {m}: predicted {pct(q.get(f'pred_{m}'))}, actual {pct(q.get(f'actual_{m}'))}"
+                for m in bc["blowout_margins"]))
         # auto flags for tuning
         w1 = s.get("within_1_sigma")
         if w1 is not None and s["games"] >= 40:
@@ -366,7 +388,7 @@ def write_report(season, week, cfg, model_json, card, graded_last, entries, retr
                 fav, dog = (e["home"]["name"], e["away"]["name"]) if home_fav else (e["away"]["name"], e["home"]["name"])
                 fav_margin = r["margin"] if home_fav else -r["margin"]
                 rows.append((p18, f"- {dog} (+{abs(e['market']['spread'])}) vs {fav}: blowout risk {pct(p18)}; "
-                                   f"fav won by {fav_margin:+.0f}; " + ", ".join(
+                                   f"fav won by {fav_margin:+.0f}; " + dog_qb_note(e, home_fav).strip() + (" " if dog_qb_note(e, home_fav) else "") + ", ".join(
                                        f"+{m} {'HIT' if fav_margin < m else 'MISS'}" for m in bc["blowout_margins"])))
             for _, line in sorted(rows):
                 L.append(line)
@@ -389,7 +411,8 @@ def write_report(season, week, cfg, model_json, card, graded_last, entries, retr
         home_fav, p18 = blowout_info(e, bc["blowout_margins"][0])
         _, p22 = blowout_info(e, bc["blowout_margins"][1])
         dog = e["away"]["name"] if home_fav else e["home"]["name"]
-        scored.append((p18, f"- {dog} +{abs(e['market']['spread'])}: P(fav by 18+) {pct(p18)}, P(fav by 22+) {pct(p22)}, sigma {e['model']['sigma']}"))
+        scored.append((p18, f"- {dog} +{abs(e['market']['spread'])}: P(fav by 18+) {pct(p18)}, P(fav by 22+) {pct(p22)}, sigma {e['model']['sigma']}"
+                            + dog_qb_note(e, home_fav)))
     L.append("\n### Lowest blowout risk (alt-dog candidates)")
     L += [s for _, s in sorted(scored)[:10]] or ["None in band."]
     L.append("\n### Largest ML edges (model prob minus no-vig implied)")
@@ -410,6 +433,17 @@ def write_report(season, week, cfg, model_json, card, graded_last, entries, retr
             continue
         dis.append((abs(e["model"]["margin"] + sp), f"- {e['away']['name']} @ {e['home']['name']}: market home {fmt_line(sp)}, model home {fmt_line(-e['model']['margin'])}"))
     L += [s for _, s in sorted(dis, reverse=True)[:8]]
+
+    L.append("\n### QB flags this week (new starter or under the career-start threshold)")
+    qrows = []
+    for e in entries:
+        for side in ("away", "home"):
+            q = (e.get("qb") or {}).get(side) or {}
+            if q.get("flag"):
+                opp = e["home" if side == "away" else "away"]["name"]
+                qrows.append(f"- {e[side]['name']} ({'at' if side == 'away' else 'vs'} {opp}): {q.get('name')}, {q.get('reason')}")
+    L += qrows or ["- None flagged."]
+    L.append("\nQB flags use only completed games, so a starter change announced this week will not show. Always check Saturday's availability report.")
 
     L.append("\n## Auto-flags for tuning")
     L += [f"- {f}" for f in flags] or ["- Nothing flagged."]

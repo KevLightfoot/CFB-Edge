@@ -4,7 +4,8 @@
 //   CFBD_API_KEY      CollegeFootballData key (live lines)
 //   OPENAI_API_KEY    OpenAI key (game explanations)
 //   OPENAI_MODEL      optional, defaults to gpt-4o-mini
-//   APP_PASSWORD      optional, password-protects the whole site
+//   CORS_ORIGINS      optional, comma-separated sites allowed to call the API
+//                     (default "*"; e.g. https://kevlightfoot.github.io)
 //   PORT              set automatically by Render
 
 // No npm dependencies: uses only Node's built-in modules (Node 18+ for fetch).
@@ -21,7 +22,7 @@ const CFBD_BASE = process.env.CFBD_BASE_URL || "https://api.collegefootballdata.
 const OPENAI_KEY = process.env.OPENAI_API_KEY || "";
 const OPENAI_MODEL = process.env.OPENAI_MODEL || "gpt-4o-mini";
 const OPENAI_BASE = process.env.OPENAI_BASE_URL || "https://api.openai.com/v1";
-const APP_PASSWORD = process.env.APP_PASSWORD || "";
+const CORS_ORIGINS = (process.env.CORS_ORIGINS || "*").split(",").map((s) => s.trim()).filter(Boolean);
 const LINES_CACHE_MIN = Number(process.env.LINES_CACHE_MINUTES || 30);
 const EXPLAIN_LIMIT_PER_HOUR = Number(process.env.EXPLAIN_LIMIT_PER_HOUR || 40);
 
@@ -50,8 +51,10 @@ const MIME = { ".html": "text/html; charset=utf-8", ".js": "text/javascript; cha
 
 function serveStatic(urlPath, res) {
   const rel = decodeURIComponent(urlPath).replace(/^\/+/, "") || "index.html";
-  const file = path.normalize(path.join(PUBLIC_DIR, rel));
-  if (!file.startsWith(PUBLIC_DIR)) return false;
+  // data/*.json is served too, so local dev matches the GitHub Pages layout
+  const base = rel.startsWith("data/") ? ROOT : PUBLIC_DIR;
+  const file = path.normalize(path.join(base, rel));
+  if (!file.startsWith(base === ROOT ? DATA_DIR : PUBLIC_DIR)) return false;
   if (!fs.existsSync(file) || !fs.statSync(file).isFile()) return false;
   res.writeHead(200, { "Content-Type": MIME[path.extname(file)] || "application/octet-stream", "Cache-Control": "no-cache" });
   fs.createReadStream(file).pipe(res);
@@ -67,12 +70,14 @@ function readBody(req) {
   });
 }
 
-function authorized(req) {
-  if (!APP_PASSWORD) return true;
-  const [scheme, encoded] = (req.headers.authorization || "").split(" ");
-  if (scheme !== "Basic" || !encoded) return false;
-  const pass = Buffer.from(encoded, "base64").toString().split(":").slice(1).join(":");
-  return pass === APP_PASSWORD;
+function setCors(req, res) {
+  const origin = req.headers.origin;
+  if (!origin) return;
+  if (CORS_ORIGINS.includes("*")) res.setHeader("Access-Control-Allow-Origin", "*");
+  else if (CORS_ORIGINS.includes(origin)) { res.setHeader("Access-Control-Allow-Origin", origin); res.setHeader("Vary", "Origin"); }
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Max-Age", "86400");
 }
 
 // ---------- data files (reloaded when they change on disk) ----------
@@ -178,6 +183,18 @@ app.get("/api/predictions", async (req, res) => {
   res.json(out);
 });
 
+// Live lines only (used by the GitHub Pages site, which has predictions as static files).
+app.get("/api/lines", async (req, res) => {
+  const url = new URL(req.url, "http://localhost");
+  const season = Number(url.searchParams.get("season"));
+  const week = Number(url.searchParams.get("week"));
+  if (!season || !week) return res.status(400).json({ error: "season and week are required" });
+  const p = readJson("predictions.json");
+  const prefs = p?.line_provider_preference || ["DraftKings", "ESPN Bet", "Bovada", "consensus"];
+  const lc = await liveLines(season, week, prefs);
+  res.json({ season, week, lines: lc.data || {}, updated: lc.at ? new Date(lc.at).toISOString() : null, error: lc.error || null });
+});
+
 app.get("/api/report-card", (req, res) => {
   const c = readJson("report_card.json");
   if (!c) return res.status(404).json({ error: "No report card yet." });
@@ -238,6 +255,11 @@ function buildFacts(g, p) {
     },
     margin_drivers_points_toward_home: g.factors.map((f) => ({ factor: f.label, points: f.points })),
     volatility_drivers_std_dev_points: g.vol_factors.map((f) => ({ factor: f.label, points: f.sigma_pts })),
+    quarterbacks: {
+      note: "Starter of each team's most recent game. flag=1 means a new starter vs. the QB the team's season stats came from, or very few career starts. Inexperienced or new QBs raise turnover and blowout risk.",
+      home: g.qb?.home || null,
+      away: g.qb?.away || null,
+    },
     home: side(g.home),
     away: side(g.away),
   };
@@ -252,6 +274,7 @@ Rules:
 - Explain what drives THIS game. No generic statements like "turnovers matter" or "defense wins games".
 - Prioritize the largest margin drivers and volatility drivers. Say why they push the margin or the variance.
 - Compare our numbers to the market and say plainly whether the edge looks real or thin.
+- If either quarterback has flag=1, address it explicitly in blowout_take and risks (name, career starts, why it matters).
 - Be concise and direct. No disclaimers about gambling.
 
 Return JSON with exactly these keys:
@@ -312,10 +335,8 @@ app.post("/api/explain", async (req, res) => {
 const server = http.createServer(async (req, res) => {
   wrapRes(res);
   try {
-    if (!authorized(req)) {
-      res.writeHead(401, { "WWW-Authenticate": 'Basic realm="CFB Edge"', "Content-Type": "text/plain" });
-      return res.end("Password required");
-    }
+    setCors(req, res);
+    if (req.method === "OPTIONS") { res.writeHead(204); return res.end(); }
     const url = new URL(req.url, "http://localhost");
     const route = routes.find((r) => r.method === req.method && r.path === url.pathname);
     if (route) {
@@ -333,7 +354,7 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(PORT, () => {
   console.log(`CFB Edge running on http://localhost:${PORT}`);
-  console.log(`  CFBD key: ${CFBD_KEY ? "set" : "MISSING"} | OpenAI key: ${OPENAI_KEY ? "set" : "MISSING"} | password: ${APP_PASSWORD ? "on" : "off"}`);
+  console.log(`  CFBD key: ${CFBD_KEY ? "set" : "MISSING"} | OpenAI key: ${OPENAI_KEY ? "set" : "MISSING"} | CORS: ${CORS_ORIGINS.join(", ")}`);
 });
 
 function loadDotEnv(file) {

@@ -75,22 +75,21 @@ git push -u origin main
 ```
 Check on GitHub that **`.env` is NOT in the repo** (it's gitignored).
 
-## 5. Deploy on Render
+## 5. Deploy the backend on Render (live lines + AI explanations)
 1. https://render.com → **New +** → **Web Service** → connect GitHub → pick the `cfb-edge` repo.
-2. Settings:
-   - **Runtime:** Node
-   - **Build Command:** `npm install`
-   - **Start Command:** `npm start`
-   - **Instance type:** Free is fine
-3. **Environment** → add variables:
-   - `CFBD_API_KEY` = your CFBD key
-   - `OPENAI_API_KEY` = your OpenAI key
-   - `OPENAI_MODEL` = optional (defaults to `gpt-4o-mini`; set it to whichever current model you prefer)
-   - `APP_PASSWORD` = optional but **recommended**: password-protects the site so strangers can't burn your OpenAI credit. The browser asks for a username (anything) and this password.
-4. **Create Web Service.** When the log shows `CFB Edge running`, open your `https://<name>.onrender.com` URL.
-5. Sanity check: visit `/api/health`. It should show `"cfbd_key": true, "openai_key": true`.
+2. Runtime **Node**, Build Command `npm install`, Start Command `npm start`, Free instance.
+3. **Environment** → add `CFBD_API_KEY` and `OPENAI_API_KEY` (optional: `OPENAI_MODEL`, and `CORS_ORIGINS=https://kevlightfoot.github.io` to only allow your site).
+4. Deploy, then copy the service URL (e.g. `https://cfb-edge.onrender.com`) and check `<url>/api/health`.
 
-Render free instances sleep after ~15 minutes idle, so the first load after a break takes up to a minute.
+## 6. Host the site on GitHub Pages
+The site and this week's data load instantly from Pages. Only live lines and explanations call Render, in the background, so a sleeping Render instance never blocks the page.
+
+1. Repo → **Settings → Secrets and variables → Actions → Variables** tab → **New repository variable**: name `CFB_API_BASE`, value your Render URL (no trailing slash).
+2. Repo → **Settings → Pages** → Source: **GitHub Actions**.
+3. Push any commit (or Actions tab → "Deploy site to GitHub Pages" → Run workflow).
+4. The site is at `https://kevlightfoot.github.io/cfb-edge/`.
+
+GitHub Pages on a **private** repo needs GitHub Pro, which is free through the GitHub Student Developer Pack. Otherwise make the repo public; your keys are never in it.
 
 ---
 
@@ -99,9 +98,9 @@ Render free instances sleep after ~15 minutes idle, so the first load after a br
 ```bash
 source .venv/bin/activate
 python engine/run_week.py --week 11              # predicts week 11, grades week 10
-git add -A && git commit -m "Week 11" && git push  # Render redeploys automatically
+git add -A && git commit -m "Week 11" && git push  # Pages and Render both redeploy automatically
 ```
-- Lines on the site refresh live from CFBD every 30 minutes. Predictions only change when you run the engine (team stats don't change mid-week).
+- Live lines are fetched from CFBD (cached 30 minutes on the server) after the page loads. Predictions only change when you run the engine (team stats don't change mid-week).
 - **Then upload `engine/reports/weekly_report_2026_w11.md` to Claude.** It contains last week's grades, biggest misses, the alt-dog band results, the live and backtest report card, feature weights, and auto-flags. Include `engine/config.json` if you've edited it.
 
 ## When Claude suggests a tweak
@@ -124,6 +123,7 @@ git add -A && git commit -m "Week 11" && git push  # Render redeploys automatica
 | `model.sigma_min` / `sigma_max` | Clamp on per-game volatility. |
 | `betting.alt_dog_spread_range` | The favorite range your Alt-Dog Finder targets (default 2–7). |
 | `betting.blowout_margins` | The alt lines you play (default 17.5 and 21.5). |
+| `qb.enabled`, `qb.inexperienced_starts` | Starting-QB flag. Flags a team whose latest starter is new vs. the QB its stats came from, or has fewer career starts than this. Adds `qb_flag_diff` (margin) and `qb_flag_sum` (volatility). |
 | `betting.spread_edge_threshold_pts`, `ml_edge_threshold` | When the report card counts a game as a "pick". |
 
 ---
@@ -147,6 +147,6 @@ git add -A && git commit -m "Week 11" && git push  # Render redeploys automatica
 - **`CFBD ... HTTP 401`:** key typo, or the key hasn't been activated yet (check your email).
 - **Mac: `CERTIFICATE_VERIFY_FAILED`:** run "Install Certificates.command" from your Python folder in Applications.
 - **A stat looks empty or flat:** CFBD sometimes renames a field. Run with the real key, then send Claude the weekly report and the console output.
-- **Site shows "Live lines unavailable":** it falls back to the lines saved when you ran the engine. Check `/api/health` and the Render logs.
+- **Site shows "Live lines unavailable":** it falls back to the lines saved when you ran the engine. Check `CFB_API_BASE` is set to your Render URL, that `<render url>/api/health` works, and the Render logs.
 - **Explanations fail:** check `OPENAI_API_KEY`, your OpenAI credit, and that `OPENAI_MODEL` is a model your account can use.
 - **Test without keys:** `python engine/run_week.py --week 9 --mock --retrain` uses fictional data and writes to `engine/mock/`, never touching your real model history.

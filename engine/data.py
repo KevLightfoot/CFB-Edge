@@ -141,4 +141,57 @@ def load_season(client, season, cfg):
         if t and v is not None:
             talent[t] = v
 
-    return {"season": season, "games": games, "lines": lines, "adv": adv, "talent": talent}
+    qb = load_qb_starters(client, season, raw_games, cfg) if cfg.get("qb", {}).get("enabled", True) else {}
+
+    return {"season": season, "games": games, "lines": lines, "adv": adv, "talent": talent, "qb": qb}
+
+
+def _attempts(stat):
+    """'24/44' -> 44 (attempts). Returns 0 if unparseable."""
+    try:
+        return int(str(stat).split("/")[1])
+    except (IndexError, ValueError):
+        return 0
+
+
+def load_qb_starters(client, season, raw_games, cfg):
+    """Starting QB (most pass attempts) for every team in every completed game.
+
+    CFBD's /games/players needs a week, so this is one call per week. Finished
+    weeks are cached forever; only the latest week of the current season is
+    refreshed. Returns {(gameId, team): {"id", "name", "att"}}.
+    """
+    st = cfg["data"]["season_type"]
+    weeks = sorted({int(g(r, "week", default=0)) for r in raw_games
+                    if g(r, "completed") or g(r, "homePoints", "home_points") is not None})
+    if not weeks:
+        return {}
+    last_week = weeks[-1]
+    out = {}
+    for wk in weeks:
+        # Only the most recent week of the current season can still change.
+        refresh = season if (season >= client.current_season and wk >= last_week) else None
+        raw = client.get("/games/players", {"year": season, "week": wk, "seasonType": st, "category": "passing"},
+                         season=refresh, optional=True) or []
+        for gm in raw:
+            gid = g(gm, "id")
+            for t in g(gm, "teams", default=[]) or []:
+                team = g(t, "team", "school")
+                best = None
+                for cat in g(t, "categories", default=[]) or []:
+                    if (g(cat, "name", default="") or "").lower() != "passing":
+                        continue
+                    for typ in g(cat, "types", default=[]) or []:
+                        if (g(typ, "name", default="") or "").upper() != "C/ATT":
+                            continue
+                        for ath in g(typ, "athletes", default=[]) or []:
+                            name = g(ath, "name", default="") or ""
+                            aid = str(g(ath, "id", default=name))
+                            if not name or name.lower() == "team" or aid.startswith("-"):
+                                continue
+                            att = _attempts(g(ath, "stat"))
+                            if best is None or att > best["att"]:
+                                best = {"id": aid, "name": name, "att": att, "week": wk}
+                if team and best and best["att"] > 0:
+                    out[(gid, team)] = best
+    return out

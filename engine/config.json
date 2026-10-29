@@ -1,21 +1,36 @@
 {
   "_readme": "Every tunable setting lives here. Change values, re-run run_week.py --retrain, and compare the new report card. Keys starting with _ are comments.",
-
   "data": {
     "_note": "Seasons used to train the final model. 2020 (COVID) is skipped by default because schedules and home field were unusual.",
-    "train_seasons": [2018, 2019, 2021, 2022, 2023, 2024, 2025],
-    "backtest_seasons": [2023, 2024, 2025],
+    "train_seasons": [
+      2018,
+      2019,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025
+    ],
+    "backtest_seasons": [
+      2023,
+      2024,
+      2025
+    ],
     "include_current_season_in_training": true,
     "season_type": "regular",
     "fbs_only": true,
-    "line_provider_preference": ["DraftKings", "ESPN Bet", "Bovada", "consensus", "William Hill (New Jersey)"],
+    "line_provider_preference": [
+      "DraftKings",
+      "ESPN Bet",
+      "Bovada",
+      "consensus",
+      "William Hill (New Jersey)"
+    ],
     "current_season_cache_hours": 6
   },
-
   "features": {
     "_note": "Team stats are season-to-date averages from games BEFORE the game being predicted. Early in the season they are blended with last season's numbers: weight = games / (games + prior_games_weight).",
     "prior_games_weight": 3,
-
     "margin_features": [
       "elo_diff",
       "talent_diff",
@@ -26,9 +41,9 @@
       "pass_matchup",
       "net_havoc_diff",
       "net_points_diff",
-      "home_field"
+      "home_field",
+      "qb_flag_diff"
     ],
-
     "total_features": [
       "off_ppa_sum",
       "def_ppa_sum",
@@ -37,15 +52,14 @@
       "points_against_sum",
       "explosiveness_sum"
     ],
-
     "volatility_features": [
       "expected_total",
       "pace_sum",
       "havoc_allowed_sum",
       "abs_expected_margin",
-      "abs_talent_gap"
+      "abs_talent_gap",
+      "qb_flag_sum"
     ],
-
     "labels": {
       "elo_diff": "Elo rating gap",
       "talent_diff": "Roster talent gap",
@@ -66,10 +80,11 @@
       "expected_total": "Expected total points",
       "havoc_allowed_sum": "Turnover/disruption proneness",
       "abs_expected_margin": "Size of expected margin",
-      "abs_talent_gap": "Size of talent gap"
+      "abs_talent_gap": "Size of talent gap",
+      "qb_flag_diff": "QB situation (new/inexperienced starter)",
+      "qb_flag_sum": "New or inexperienced QB in game"
     }
   },
-
   "model": {
     "_note": "ridge_alpha: higher = more conservative weights. market_blend: 0 = pure model, 1 = pure Vegas line. sigma bounds clamp the per-game volatility.",
     "ridge_alpha": 10.0,
@@ -79,13 +94,23 @@
     "sigma_max": 22.0,
     "default_sigma": 16.0
   },
-
   "betting": {
     "_note": "Thresholds used by the report card to simulate bets and by the site to highlight edges.",
-    "blowout_margins": [17.5, 21.5],
-    "alt_dog_spread_range": [2.0, 7.0],
+    "blowout_margins": [
+      17.5,
+      21.5
+    ],
+    "alt_dog_spread_range": [
+      2.0,
+      7.0
+    ],
     "spread_edge_threshold_pts": 3.0,
     "ml_edge_threshold": 0.04,
     "remove_vig": true
+  },
+  "qb": {
+    "_note": "Starting-QB flag. A team is flagged when its latest starter differs from the QB its season stats came from, or has fewer than inexperienced_starts career starts (counted from 2017 on). Set enabled false to turn off.",
+    "enabled": true,
+    "inexperienced_starts": 3
   }
 }

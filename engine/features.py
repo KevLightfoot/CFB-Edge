@@ -83,8 +83,69 @@ def team_snapshot(team, idx, before_week, prior_idx, k):
     return snap
 
 
-def game_features(gm, h, a, idx):
+class QBIndex:
+    """Who started at QB for every team-game across all loaded seasons.
+
+    For a game in (season, week), everything is computed from games strictly
+    BEFORE it, so the flag uses only information you'd have had that week.
+    """
+
+    def __init__(self, seasons, inexperienced_starts=3):
+        self.min_starts = inexperienced_starts
+        self.by_team = defaultdict(list)  # (season, team) -> [(week, qb_id, name)]
+        self.by_qb = defaultdict(list)    # qb_id -> [(season, week)]
+        self.has_data = set()             # seasons with any QB data
+        for s, sd in seasons.items():
+            for (gid, team), q in (sd.get("qb") or {}).items():
+                self.by_team[(s, team)].append((q["week"], q["id"], q["name"]))
+                self.by_qb[q["id"]].append((s, q["week"]))
+                self.has_data.add(s)
+        for v in self.by_team.values():
+            v.sort()
+        for v in self.by_qb.values():
+            v.sort()
+
+    def _main(self, games):
+        counts = defaultdict(int)
+        for _, qid, _ in games:
+            counts[qid] += 1
+        return max(counts, key=counts.get) if counts else None
+
+    def state(self, team, season, week):
+        """Latest starter going into this game and whether he's a red flag."""
+        if season not in self.has_data:
+            return {"known": False, "flag": 0}
+        cur = [x for x in self.by_team.get((season, team), []) if x[0] < week]
+        if not cur:
+            return {"known": False, "flag": 0}
+        _, qid, name = cur[-1]
+        starts = sum(1 for (s, w) in self.by_qb.get(qid, []) if (s, w) < (season, week))
+        main_cur = self._main(cur)
+        new = qid != main_cur
+        # Early season, team stats are mostly last season's: compare to last year's QB too.
+        prior = self.by_team.get((season - 1, team), [])
+        if len(cur) < 3 and prior and self._main(prior) != qid:
+            new = True
+        # A veteran returning to the job isn't a "new" starter: he was last
+        # season's main QB, or he started most of this team's games so far.
+        mine = sum(1 for x in cur if x[1] == qid)
+        if new and ((prior and self._main(prior) == qid) or mine * 2 >= len(cur)):
+            new = False
+        inexperienced = starts < self.min_starts
+        reasons = []
+        if new:
+            reasons.append("new starter vs. the QB the team's stats came from")
+        if inexperienced:
+            reasons.append(f"only {starts} career start{'s' if starts != 1 else ''}")
+        return {"known": True, "name": name, "starts": starts, "new": new,
+                "inexperienced": inexperienced, "flag": 1 if (new or inexperienced) else 0,
+                "reason": "; ".join(reasons)}
+
+
+def game_features(gm, h, a, idx, hq=None, aq=None):
     """Raw (unstandardized) features, all oriented from the HOME team's view."""
+    hq = hq or {"flag": 0}
+    aq = aq or {"flag": 0}
     if gm.get("home_elo") is not None and gm.get("away_elo") is not None:
         elo_diff = (gm["home_elo"] - gm["away_elo"]) / 100.0
     else:
@@ -108,11 +169,13 @@ def game_features(gm, h, a, idx):
         "explosiveness_sum": h["off_expl"] + a["off_expl"] + h["def_expl"] + a["def_expl"],
         "havoc_allowed_sum": h["havoc_allowed"] + a["havoc_allowed"],
         "abs_talent_gap": abs(h["talent"] - a["talent"]) / 100.0,
+        "qb_flag_diff": float(aq["flag"] - hq["flag"]),   # + means the AWAY QB is the shaky one
+        "qb_flag_sum": float(aq["flag"] + hq["flag"]),
     }
     return f
 
 
-def build_rows(seasons, season_idx, cfg, only_completed=True, week=None, season_filter=None):
+def build_rows(seasons, season_idx, cfg, only_completed=True, week=None, season_filter=None, qb=None):
     """Rows for every game: features + snapshots + market + result."""
     k = cfg["features"]["prior_games_weight"]
     rows = []
@@ -128,11 +191,15 @@ def build_rows(seasons, season_idx, cfg, only_completed=True, week=None, season_
                 continue
             h = team_snapshot(gm["home"], idx, gm["week"], prior_idx, k)
             a = team_snapshot(gm["away"], idx, gm["week"], prior_idx, k)
+            hq = qb.state(gm["home"], s, gm["week"]) if qb else {"known": False, "flag": 0}
+            aq = qb.state(gm["away"], s, gm["week"]) if qb else {"known": False, "flag": 0}
             row = {
                 "game": gm,
                 "home_snap": h,
                 "away_snap": a,
-                "f": game_features(gm, h, a, idx),
+                "home_qb": hq,
+                "away_qb": aq,
+                "f": game_features(gm, h, a, idx, hq, aq),
                 "market": sd["lines"].get(gm["id"], {}),
             }
             if gm["completed"]:
