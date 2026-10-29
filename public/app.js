@@ -45,14 +45,35 @@ function G(g) {
   if (ph != null && pa != null && removeVig) { ih = ph / (ph + pa); ia = pa / (ph + pa); }
   return {
     mu, sd, mk, homeFav, fav, dog, favMu,
-    pHome: ncdf(mu / sd), pAway: 1 - ncdf(mu / sd),
+    // Win % comes from the engine's calibrated curve; cover/blowout math uses Normal(mu, sd).
+    pHome: g.model.home_win_prob ?? ncdf(mu / sd), pAway: 1 - (g.model.home_win_prob ?? ncdf(mu / sd)),
     implHome: ih, implAway: ia,
     ourHomeSpread: -mu,
     spreadEdge: mk.spread != null ? mu + mk.spread : null, // + = home side value
-    pFavBy: (m) => 1 - ncdf((m - favMu) / sd),
+    pFavBy: (m) => 1 - dogCover(g, favMu, sd, m, homeFav),
     // P(team covers line L from that team's perspective), e.g. +17.5
-    pCover: (isHome, L) => (isHome ? 1 - ncdf((-L - mu) / sd) : ncdf((L - mu) / sd)),
+    pCover: (isHome, L) => (isHome === !homeFav && mk.spread != null
+      ? dogCover(g, favMu, sd, L, homeFav)
+      : (isHome ? 1 - ncdf((-L - mu) / sd) : ncdf((L - mu) / sd))),
+    adjusted: Boolean(g.model.cover_adj),
   };
+}
+
+// Underdog covering +L. Uses the engine's cover adjustment (favorite pours it on,
+// favorite's big wins, dog QB) when it passed the held-out test; otherwise Normal(mu, sd).
+function dogCover(g, favMu, sd, L, homeFav) {
+  const adj = g.model.cover_adj, sp = Math.abs((g.market || {}).spread ?? 0);
+  if (adj && L >= sp) return 1 / (1 + Math.exp(-(adj.a + adj.b * (L - favMu) / sd)));
+  return ncdf((L - favMu) / sd);
+}
+
+// Favorite's game-ending habit badge for alt-dog bets.
+function pourBadge(g, homeFav) {
+  const h = (g.hist || {})[homeFav ? "home" : "away"] || {};
+  if (!(h.n_up_big >= 3) || h.q4_when_up_big == null) return "";
+  if (h.q4_when_up_big >= 3) return `<span class="pill bad" title="Favorite's 4th-quarter margin when up 14+: ${sgn(h.q4_when_up_big)}">Fav pours it on</span>`;
+  if (h.q4_when_up_big < 0) return `<span class="pill good" title="Favorite's 4th-quarter margin when up 14+: ${sgn(h.q4_when_up_big)}">Fav eases off</span>`;
+  return "";
 }
 
 function fmtDate(iso) {
@@ -177,6 +198,7 @@ function viewSlate() {
   sel.onchange = () => { store.set("slate", { ...st, sort: sel.value }); viewSlate(); };
   const qi = document.getElementById("q");
   qi.oninput = debounce(() => { store.set("slate", { ...st, q: qi.value }); viewSlate(); document.getElementById("q").focus(); }, 300);
+  wireLogButtons();
 }
 
 function mlEdge(x) {
@@ -198,7 +220,8 @@ function gameCard(g, x, m1) {
     <div class="teams">
       <div class="team-line"><span>${esc(g.away.name)} ${qbWarn(g, g.away, true)}</span><span class="rec">${line(mk.spread != null ? -mk.spread : null)}</span></div>
       <div class="team-line"><span>${g.neutral ? "vs" : "@"} ${esc(g.home.name)} ${qbWarn(g, g.home, true)}</span><span class="rec">${line(mk.spread)}</span></div>
-      <div class="when">${fmtDate(g.start)}${g.neutral ? " · neutral" : ""}</div>
+      <div class="when">${fmtDate(g.start)}${g.neutral ? " · neutral" : ""} ${pourBadge(g, x.homeFav)}</div>
+      <div><button class="logbtn" data-log="${g.id}" data-side="${x.homeFav ? "away" : "home"}" data-kind="alt">+ Bet log</button></div>
     </div>
     <div class="stat"><span class="k">Home spread</span><span class="v">${line(mk.spread)}</span><span class="s">ours ${line(round1(x.ourHomeSpread))}</span></div>
     <div class="stat"><span class="k">Spread edge</span><span class="v ${edge != null && Math.abs(edge) >= thr ? "hot" : ""}">${edge == null ? "—" : Math.abs(edge).toFixed(1)}</span><span class="s">${edge == null ? "no line" : esc(shortName(edgeSide))}</span></div>
@@ -208,6 +231,36 @@ function gameCard(g, x, m1) {
 }
 
 // ---------------------------------------------------------------- alt dogs
+function coverSection() {
+  const picks = S.preds.games.filter((g) => g.cover).sort((a, b) => b.cover.prob - a.cover.prob);
+  if (!picks.length) {
+    return `<div class="page-head"><div><h1>Alt Dogs</h1><div class="sub">No ML cover picks yet. Install scikit-learn and run the engine with --retrain.</div></div></div>`;
+  }
+  const buf = S.preds.cover_buffer, rk = picks[0].cover.ranker;
+  const card = S.card?.cover_model;
+  const k = S.preds.cover_top_k || 6;
+  const bt = card?.top_k?.[rk];
+  const row = (g, i) => {
+    const c = g.cover, dog = g[c.dog], opp = g[c.dog === "home" ? "away" : "home"];
+    const flagged = qbOf(g, c.dog).flag;
+    return `<tr class="click${flagged ? " dim" : ""}" data-id="${g.id}">
+      <td class="num muted">${i + 1}</td>
+      <td><div class="team">${esc(dog.name)}</div><div class="opp">${c.dog === "away" ? "at" : "vs"} ${esc(opp.name)} ${pourBadge(g, c.dog === "away")}</div>${qbWarn(g, dog, false)}</td>
+      <td class="num">+${c.spread}</td><td class="num hot">+${c.line}</td>
+      <td class="num hot">${pct(c.prob)}</td><td class="num">${fairOdds(c.prob)}</td>
+      <td class="num muted">${pct(c.prob_ml)}</td><td class="num muted">${pct(c.prob_normal)}</td><td class="num muted">${c.prob_adjusted == null ? "—" : pct(c.prob_adjusted)}</td>
+      <td><button class="logbtn" data-log="${g.id}" data-side="${c.dog}" data-kind="alt" data-line="${c.line}">+ Log</button></td></tr>`;
+  };
+  return `<div class="page-head"><div><h1>Best covers, all spreads</h1>
+      <div class="sub">Every underdog, line bought to spread + ${buf} (on the half point). Ranked by <b>${esc(rk)}</b>, the method that tested best on seasons it never saw.
+      ${bt ? `Backtest: the top ${k} each week covered <b>${pct(bt.leg_hit_rate)}</b> per leg; all ${k} hit ${pct(bt.all_hit_rate)} of weeks.` : ""}</div></div></div>
+    ${card && card.beats_base_rate === false ? `<div class="banner err">No method beat simply assuming every dog covers ${pct(card.base_rate)} on seasons it never saw. Treat this ranking as having <b>no proven edge</b>.</div>` : ""}
+    <div class="table-wrap"><table class="covtable">
+      <thead><tr><th>#</th><th>Underdog</th><th>Spread</th><th>Alt line</th><th>Cover %</th><th>Fair odds</th><th>ML</th><th>Normal</th><th>Adjusted</th><th></th></tr></thead>
+      <tbody>${picks.map(row).join("")}</tbody></table></div>
+    <p class="sub small">Dimmed rows have a ⚠ QB flag on the underdog. Inexperienced-QB dogs have covered less often in testing, so the ranking may still overrate them.</p>`;
+}
+
 function viewAltDogs() {
   const b = S.preds.betting;
   const st = store.get("altdogs", { min: b.alt_dog_spread_range[0], max: b.alt_dog_spread_range[1], alt: b.blowout_margins[0], odds: -400, rowOdds: {} });
@@ -223,8 +276,9 @@ function viewAltDogs() {
     .sort((a, b2) => b2.p - a.p);
 
   $view.innerHTML = `${banners()}
-    <div class="page-head"><div><h1>Alt-Dog Finder</h1>
-      <div class="sub">Small underdogs ranked by how likely they are to stay inside your alt spread. Enter your book's price to see expected value.</div></div></div>
+    ${coverSection()}
+    <div class="page-head" style="margin-top:22px"><div><h2>Custom line finder</h2>
+      <div class="sub">Pick any spread range and alt line. Enter your book's price to see expected value.</div></div></div>
     <div class="controls">
       <label class="field">Fav spread from<input type="number" step="0.5" id="min" value="${st.min}"></label>
       <label class="field">to<input type="number" step="0.5" id="max" value="${st.max}"></label>
@@ -232,9 +286,9 @@ function viewAltDogs() {
       <label class="field">Default book odds<input type="number" step="5" id="odds" value="${st.odds}"></label>
     </div>
     <div class="table-wrap"><table>
-      <thead><tr><th>Underdog</th><th>Book</th><th>Our line</th><th>σ</th><th>Cover +${st.alt}</th><th>Fair odds</th><th>Your odds</th><th>EV / unit</th></tr></thead>
+      <thead><tr><th>Underdog</th><th>Book</th><th>Our line</th><th>σ</th><th>Cover +${st.alt}</th><th>Fair odds</th><th>Your odds</th><th>EV / unit</th><th></th></tr></thead>
       <tbody>${rows.map((r) => `<tr class="click" data-id="${r.g.id}">
-        <td><div class="team">${esc(r.x.dog.name)}</div><div class="opp">${r.x.homeFav ? "at" : "vs"} ${esc(r.x.fav.name)}</div>${qbWarn(r.g, r.x.dog, false)}${qbOf(r.g, qbSide(r.g, r.x.fav)).flag ? `<div class="qbgood">Favorite's QB flagged (helps the dog)</div>` : ""}</td>
+        <td><div class="team">${esc(r.x.dog.name)}</div><div class="opp">${r.x.homeFav ? "at" : "vs"} ${esc(r.x.fav.name)} ${pourBadge(r.g, r.x.homeFav)}</div>${qbWarn(r.g, r.x.dog, false)}${qbOf(r.g, qbSide(r.g, r.x.fav)).flag ? `<div class="qbgood">Favorite's QB flagged (helps the dog)</div>` : ""}</td>
         <td class="num">${line(Math.abs(r.x.mk.spread))}</td>
         <td class="num">${line(round1(r.x.homeFav ? r.x.mu : -r.x.mu))}</td>
         <td class="num">${r.x.sd.toFixed(1)}</td>
@@ -242,7 +296,8 @@ function viewAltDogs() {
         <td class="num">${fairOdds(r.p)}</td>
         <td><input type="number" step="5" data-key="${r.key}" value="${r.odds}"></td>
         <td class="num ${r.e == null ? "" : r.e > 0 ? "pos" : "neg"}">${r.e == null ? "—" : sgn(r.e, 3)}</td>
-      </tr>`).join("") || `<tr><td colspan="8" class="muted">No games in this spread range.</td></tr>`}</tbody>
+        <td><button class="logbtn" data-log="${r.g.id}" data-side="${r.x.homeFav ? "away" : "home"}" data-kind="alt" data-line="${st.alt}" data-odds="${r.odds}">+ Log</button></td>
+      </tr>`).join("") || `<tr><td colspan="9" class="muted">No games in this spread range.</td></tr>`}</tbody>
     </table></div>
     <p class="sub small">"Our line" is our expected margin for the underdog (negative means we expect them to lose by that much). Cover probability uses each game's own volatility (σ), so low-σ games rank higher.</p>`;
 
@@ -255,6 +310,7 @@ function viewAltDogs() {
     inp.onchange = () => save({ rowOdds: { ...st.rowOdds, [inp.dataset.key]: Number(inp.value) } });
   });
   $view.querySelectorAll("tr.click").forEach((tr) => (tr.onclick = () => (location.hash = `#/game/${tr.dataset.id}`)));
+  wireLogButtons();
 }
 
 // ---------------------------------------------------------------- moneylines
@@ -281,7 +337,7 @@ function viewMoneylines() {
       <label class="field">Sort<select id="sort"><option value="edge">Edge</option><option value="win">Win probability</option></select></label>
     </div>
     <div class="table-wrap"><table>
-      <thead><tr><th>Team</th><th>ML</th><th>Book (no-vig)</th><th>Ours</th><th>Edge</th><th>Fair</th><th>EV / unit</th><th>Fav by 18+</th></tr></thead>
+      <thead><tr><th>Team</th><th>ML</th><th>Book (no-vig)</th><th>Ours</th><th>Edge</th><th>Fair</th><th>EV / unit</th><th>Fav by 18+</th><th></th></tr></thead>
       <tbody>${rows.map((r) => {
         const blow = r.x.pFavBy(S.preds.betting.blowout_margins[0]);
         return `<tr class="click" data-id="${r.g.id}">
@@ -290,8 +346,9 @@ function viewMoneylines() {
         <td class="num ${r.edge >= thr ? "hot" : r.edge < 0 ? "neg" : ""}">${sgn(r.edge * 100, 1)}</td>
         <td class="num">${fairOdds(r.p)}</td>
         <td class="num ${r.ev > 0 ? "pos" : "neg"}">${sgn(r.ev, 3)}</td>
-        <td class="num">${(r.team === r.x.fav) ? pct(blow, 0) : "—"}</td></tr>`;
-      }).join("") || `<tr><td colspan="8" class="muted">No moneylines match.</td></tr>`}</tbody>
+        <td class="num">${(r.team === r.x.fav) ? pct(blow, 0) : "—"}</td>
+        <td><button class="logbtn" data-log="${r.g.id}" data-side="${r.isHome ? "home" : "away"}" data-kind="ml" data-odds="${r.o}">+ Log</button></td></tr>`;
+      }).join("") || `<tr><td colspan="9" class="muted">No moneylines match.</td></tr>`}</tbody>
     </table></div>
     <p class="sub small">Edge is in percentage points. For favorites in parlays, a small negative edge on every leg compounds quickly, so prefer legs at or above zero.</p>`;
   document.getElementById("fav").onchange = (e) => { store.set("ml", { ...st, favOnly: e.target.checked }); viewMoneylines(); };
@@ -299,6 +356,7 @@ function viewMoneylines() {
   const so = document.getElementById("sort"); so.value = st.sort;
   so.onchange = () => { store.set("ml", { ...st, sort: so.value }); viewMoneylines(); };
   $view.querySelectorAll("tr.click").forEach((tr) => (tr.onclick = () => (location.hash = `#/game/${tr.dataset.id}`)));
+  wireLogButtons();
 }
 
 // ---------------------------------------------------------------- game page
@@ -414,7 +472,7 @@ function viewGame(id) {
           ${b.blowout_margins.map((m) => `<span class="lbl">${esc(x.fav.name)} wins by more than ${m}</span><span class="val">${pct(x.pFavBy(m))}</span>`).join("")}
           ${b.blowout_margins.map((m) => `<span class="lbl">${esc(x.dog.name)} +${m} covers</span><span class="val hot">${pct(1 - x.pFavBy(m))}</span>`).join("")}
           <span class="lbl">One-score game (within 8)</span><span class="val">${pct(ncdf((8 - x.mu) / x.sd) - ncdf((-8 - x.mu) / x.sd))}</span>
-          <span class="lbl">${esc(x.dog.name)} wins outright</span><span class="val">${pct(1 - ncdf(x.favMu / x.sd))}</span>
+          <span class="lbl">${esc(x.dog.name)} wins outright</span><span class="val">${pct(x.homeFav ? x.pAway : x.pHome)}</span>
         </div>
         <div class="dist" style="margin-top:10px">${distSvg(x, b.blowout_margins)}</div>
       </div>
@@ -472,10 +530,9 @@ function viewGame(id) {
   ["prTeam", "prLine", "prOdds"].forEach((i) => (document.getElementById(i).oninput = updatePricer));
   updatePricer();
   document.getElementById("prLog").onclick = () => {
-    const { cfg, p } = updatePricer();
-    const team = cfg.team === "home" ? g.home.name : g.away.name;
-    addBet({ desc: `${team} ${line(cfg.line)} (${g.away.name} @ ${g.home.name})`, type: Math.abs(cfg.line) === Math.abs(mk.spread ?? NaN) ? "Spread" : "Alt spread", odds: cfg.odds, stake: 1, prob: Math.round(p * 1000) / 10 });
-    document.getElementById("prLog").textContent = "Added ✓";
+    const { cfg } = updatePricer();
+    const sideSpread = mk.spread == null ? null : cfg.team === "home" ? mk.spread : -mk.spread;
+    openLog(g, { side: cfg.team, kind: sideSpread != null && cfg.line === sideSpread ? "spread" : "alt", line: cfg.line, odds: cfg.odds });
   };
   wireExplain(id);
 }
@@ -487,7 +544,31 @@ function qbCard(g) {
     return `<div class="qbrow"><b class="${side}-c">${esc(t.name)}</b><span>${esc(q.name)} · ${q.starts} career start${q.starts === 1 ? "" : "s"}</span>
       ${q.flag ? `<span class="pill bad">⚠ ${esc(q.reason)}</span>` : `<span class="pill good">Established starter</span>`}</div>`;
   };
+  const fm = (side) => {
+    const f = (g.form || {})[side] || {};
+    if (f.last_margin == null) return "";
+    const res = f.last_margin > 0 ? `W by ${f.last_margin}` : f.last_margin < 0 ? `L by ${-f.last_margin}` : "T";
+    const ats = f.last_ats == null ? "" : f.last_ats > 0 ? `, covered by ${f.last_ats}` : f.last_ats < 0 ? `, missed by ${-f.last_ats}` : ", pushed";
+    return `<div class="qbrow"><b class="${side}-c">${esc(g[side].name)}</b><span>Last game: ${res}${ats}</span>
+      <span class="muted">Last 3 vs spread: ${sgn(f.last3_ats)} · Season covers: ${f.season_cover_rate == null ? "—" : pct(f.season_cover_rate, 0)}${f.rest_days != null && f.rest_days > 10 ? " · off a bye" : ""}</span></div>`;
+  };
+  const hm = (side) => {
+    const h = (g.hist || {})[side] || {};
+    if (!h.hist_games) return "";
+    const up = h.n_up_big >= 3 && h.q4_when_up_big != null ? `Up 14+ after 3: 4th qtr ${sgn(h.q4_when_up_big)} (${h.n_up_big} games)` : "";
+    const dn = h.n_down_big >= 3 && h.q4_when_down_big != null ? `Down 14+ after 3: 4th qtr ${sgn(h.q4_when_down_big)} (${h.n_down_big} games)` : "";
+    const bw = h.n_as_fav >= 3 && h.big_win_vs_line_rate != null ? `As fav, won by spread+${S.preds.cover_buffer || 14}: ${pct(h.big_win_vs_line_rate, 0)}` : "";
+    const bl = h.n_as_dog >= 3 && h.big_loss_vs_line_rate != null ? `As dog, lost by spread+${S.preds.cover_buffer || 14}: ${pct(h.big_loss_vs_line_rate, 0)}` : "";
+    const pr = h.pass_rate_drop != null ? `Up big late: passes ${pct(h.pass_rate_up_big, 0)} vs ${pct(h.pass_rate_neutral, 0)} normally` : "";
+    const tp = h.tempo_slowdown != null ? `${h.secs_per_play_up_big.toFixed(0)}s/play vs ${h.secs_per_play_neutral.toFixed(0)}s normally` : "";
+    const qs = h.n_up_big >= 3 && h.q4_for_when_up_big != null ? `Q4 up 14+: scores ${h.q4_for_when_up_big.toFixed(1)}, allows ${h.q4_against_when_up_big.toFixed(1)}` : "";
+    const parts = [up, qs, pr, tp, dn, bw, bl].filter(Boolean);
+    return parts.length ? `<div class="qbrow"><b class="${side}-c">${esc(g[side].name)}</b><span class="muted">${parts.join(" · ")} <span class="small">(last ${h.hist_games} games${h.coach_tenure ? `, coach yr ${h.coach_tenure}` : ""})</span></span></div>` : "";
+  };
+  const ends = hm("away") + hm("home");
+  const form = fm("away") + fm("home") + (ends ? `<h3 style="margin-top:12px">How their games end</h3>${ends}` : "");
   return `<div class="card qbcard"><h3>Quarterbacks (last game's starter)</h3>${row("away")}${row("home")}
+    ${form ? `<h3 style="margin-top:12px">Recent form</h3>${form}` : ""}
     <p class="small muted" style="margin:8px 0 0">Based on completed games only. A starter change announced this week won't show here, so check Saturday's availability report.</p></div>`;
 }
 
@@ -572,6 +653,8 @@ function viewReport() {
     ${!sec || !sec.games ? `<div class="empty">No graded games yet. Results appear after the first week is graded.</div>` : reportBody(sec)}
     ${st.tab === "live" && c.live?.weeks?.length ? weeklyTable(c.live.weeks) : ""}
     <div class="grid2" style="margin-top:12px">
+      ${adjustReport(c.adjust)}
+      ${coverReport(c.cover_model)}
       <div class="card"><h3>Feature weights (points per 1 SD)</h3><div class="factors">${weightRows(c.feature_weights || [])}</div></div>
       <div class="card"><h3>Settings</h3><div class="kv" style="grid-template-columns:1fr auto">
         <span class="lbl">Ridge alpha</span><span class="val">${c.settings?.ridge_alpha}</span>
@@ -581,6 +664,39 @@ function viewReport() {
         <p class="small muted" style="margin:10px 0 0">Change these in engine/config.json, then run with --retrain.</p></div>
     </div>`;
   $view.querySelectorAll(".seg button").forEach((bt) => (bt.onclick = () => { store.set("report", { tab: bt.dataset.t }); viewReport(); }));
+}
+
+function adjustReport(ad) {
+  if (!ad) return "";
+  const c = ad.coefficients || {};
+  return `<div class="card span"><h3>Cover adjustment: favorite eases off / pours it on</h3>
+    <p class="small" style="margin:0 0 8px">${ad.used_on_site ? `<b class="hot">Used on the site.</b>` : `<b>Not used</b> (didn't beat the normal model on held-out seasons).`}
+      Held-out Brier on the 2–7 band at your alt lines: adjusted ${ad.brier_adjusted ?? "—"} vs normal ${ad.brier_normal ?? "—"}
+      (${ad.gain_pct ?? "—"}% better; needs ${ad.min_gain_pct ?? 0.5}%).</p>
+    ${(ad.band || []).length ? `<div class="table-wrap"><table><thead><tr><th>2–7 band</th><th>Games</th><th>All dogs</th><th>Top third, normal</th><th>Top third, adjusted</th></tr></thead>
+      <tbody>${ad.band.map((b) => `<tr><td>Dog +${b.line}</td><td>${b.games}</td><td class="num">${pct(b.all)}</td><td class="num">${pct(b.top_third_norm)}</td><td class="num hot">${pct(b.top_third_adj)}</td></tr>`).join("")}</tbody></table></div>` : ""}
+    <p class="small muted" style="margin:8px 0 0">Effect sizes (log-odds of the dog covering vs an "in between" favorite; negative hurts the dog): pours it on ${c.pours_on ?? "—"}, eases off ${c.eases_off ?? "—"}.</p></div>`;
+}
+
+function coverReport(cm) {
+  if (!cm) return "";
+  const k = S.preds?.cover_top_k || 6;
+  const name = { ml: "ML model", normal: "Normal model", blend: "Blend", adjusted: "Adjusted (pour/big-win/QB)" };
+  const rows = (cm.methods || ["ml", "normal", "blend"]).map((key) => {
+    const t = cm.top_k[key] || {};
+    return `<tr${key === cm.ranker ? ' class="bestrow"' : ""}><td>${name[key]}${key === cm.ranker ? " ✓" : ""}</td><td class="num">${cm.brier[key]}</td>
+      <td class="num">${pct(t.leg_hit_rate)}</td><td class="num muted">${pct(t.avg_predicted)}</td><td class="num">${pct(t.all_hit_rate)}</td></tr>`;
+  }).join("");
+  const skip = cm.top_k.best_skip_qb;
+  return `<div class="card span"><h3>ML cover model: dog covers spread + ${cm.buffer}, all spreads (${cm.games} held-out games)</h3>
+    ${cm.beats_base_rate === false ? `<div class="banner err">No method beat guessing the base rate (Brier ${cm.brier.always_base_rate}). No proven edge.</div>` : ""}
+    <div class="table-wrap"><table><thead><tr><th>Method</th><th>Brier</th><th>Top ${k}/wk leg hit</th><th>Predicted</th><th>All ${k} hit</th></tr></thead>
+    <tbody>${rows}<tr><td>Every game</td><td class="num">${cm.brier.always_base_rate}</td><td class="num">${pct(cm.base_rate)}</td><td></td><td></td></tr>
+    ${skip ? `<tr><td>${name[cm.ranker]}, skipping QB-flagged dogs</td><td></td><td class="num">${pct(skip.leg_hit_rate)}</td><td class="num muted">${pct(skip.avg_predicted)}</td><td class="num">${pct(skip.all_hit_rate)}</td></tr>` : ""}</tbody></table></div>
+    ${(cm.by_spread || []).length ? `<div class="table-wrap" style="margin-top:10px"><table><thead><tr><th>Spread</th><th>Games</th><th>All cover</th><th>Our top third</th><th>Predicted</th></tr></thead>
+      <tbody>${cm.by_spread.map((x) => `<tr><td>${esc(x.spreads)}</td><td>${x.games}</td><td class="num">${pct(x.all_hit)}</td><td class="num hot">${pct(x.top_third_hit)}</td><td class="num muted">${pct(x.top_third_predicted)}</td></tr>`).join("")}</tbody></table></div>` : ""}
+    ${(cm.importance || []).length ? `<p class="small" style="margin:10px 0 4px"><b>What the ML model leans on most:</b> ${cm.importance.slice(0, 10).map((x) => esc(x.feature)).join(", ")}</p>` : ""}
+    <p class="small muted" style="margin:6px 0 0">Lower Brier = more accurate probabilities. ✓ marks the method used live. If "leg hit" is well below "predicted", that method is overconfident about its top picks.</p></div>`;
 }
 
 function reportBody(s) {
@@ -602,6 +718,10 @@ function reportBody(s) {
           <div class="table-wrap"><table><thead><tr><th>Group</th><th>Games</th><th>Predicted</th><th>Actual</th></tr></thead><tbody>
           ${bm.terciles.map((t) => `<tr><td>${t.group}</td><td>${t.n}</td><td class="num">${pct(t.predicted)}</td><td class="num">${pct(t.actual)}</td></tr>`).join("")}</tbody></table></div>`).join("")}
         <p class="small muted">If the ranking works, "Actual" should rise from the lowest-risk third to the highest.</p></div>
+      ${(s.blowout?.filters || []).length ? `<div class="card span"><h3>Filter checks: alt-dog cover rate by rule (real vs model)</h3>
+        <div class="table-wrap"><table><thead><tr><th>Rule</th><th>Group</th><th>Games</th>${(S.preds?.betting?.blowout_margins || [17.5, 21.5]).map((m) => `<th>+${m} real</th><th>+${m} model</th>`).join("")}</tr></thead>
+        <tbody>${s.blowout.filters.map((f) => `<tr><td>${esc(f.filter)}</td><td>${esc(f.group)}</td><td>${f.n}</td>${(S.preds?.betting?.blowout_margins || [17.5, 21.5]).map((m) => `<td class="num">${pct(f["hit_" + m])}</td><td class="num muted">${pct(f["model_" + m])}</td>`).join("")}</tr>`).join("")}</tbody></table></div>
+        <p class="small muted">A rule is worth trusting when its "real" rate differs from the other groups by several points over 100+ games. If "model" tracks "real", the model already prices it in.</p></div>` : ""}
     </div>
     <div class="card" style="margin-top:12px"><h3>Totals</h3><p class="small" style="margin:0">Total points MAE: ours ${s.total_mae_model} vs market ${s.total_mae_market ?? "—"}. Log loss ${s.log_loss_model}.</p></div>`;
 }
@@ -632,6 +752,101 @@ function calSvg(cal) {
 }
 
 // ---------------------------------------------------------------- bet log
+// Quick-log sheet used by every "+ Log" button. Bets are logged one leg at a time,
+// with the game id, side and line saved so the log can be graded against results later.
+const KIND_TYPE = { ml: "Moneyline", spread: "Spread", alt: "Alt spread" };
+function wireLogButtons() {
+  $view.querySelectorAll("[data-log]").forEach((b) => (b.onclick = (e) => {
+    e.preventDefault(); e.stopPropagation();
+    const g = S.preds.games.find((x) => String(x.id) === b.dataset.log);
+    if (g) openLog(g, { side: b.dataset.side, kind: b.dataset.kind, line: b.dataset.line != null ? Number(b.dataset.line) : null, odds: b.dataset.odds != null ? Number(b.dataset.odds) : null });
+  }));
+}
+
+function openLog(g, preset) {
+  const x = G(g), mk = x.mk;
+  const lastOdds = store.get("lastOdds", { alt: -800, spread: -110 });
+  const st = { side: preset.side || "away", kind: preset.kind || "alt", line: preset.line, odds: preset.odds, stake: store.get("lastStake", 1) };
+  const sideSpread = (side) => (mk.spread == null ? null : side === "home" ? mk.spread : -mk.spread);
+  const sideMl = (side) => (side === "home" ? mk.home_ml : mk.away_ml);
+  const defaults = () => {
+    if (st.kind === "ml") { st.line = null; if (st.odds == null) st.odds = sideMl(st.side) ?? -110; }
+    else if (st.kind === "spread") { st.line = sideSpread(st.side); if (st.odds == null) st.odds = lastOdds.spread; }
+    else {
+      if (st.line == null) {
+        // Your usual bet: 2-7 dogs at the first alt line; otherwise spread + buffer, on the half point.
+        const b = S.preds.betting, sp = Math.abs(mk.spread ?? 0), isDog = st.side === (x.homeFav ? "away" : "home");
+        const raw = isDog && sp >= b.alt_dog_spread_range[0] && sp <= b.alt_dog_spread_range[1] ? b.blowout_margins[0] : (sideSpread(st.side) ?? 0) + (S.preds.cover_buffer || 14);
+        st.line = Number.isInteger(raw) ? raw + 0.5 : raw;
+      }
+      if (st.odds == null) st.odds = lastOdds.alt;
+    }
+  };
+  defaults();
+  const prob = () => {
+    if (st.kind === "ml") return st.side === "home" ? x.pHome : x.pAway;
+    if (st.line == null || isNaN(st.line)) return null;
+    return x.pCover(st.side === "home", st.line);
+  };
+  const ov = document.createElement("div");
+  ov.className = "sheet-bg";
+  const close = () => { ov.remove(); document.removeEventListener("keydown", onKey); };
+  const onKey = (e) => { if (e.key === "Escape") close(); };
+  document.addEventListener("keydown", onKey);
+  ov.onclick = (e) => { if (e.target === ov) close(); };
+
+  const render = () => {
+    const p = prob(), ip = implied(st.odds), e = ev(p, st.odds);
+    ov.innerHTML = `<div class="sheet" role="dialog" aria-label="Add to bet log">
+      <div class="sheet-head"><h3>Add to bet log</h3><button class="link-btn" data-x>close</button></div>
+      <div class="muted small" style="margin-bottom:10px">${esc(g.away.name)} @ ${esc(g.home.name)} · ${fmtDate(g.start)}</div>
+      <div class="sheet-grid">
+        <label class="field">Team<select id="lgSide"><option value="away">${esc(g.away.name)}</option><option value="home">${esc(g.home.name)}</option></select></label>
+        <label class="field">Bet<select id="lgKind"><option value="alt">Alt spread</option><option value="spread">Spread</option><option value="ml">Moneyline</option></select></label>
+        ${st.kind === "ml" ? "" : `<label class="field">Line<input type="number" step="0.5" id="lgLine" value="${st.line ?? ""}"></label>`}
+        <label class="field">Odds<input type="number" step="5" id="lgOdds" value="${st.odds ?? ""}"></label>
+        <label class="field">Stake (u)<input type="number" step="0.1" id="lgStake" value="${st.stake}"></label>
+      </div>
+      <div class="kv" style="grid-template-columns:1fr auto;margin:12px 0">
+        <span class="lbl">Our probability</span><span class="val hot">${pct(p)}</span>
+        <span class="lbl">Book implied</span><span class="val">${pct(ip)}</span>
+        <span class="lbl">EV per unit</span><span class="val ${e > 0 ? "pos" : "neg"}">${sgn(e, 3)}</span>
+      </div>
+      <button class="btn" id="lgAdd" style="width:100%">Add leg</button>
+      <p class="small muted" style="margin:8px 0 0">Log each parlay leg on its own so every leg gets graded.</p>
+    </div>`;
+    ov.querySelector("#lgSide").value = st.side;
+    ov.querySelector("#lgKind").value = st.kind;
+    ov.querySelector("[data-x]").onclick = close;
+    ov.querySelector("#lgSide").onchange = (ev2) => {
+      st.side = ev2.target.value;
+      if (st.kind === "ml") st.odds = sideMl(st.side) ?? st.odds;
+      if (st.kind === "spread") st.line = sideSpread(st.side);
+      render();
+    };
+    ov.querySelector("#lgKind").onchange = (ev2) => { st.kind = ev2.target.value; st.odds = null; st.line = null; defaults(); render(); };
+    const num = (id, k) => { const el = ov.querySelector(id); if (el) el.onchange = () => { st[k] = el.value === "" ? null : Number(el.value); render(); }; };
+    num("#lgLine", "line"); num("#lgOdds", "odds"); num("#lgStake", "stake");
+    ov.querySelector("#lgAdd").onclick = () => {
+      if (st.odds == null || isNaN(st.odds) || st.odds === 0) { ov.querySelector("#lgOdds").focus(); return; }
+      const team = st.side === "home" ? g.home.name : g.away.name;
+      const pp = prob();
+      addBet({
+        desc: `${team} ${st.kind === "ml" ? "ML" : line(st.line)} (${g.away.name} @ ${g.home.name})`,
+        type: KIND_TYPE[st.kind], odds: st.odds, stake: Number(st.stake) || 1,
+        prob: pp == null ? null : Math.round(pp * 1000) / 10,
+        game_id: g.id, season: S.preds.season, week: S.preds.week, side: st.side, team, kind: st.kind, line: st.line,
+      });
+      if (st.kind !== "ml") store.set("lastOdds", { ...lastOdds, [st.kind]: st.odds });
+      store.set("lastStake", Number(st.stake) || 1);
+      ov.querySelector(".sheet").innerHTML = `<div style="text-align:center;padding:18px 0"><h3 style="color:var(--good)">Added ✓</h3><div class="muted small">${esc(team)} ${st.kind === "ml" ? "ML" : line(st.line)} · ${ml(st.odds)}</div></div>`;
+      setTimeout(close, 900);
+    };
+  };
+  render();
+  document.body.appendChild(ov);
+}
+
 function addBet(b) {
   const bets = store.get("bets", []);
   bets.unshift({ id: Date.now(), date: new Date().toISOString().slice(0, 10), status: "pending", ...b });

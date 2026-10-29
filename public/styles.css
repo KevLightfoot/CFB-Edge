@@ -177,3 +177,18 @@ td.num, .num { font-family: var(--mono); font-size: 16px; font-weight: 600; }
 .qbrow { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
 .qbrow:last-of-type { border-bottom: 0; }
 .qbrow b { min-width: 150px; font-family: var(--mono); font-size: 17px; }
+
+tr.dim td { opacity: 0.55; }
+tr.bestrow td { background: rgba(200, 241, 105, 0.07); }
+.covtable th:nth-child(2), .covtable td:nth-child(2) { text-align: left; white-space: normal; }
+
+/* quick bet-log button + sheet */
+.logbtn { background: transparent; color: var(--accent); border: 1px solid var(--line); border-radius: 6px; padding: 3px 8px; font-size: 12px; font-weight: 600; cursor: pointer; margin-top: 6px; white-space: nowrap; }
+.logbtn:hover { border-color: var(--accent); }
+td .logbtn { margin-top: 0; }
+.sheet-bg { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 50; }
+.sheet { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; width: 100%; max-width: 420px; max-height: 90vh; overflow: auto; }
+.sheet-head { display: flex; justify-content: space-between; align-items: center; }
+.sheet-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.sheet-grid .field input, .sheet-grid .field select { width: 100%; }
+@media (max-width: 760px) { .sheet-bg { align-items: flex-end; padding: 0; } .sheet { max-width: none; border-radius: var(--radius) var(--radius) 0 0; } }
