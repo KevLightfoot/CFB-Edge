@@ -109,8 +109,9 @@
     "remove_vig": true
   },
   "qb": {
-    "_note": "Starting-QB flag. A team is flagged when its latest starter differs from the QB its season stats came from, or has fewer than inexperienced_starts career starts (counted from 2017 on). Set enabled false to turn off.",
+    "_note": "Starting-QB flag. A team is flagged when its latest starter differs from the QB its season stats came from, or has fewer than inexperienced_starts career starts (counted from 2017 on). Set enabled false to turn off. flag_mode: \"any\" flags new OR inexperienced starters; \"inexperienced\" flags only QBs under inexperienced_starts career starts.",
     "enabled": true,
+    "flag_mode": "inexperienced",
     "inexperienced_starts": 3
   }
 }

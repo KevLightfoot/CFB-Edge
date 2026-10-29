@@ -90,8 +90,9 @@ class QBIndex:
     BEFORE it, so the flag uses only information you'd have had that week.
     """
 
-    def __init__(self, seasons, inexperienced_starts=3):
+    def __init__(self, seasons, inexperienced_starts=3, flag_mode="any"):
         self.min_starts = inexperienced_starts
+        self.flag_mode = flag_mode  # "any" = new OR inexperienced; "inexperienced" = few career starts only
         self.by_team = defaultdict(list)  # (season, team) -> [(week, qb_id, name)]
         self.by_qb = defaultdict(list)    # qb_id -> [(season, week)]
         self.has_data = set()             # seasons with any QB data
@@ -138,7 +139,8 @@ class QBIndex:
         if inexperienced:
             reasons.append(f"only {starts} career start{'s' if starts != 1 else ''}")
         return {"known": True, "name": name, "starts": starts, "new": new,
-                "inexperienced": inexperienced, "flag": 1 if (new or inexperienced) else 0,
+                "inexperienced": inexperienced,
+                "flag": 1 if (inexperienced if self.flag_mode == "inexperienced" else (new or inexperienced)) else 0,
                 "reason": "; ".join(reasons)}
 
 

@@ -164,7 +164,7 @@ def main():
     if not args.mock:
         print(f"CFBD API calls used this run: {client.calls_made}")
     qcfg = cfg.get("qb", {})
-    qbi = QBIndex(seasons, qcfg.get("inexperienced_starts", 3)) if qcfg.get("enabled", True) else None
+    qbi = QBIndex(seasons, qcfg.get("inexperienced_starts", 3), qcfg.get("flag_mode", "any")) if qcfg.get("enabled", True) else None
     if qbi is not None and not qbi.has_data:
         print("  (no QB data returned; QB flag features will be 0)")
     if season not in seasons:

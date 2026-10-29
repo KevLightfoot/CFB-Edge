@@ -1,8 +1,8 @@
 {
  "season": 2026,
  "week": 9,
- "generated_at": "2026-10-29T05:07:04",
- "model_version": 6,
+ "generated_at": "2026-10-29T05:14:57",
+ "model_version": 7,
  "mock": false,
  "betting": {
   "_note": "Thresholds used by the report card to simulate bets and by the site to highlight edges.",
@@ -141,10 +141,10 @@
    },
    "model": {
     "margin": 2.39,
-    "model_margin": 2.07,
+    "model_margin": 2.05,
     "total": 55.7,
-    "sigma": 15.35,
-    "home_win_prob": 0.562,
+    "sigma": 15.41,
+    "home_win_prob": 0.5615,
     "baseline_margin": 4.53
    },
    "market": {
@@ -159,7 +159,7 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": -4.59
+     "points": -4.62
     },
     {
      "key": "talent_diff",
@@ -169,17 +169,17 @@
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": 0.7
+     "points": 0.73
     },
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": -0.49
+     "points": -0.5
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": 0.48
+     "points": 0.47
     },
     {
      "key": "net_explosiveness_diff",
@@ -209,34 +209,34 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
     {
      "key": "pace_sum",
      "label": "Combined pace (plays/game)",
-     "sigma_pts": 0.24
+     "sigma_pts": 0.25
     },
     {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
-     "sigma_pts": -0.19
+     "sigma_pts": -0.2
     },
     {
      "key": "qb_flag_sum",
      "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
+     "sigma_pts": -0.06
     },
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": 0.03
+     "sigma_pts": 0.04
     },
     {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": 0.02
+     "sigma_pts": 0.01
     },
     {
      "key": "abs_talent_gap",
@@ -354,11 +354,11 @@
     }
    },
    "model": {
-    "margin": 5.27,
-    "model_margin": 4.59,
+    "margin": 5.63,
+    "model_margin": 6.03,
     "total": 50.6,
-    "sigma": 15.7,
-    "home_win_prob": 0.6315,
+    "sigma": 15.38,
+    "home_win_prob": 0.6429,
     "baseline_margin": 4.53
    },
    "market": {
@@ -373,17 +373,12 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": 2.12
-    },
-    {
-     "key": "qb_flag_diff",
-     "label": "QB situation (new/inexperienced starter)",
-     "points": -1.39
+     "points": 2.14
     },
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": 0.68
+     "points": 0.7
     },
     {
      "key": "talent_diff",
@@ -393,17 +388,17 @@
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": -0.49
+     "points": -0.48
     },
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": -0.39
+     "points": -0.38
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": -0.27
+     "points": -0.28
     },
     {
      "key": "net_success_diff",
@@ -424,23 +419,23 @@
      "key": "rush_matchup",
      "label": "Run game matchup",
      "points": 0.02
+    },
+    {
+     "key": "qb_flag_diff",
+     "label": "QB situation (new/inexperienced starter)",
+     "points": 0.01
     }
    ],
    "vol_factors": [
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": 0.58
+     "sigma_pts": 0.61
     },
     {
      "key": "pace_sum",
      "label": "Combined pace (plays/game)",
-     "sigma_pts": -0.45
-    },
-    {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": 0.29
+     "sigma_pts": -0.46
     },
     {
      "key": "abs_expected_margin",
@@ -450,12 +445,17 @@
     {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
-     "sigma_pts": 0.05
+     "sigma_pts": 0.06
+    },
+    {
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": -0.06
     },
     {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": -0.03
+     "sigma_pts": -0.02
     }
    ],
    "qb": {
@@ -465,7 +465,7 @@
      "starts": 3,
      "new": true,
      "inexperienced": false,
-     "flag": 1,
+     "flag": 0,
      "reason": "new starter vs. the QB the team's stats came from"
     },
     "away": {
@@ -569,10 +569,10 @@
    },
    "model": {
     "margin": -1.24,
-    "model_margin": -0.45,
+    "model_margin": -0.46,
     "total": 51.1,
-    "sigma": 14.61,
-    "home_win_prob": 0.4662,
+    "sigma": 14.68,
+    "home_win_prob": 0.4663,
     "baseline_margin": 4.53
    },
    "market": {
@@ -587,27 +587,27 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": -4.23
+     "points": -4.26
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": -1.01
+     "points": -1.0
     },
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": -0.81
+     "points": -0.8
     },
     {
      "key": "talent_diff",
      "label": "Roster talent gap",
-     "points": 0.64
+     "points": 0.63
     },
     {
      "key": "net_explosiveness_diff",
      "label": "Net explosiveness gap",
-     "points": 0.39
+     "points": 0.38
     },
     {
      "key": "net_points_diff",
@@ -630,13 +630,13 @@
      "points": -0.06
     },
     {
-     "key": "net_ppa_diff",
-     "label": "Net EPA per play gap",
-     "points": -0.01
-    },
-    {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
+     "points": 0.01
+    },
+    {
+     "key": "net_ppa_diff",
+     "label": "Net EPA per play gap",
      "points": -0.0
     }
    ],
@@ -644,12 +644,12 @@
     {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
-     "sigma_pts": -0.22
+     "sigma_pts": -0.23
     },
     {
      "key": "pace_sum",
      "label": "Combined pace (plays/game)",
-     "sigma_pts": -0.2
+     "sigma_pts": -0.21
     },
     {
      "key": "havoc_allowed_sum",
@@ -659,17 +659,17 @@
     {
      "key": "qb_flag_sum",
      "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
+     "sigma_pts": -0.06
     },
     {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": -0.05
+     "sigma_pts": -0.04
     },
     {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
-     "sigma_pts": 0.02
+     "sigma_pts": 0.03
     }
    ],
    "qb": {
@@ -782,11 +782,11 @@
     }
    },
    "model": {
-    "margin": -3.79,
-    "model_margin": -6.16,
+    "margin": -3.8,
+    "model_margin": -6.2,
     "total": 49.4,
-    "sigma": 14.91,
-    "home_win_prob": 0.3997,
+    "sigma": 14.98,
+    "home_win_prob": 0.3999,
     "baseline_margin": 4.53
    },
    "market": {
@@ -801,42 +801,42 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": -7.46
+     "points": -7.51
     },
     {
      "key": "talent_diff",
      "label": "Roster talent gap",
-     "points": -2.73
+     "points": -2.72
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": -1.3
+     "points": -1.29
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": 1.27
+     "points": 1.23
     },
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": -0.8
+     "points": -0.79
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": 0.76
+     "points": 0.79
     },
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": -0.41
+     "points": -0.42
     },
     {
      "key": "rush_matchup",
      "label": "Run game matchup",
-     "points": -0.18
+     "points": -0.19
     },
     {
      "key": "net_explosiveness_diff",
@@ -851,19 +851,14 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
     {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
-     "sigma_pts": -0.16
-    },
-    {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
+     "sigma_pts": -0.17
     },
     {
      "key": "pace_sum",
@@ -871,18 +866,23 @@
      "sigma_pts": -0.13
     },
     {
-     "key": "expected_total",
-     "label": "Expected total points",
-     "sigma_pts": -0.04
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": -0.06
     },
     {
-     "key": "havoc_allowed_sum",
-     "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.0
+     "key": "expected_total",
+     "label": "Expected total points",
+     "sigma_pts": -0.03
     },
     {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
+     "sigma_pts": -0.01
+    },
+    {
+     "key": "havoc_allowed_sum",
+     "label": "Turnover/disruption proneness",
      "sigma_pts": -0.0
     }
    ],
@@ -996,11 +996,11 @@
     }
    },
    "model": {
-    "margin": 20.23,
-    "model_margin": 22.43,
+    "margin": 20.26,
+    "model_margin": 22.53,
     "total": 50.9,
-    "sigma": 15.42,
-    "home_win_prob": 0.9052,
+    "sigma": 15.52,
+    "home_win_prob": 0.904,
     "baseline_margin": 4.53
    },
    "market": {
@@ -1015,27 +1015,27 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": 17.37
+     "points": 17.48
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": 3.97
+     "points": 3.93
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": -2.72
+     "points": -2.63
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": -2.04
+     "points": -2.12
     },
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": 1.69
+     "points": 1.68
     },
     {
      "key": "talent_diff",
@@ -1045,12 +1045,12 @@
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": 0.35
+     "points": 0.36
     },
     {
      "key": "net_explosiveness_diff",
      "label": "Net explosiveness gap",
-     "points": -0.19
+     "points": -0.18
     },
     {
      "key": "home_field",
@@ -1058,13 +1058,13 @@
      "points": 0.08
     },
     {
-     "key": "rush_matchup",
-     "label": "Run game matchup",
-     "points": -0.0
-    },
-    {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
+     "points": 0.01
+    },
+    {
+     "key": "rush_matchup",
+     "label": "Run game matchup",
      "points": -0.0
     }
    ],
@@ -1072,12 +1072,12 @@
     {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
-     "sigma_pts": 0.2
+     "sigma_pts": 0.21
     },
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.18
+     "sigma_pts": -0.19
     },
     {
      "key": "pace_sum",
@@ -1085,19 +1085,19 @@
      "sigma_pts": 0.16
     },
     {
+     "key": "abs_talent_gap",
+     "label": "Size of talent gap",
+     "sigma_pts": 0.06
+    },
+    {
      "key": "qb_flag_sum",
      "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
+     "sigma_pts": -0.06
     },
     {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": -0.05
-    },
-    {
-     "key": "abs_talent_gap",
-     "label": "Size of talent gap",
-     "sigma_pts": 0.05
+     "sigma_pts": -0.04
     }
    ],
    "qb": {
@@ -1210,11 +1210,11 @@
     }
    },
    "model": {
-    "margin": 15.82,
-    "model_margin": 19.77,
+    "margin": 15.84,
+    "model_margin": 19.87,
     "total": 71.3,
-    "sigma": 15.88,
-    "home_win_prob": 0.8403,
+    "sigma": 15.92,
+    "home_win_prob": 0.8401,
     "baseline_margin": 4.53
    },
    "market": {
@@ -1229,37 +1229,37 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": 14.93
+     "points": 15.04
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": -2.79
+     "points": -2.7
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": 2.39
+     "points": 2.37
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": -1.76
+     "points": -1.82
     },
     {
      "key": "net_explosiveness_diff",
      "label": "Net explosiveness gap",
-     "points": 1.22
+     "points": 1.2
     },
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": 0.88
+     "points": 0.87
     },
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": 0.64
+     "points": 0.66
     },
     {
      "key": "talent_diff",
@@ -1279,29 +1279,24 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
     {
      "key": "pace_sum",
      "label": "Combined pace (plays/game)",
-     "sigma_pts": 0.64
+     "sigma_pts": 0.65
     },
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.4
+     "sigma_pts": -0.42
     },
     {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": 0.25
-    },
-    {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
+     "sigma_pts": 0.21
     },
     {
      "key": "abs_expected_margin",
@@ -1311,7 +1306,12 @@
     {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
-     "sigma_pts": 0.05
+     "sigma_pts": 0.06
+    },
+    {
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": -0.06
     }
    ],
    "qb": {
@@ -1424,11 +1424,11 @@
     }
    },
    "model": {
-    "margin": -11.06,
-    "model_margin": -15.76,
+    "margin": -10.63,
+    "model_margin": -14.01,
     "total": 47.9,
-    "sigma": 15.62,
-    "home_win_prob": 0.2394,
+    "sigma": 15.15,
+    "home_win_prob": 0.2414,
     "baseline_margin": 4.53
    },
    "market": {
@@ -1443,37 +1443,42 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": -17.84
+     "points": -17.96
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": -4.12
+     "points": -4.08
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": 3.51
+     "points": 3.39
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": 2.57
+     "points": 2.67
     },
     {
      "key": "talent_diff",
      "label": "Roster talent gap",
-     "points": -1.87
+     "points": -1.86
+    },
+    {
+     "key": "qb_flag_diff",
+     "label": "QB situation (new/inexperienced starter)",
+     "points": 1.81
     },
     {
      "key": "net_explosiveness_diff",
      "label": "Net explosiveness gap",
-     "points": -1.51
+     "points": -1.48
     },
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": -0.98
+     "points": -0.97
     },
     {
      "key": "rush_matchup",
@@ -1489,33 +1494,28 @@
      "key": "pass_matchup",
      "label": "Pass game matchup",
      "points": 0.06
-    },
-    {
-     "key": "qb_flag_diff",
-     "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
     }
    ],
    "vol_factors": [
     {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": 0.72
-    },
-    {
      "key": "pace_sum",
      "label": "Combined pace (plays/game)",
-     "sigma_pts": -0.67
+     "sigma_pts": -0.68
     },
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": 0.25
+     "sigma_pts": 0.26
+    },
+    {
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": 0.23
     },
     {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": -0.07
+     "sigma_pts": -0.06
     },
     {
      "key": "abs_talent_gap",
@@ -1525,7 +1525,7 @@
     {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
-     "sigma_pts": -0.0
+     "sigma_pts": -0.01
     }
    ],
    "qb": {
@@ -1535,7 +1535,7 @@
      "starts": 6,
      "new": true,
      "inexperienced": false,
-     "flag": 1,
+     "flag": 0,
      "reason": "new starter vs. the QB the team's stats came from"
     },
     "away": {
@@ -1639,10 +1639,10 @@
    },
    "model": {
     "margin": 0.43,
-    "model_margin": -2.78,
+    "model_margin": -2.79,
     "total": 51.2,
-    "sigma": 15.25,
-    "home_win_prob": 0.5113,
+    "sigma": 15.34,
+    "home_win_prob": 0.5111,
     "baseline_margin": 4.53
    },
    "market": {
@@ -1657,7 +1657,7 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": -5.86
+     "points": -5.9
     },
     {
      "key": "talent_diff",
@@ -1667,17 +1667,17 @@
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": 0.98
+     "points": 0.95
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": -0.93
+     "points": -0.92
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": 0.66
+     "points": 0.68
     },
     {
      "key": "net_havoc_diff",
@@ -1687,12 +1687,12 @@
     {
      "key": "net_explosiveness_diff",
      "label": "Net explosiveness gap",
-     "points": -0.41
+     "points": -0.4
     },
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": 0.1
+     "points": 0.11
     },
     {
      "key": "home_field",
@@ -1707,7 +1707,7 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
@@ -1719,17 +1719,12 @@
     {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
-     "sigma_pts": -0.24
-    },
-    {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
+     "sigma_pts": -0.25
     },
     {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": -0.07
+     "sigma_pts": -0.06
     },
     {
      "key": "havoc_allowed_sum",
@@ -1737,9 +1732,14 @@
      "sigma_pts": -0.06
     },
     {
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": -0.06
+    },
+    {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
-     "sigma_pts": 0.03
+     "sigma_pts": 0.04
     }
    ],
    "qb": {
@@ -1853,10 +1853,10 @@
    },
    "model": {
     "margin": -5.3,
-    "model_margin": 4.31,
+    "model_margin": 4.29,
     "total": 48.0,
-    "sigma": 14.78,
-    "home_win_prob": 0.36,
+    "sigma": 14.87,
+    "home_win_prob": 0.3608,
     "baseline_margin": 4.53
    },
    "market": {
@@ -1871,22 +1871,22 @@
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": 3.5
+     "points": 3.46
     },
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": -2.34
+     "points": -2.36
     },
     {
      "key": "net_explosiveness_diff",
      "label": "Net explosiveness gap",
-     "points": -1.22
+     "points": -1.2
     },
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": -0.69
+     "points": -0.68
     },
     {
      "key": "talent_diff",
@@ -1894,13 +1894,13 @@
      "points": 0.16
     },
     {
-     "key": "net_ppa_diff",
-     "label": "Net EPA per play gap",
+     "key": "net_points_diff",
+     "label": "Scoring margin gap",
      "points": 0.15
     },
     {
-     "key": "net_points_diff",
-     "label": "Scoring margin gap",
+     "key": "net_ppa_diff",
+     "label": "Net EPA per play gap",
      "points": 0.14
     },
     {
@@ -1921,7 +1921,7 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
@@ -1931,24 +1931,24 @@
      "sigma_pts": -0.37
     },
     {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
-    },
-    {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
      "sigma_pts": -0.13
     },
     {
-     "key": "expected_total",
-     "label": "Expected total points",
-     "sigma_pts": -0.08
-    },
-    {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": 0.08
+     "sigma_pts": 0.09
+    },
+    {
+     "key": "expected_total",
+     "label": "Expected total points",
+     "sigma_pts": -0.07
+    },
+    {
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": -0.06
     },
     {
      "key": "abs_talent_gap",
@@ -2067,10 +2067,10 @@
    },
    "model": {
     "margin": 7.53,
-    "model_margin": 9.11,
+    "model_margin": 9.14,
     "total": 51.8,
-    "sigma": 14.99,
-    "home_win_prob": 0.6922,
+    "sigma": 15.08,
+    "home_win_prob": 0.6914,
     "baseline_margin": 4.53
    },
    "market": {
@@ -2085,22 +2085,22 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": 5.1
+     "points": 5.13
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": -1.08
+     "points": -1.04
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": -0.99
+     "points": -1.02
     },
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": 0.95
+     "points": 0.94
     },
     {
      "key": "net_success_diff",
@@ -2135,7 +2135,7 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
@@ -2145,24 +2145,24 @@
      "sigma_pts": -0.16
     },
     {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
-    },
-    {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
      "sigma_pts": -0.08
     },
     {
-     "key": "expected_total",
-     "label": "Expected total points",
+     "key": "abs_talent_gap",
+     "label": "Size of talent gap",
+     "sigma_pts": 0.06
+    },
+    {
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
      "sigma_pts": -0.06
     },
     {
-     "key": "abs_talent_gap",
-     "label": "Size of talent gap",
-     "sigma_pts": 0.05
+     "key": "expected_total",
+     "label": "Expected total points",
+     "sigma_pts": -0.05
     },
     {
      "key": "pace_sum",
@@ -2281,10 +2281,10 @@
    },
    "model": {
     "margin": 5.01,
-    "model_margin": 9.54,
+    "model_margin": 9.56,
     "total": 38.3,
-    "sigma": 14.14,
-    "home_win_prob": 0.6385,
+    "sigma": 14.23,
+    "home_win_prob": 0.6377,
     "baseline_margin": 4.53
    },
    "market": {
@@ -2299,22 +2299,22 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": 4.12
+     "points": 4.15
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": 2.09
+     "points": 2.06
     },
     {
      "key": "talent_diff",
      "label": "Roster talent gap",
-     "points": -1.18
+     "points": -1.17
     },
     {
      "key": "net_explosiveness_diff",
      "label": "Net explosiveness gap",
-     "points": -0.72
+     "points": -0.7
     },
     {
      "key": "net_havoc_diff",
@@ -2324,12 +2324,12 @@
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": 0.56
+     "points": 0.57
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": -0.5
+     "points": -0.52
     },
     {
      "key": "rush_matchup",
@@ -2339,7 +2339,7 @@
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": 0.12
+     "points": 0.11
     },
     {
      "key": "home_field",
@@ -2349,39 +2349,39 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
     {
      "key": "pace_sum",
      "label": "Combined pace (plays/game)",
-     "sigma_pts": -0.58
+     "sigma_pts": -0.59
     },
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.23
+     "sigma_pts": -0.24
     },
     {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": -0.2
-    },
-    {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
+     "sigma_pts": -0.16
     },
     {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
-     "sigma_pts": -0.13
+     "sigma_pts": -0.14
+    },
+    {
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": -0.06
     },
     {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
-     "sigma_pts": 0.03
+     "sigma_pts": 0.04
     }
    ],
    "qb": {
@@ -2494,11 +2494,11 @@
     }
    },
    "model": {
-    "margin": -3.71,
-    "model_margin": -7.36,
+    "margin": -3.62,
+    "model_margin": -6.97,
     "total": 55.1,
-    "sigma": 15.02,
-    "home_win_prob": 0.4023,
+    "sigma": 14.94,
+    "home_win_prob": 0.4043,
     "baseline_margin": 4.53
    },
    "market": {
@@ -2513,32 +2513,32 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": -11.27
+     "points": -11.35
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": -2.91
-    },
-    {
-     "key": "net_points_diff",
-     "label": "Scoring margin gap",
-     "points": 1.46
+     "points": -2.88
     },
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": 1.38
+     "points": 1.81
+    },
+    {
+     "key": "net_points_diff",
+     "label": "Scoring margin gap",
+     "points": 1.52
     },
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": -0.84
+     "points": -0.86
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": 0.64
+     "points": 0.62
     },
     {
      "key": "talent_diff",
@@ -2570,12 +2570,12 @@
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.35
+     "sigma_pts": -0.36
     },
     {
      "key": "qb_flag_sum",
      "label": "New or inexperienced QB in game",
-     "sigma_pts": 0.29
+     "sigma_pts": 0.23
     },
     {
      "key": "pace_sum",
@@ -2585,17 +2585,17 @@
     {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
-     "sigma_pts": -0.16
+     "sigma_pts": -0.17
     },
     {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
-     "sigma_pts": 0.04
+     "sigma_pts": 0.05
     },
     {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": 0.01
+     "sigma_pts": 0.0
     }
    ],
    "qb": {
@@ -2708,11 +2708,11 @@
     }
    },
    "model": {
-    "margin": 8.32,
-    "model_margin": 12.26,
+    "margin": 8.33,
+    "model_margin": 12.34,
     "total": 56.2,
-    "sigma": 15.44,
-    "home_win_prob": 0.7049,
+    "sigma": 15.52,
+    "home_win_prob": 0.7044,
     "baseline_margin": 4.53
    },
    "market": {
@@ -2727,32 +2727,32 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": 7.42
+     "points": 7.47
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": 1.44
+     "points": 1.42
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": -1.01
+     "points": -0.97
     },
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": 0.64
+     "points": 0.66
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": -0.59
+     "points": -0.61
     },
     {
      "key": "talent_diff",
      "label": "Roster talent gap",
-     "points": -0.38
+     "points": -0.37
     },
     {
      "key": "net_havoc_diff",
@@ -2770,13 +2770,13 @@
      "points": 0.08
     },
     {
-     "key": "rush_matchup",
-     "label": "Run game matchup",
-     "points": -0.0
-    },
-    {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
+     "points": 0.01
+    },
+    {
+     "key": "rush_matchup",
+     "label": "Run game matchup",
      "points": -0.0
     }
    ],
@@ -2784,12 +2784,7 @@
     {
      "key": "pace_sum",
      "label": "Combined pace (plays/game)",
-     "sigma_pts": 0.16
-    },
-    {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
+     "sigma_pts": 0.17
     },
     {
      "key": "abs_expected_margin",
@@ -2799,12 +2794,17 @@
     {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
-     "sigma_pts": 0.05
+     "sigma_pts": 0.06
+    },
+    {
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": -0.06
     },
     {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": 0.03
+     "sigma_pts": 0.02
     },
     {
      "key": "havoc_allowed_sum",
@@ -2922,11 +2922,11 @@
     }
    },
    "model": {
-    "margin": -30.88,
-    "model_margin": -32.03,
+    "margin": -30.89,
+    "model_margin": -32.06,
     "total": 57.0,
-    "sigma": 14.81,
-    "home_win_prob": 0.0185,
+    "sigma": 14.83,
+    "home_win_prob": 0.0186,
     "baseline_margin": 4.53
    },
    "market": {
@@ -2941,37 +2941,37 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": -22.49
+     "points": -22.64
     },
     {
      "key": "talent_diff",
      "label": "Roster talent gap",
-     "points": -12.53
+     "points": -12.5
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": -4.6
+     "points": -4.55
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": 4.01
+     "points": 3.88
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": 3.12
+     "points": 3.23
     },
     {
      "key": "home_field",
      "label": "Home field",
-     "points": -2.46
+     "points": -2.44
     },
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": -1.64
+     "points": -1.62
     },
     {
      "key": "net_explosiveness_diff",
@@ -2981,7 +2981,7 @@
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": 0.35
+     "points": 0.36
     },
     {
      "key": "rush_matchup",
@@ -2991,24 +2991,24 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.53
+     "sigma_pts": -0.55
     },
     {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
-     "sigma_pts": 0.44
+     "sigma_pts": 0.46
     },
     {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
-     "sigma_pts": -0.24
+     "sigma_pts": -0.29
     },
     {
      "key": "pace_sum",
@@ -3018,12 +3018,12 @@
     {
      "key": "qb_flag_sum",
      "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
+     "sigma_pts": -0.06
     },
     {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": 0.03
+     "sigma_pts": 0.02
     }
    ],
    "qb": {
@@ -3136,11 +3136,11 @@
     }
    },
    "model": {
-    "margin": 8.93,
-    "model_margin": 13.24,
+    "margin": 8.94,
+    "model_margin": 13.26,
     "total": 48.1,
-    "sigma": 14.75,
-    "home_win_prob": 0.7277,
+    "sigma": 14.84,
+    "home_win_prob": 0.7266,
     "baseline_margin": 4.53
    },
    "market": {
@@ -3155,42 +3155,42 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": 6.99
+     "points": 7.03
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": 4.0
+     "points": 3.96
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": -2.1
+     "points": -2.03
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": -1.77
+     "points": -1.84
     },
     {
      "key": "talent_diff",
      "label": "Roster talent gap",
-     "points": 1.1
+     "points": 1.09
     },
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": 0.62
+     "points": 0.61
     },
     {
      "key": "net_explosiveness_diff",
      "label": "Net explosiveness gap",
-     "points": -0.34
+     "points": -0.33
     },
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": 0.25
+     "points": 0.26
     },
     {
      "key": "rush_matchup",
@@ -3205,7 +3205,7 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
@@ -3217,17 +3217,17 @@
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.16
-    },
-    {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
+     "sigma_pts": -0.17
     },
     {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": -0.13
+     "sigma_pts": -0.11
+    },
+    {
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": -0.06
     },
     {
      "key": "abs_expected_margin",
@@ -3237,7 +3237,7 @@
     {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
-     "sigma_pts": 0.01
+     "sigma_pts": 0.02
     }
    ],
    "qb": {
@@ -3350,11 +3350,11 @@
     }
    },
    "model": {
-    "margin": -11.25,
-    "model_margin": -13.49,
+    "margin": -11.27,
+    "model_margin": -13.57,
     "total": 56.2,
-    "sigma": 15.69,
-    "home_win_prob": 0.2368,
+    "sigma": 15.77,
+    "home_win_prob": 0.2375,
     "baseline_margin": 4.53
    },
    "market": {
@@ -3369,27 +3369,27 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": -16.54
+     "points": -16.65
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": -4.53
+     "points": -4.48
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": 3.32
+     "points": 3.21
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": 2.18
+     "points": 2.26
     },
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": -1.02
+     "points": -1.01
     },
     {
      "key": "talent_diff",
@@ -3399,7 +3399,7 @@
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": -0.52
+     "points": -0.53
     },
     {
      "key": "net_explosiveness_diff",
@@ -3419,34 +3419,34 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
     {
      "key": "pace_sum",
      "label": "Combined pace (plays/game)",
-     "sigma_pts": 0.55
+     "sigma_pts": 0.56
     },
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.19
+     "sigma_pts": -0.2
     },
     {
      "key": "qb_flag_sum",
      "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
-    },
-    {
-     "key": "expected_total",
-     "label": "Expected total points",
-     "sigma_pts": 0.04
+     "sigma_pts": -0.06
     },
     {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
-     "sigma_pts": 0.04
+     "sigma_pts": 0.05
+    },
+    {
+     "key": "expected_total",
+     "label": "Expected total points",
+     "sigma_pts": 0.03
     },
     {
      "key": "abs_expected_margin",
@@ -3567,8 +3567,8 @@
     "margin": 3.55,
     "model_margin": 3.72,
     "total": 53.4,
-    "sigma": 15.3,
-    "home_win_prob": 0.5918,
+    "sigma": 15.38,
+    "home_win_prob": 0.5914,
     "baseline_margin": 4.53
    },
    "market": {
@@ -3588,7 +3588,7 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": -0.38
+     "points": -0.39
     },
     {
      "key": "net_explosiveness_diff",
@@ -3598,7 +3598,7 @@
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": -0.29
+     "points": -0.3
     },
     {
      "key": "pass_matchup",
@@ -3633,7 +3633,7 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
@@ -3645,12 +3645,17 @@
     {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
-     "sigma_pts": -0.17
+     "sigma_pts": -0.18
     },
     {
      "key": "qb_flag_sum",
      "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
+     "sigma_pts": -0.06
+    },
+    {
+     "key": "abs_talent_gap",
+     "label": "Size of talent gap",
+     "sigma_pts": 0.03
     },
     {
      "key": "havoc_allowed_sum",
@@ -3658,14 +3663,9 @@
      "sigma_pts": 0.02
     },
     {
-     "key": "abs_talent_gap",
-     "label": "Size of talent gap",
-     "sigma_pts": 0.02
-    },
-    {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": 0.01
+     "sigma_pts": 0.0
     }
    ],
    "qb": {
@@ -3778,11 +3778,11 @@
     }
    },
    "model": {
-    "margin": 13.24,
-    "model_margin": 12.47,
+    "margin": 13.25,
+    "model_margin": 12.49,
     "total": 45.3,
-    "sigma": 14.6,
-    "home_win_prob": 0.8177,
+    "sigma": 14.7,
+    "home_win_prob": 0.8163,
     "baseline_margin": 4.53
    },
    "market": {
@@ -3797,22 +3797,22 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": 8.15
+     "points": 8.2
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": 2.18
+     "points": 2.16
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": -1.21
+     "points": -1.25
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": -1.1
+     "points": -1.06
     },
     {
      "key": "talent_diff",
@@ -3847,7 +3847,7 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
@@ -3857,28 +3857,28 @@
      "sigma_pts": -0.52
     },
     {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
+     "key": "havoc_allowed_sum",
+     "label": "Turnover/disruption proneness",
+     "sigma_pts": -0.12
     },
     {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": -0.11
-    },
-    {
-     "key": "havoc_allowed_sum",
-     "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.11
-    },
-    {
-     "key": "abs_expected_margin",
-     "label": "Size of expected margin",
-     "sigma_pts": 0.05
+     "sigma_pts": -0.09
     },
     {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
+     "sigma_pts": 0.06
+    },
+    {
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": -0.06
+    },
+    {
+     "key": "abs_expected_margin",
+     "label": "Size of expected margin",
      "sigma_pts": 0.05
     }
    ],
@@ -3992,11 +3992,11 @@
     }
    },
    "model": {
-    "margin": -14.81,
-    "model_margin": -12.76,
+    "margin": -14.37,
+    "model_margin": -11.0,
     "total": 49.7,
-    "sigma": 15.84,
-    "home_win_prob": 0.1748,
+    "sigma": 15.36,
+    "home_win_prob": 0.1746,
     "baseline_margin": 4.53
    },
    "market": {
@@ -4011,37 +4011,42 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": -14.68
+     "points": -14.78
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": -4.87
+     "points": -4.82
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": 3.91
+     "points": 3.78
     },
     {
      "key": "talent_diff",
      "label": "Roster talent gap",
-     "points": -3.34
+     "points": -3.33
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": 1.96
+     "points": 2.03
+    },
+    {
+     "key": "qb_flag_diff",
+     "label": "QB situation (new/inexperienced starter)",
+     "points": 1.81
     },
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": -1.25
+     "points": -1.24
     },
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": 0.9
+     "points": 0.93
     },
     {
      "key": "rush_matchup",
@@ -4057,28 +4062,23 @@
      "key": "home_field",
      "label": "Home field",
      "points": 0.08
-    },
-    {
-     "key": "qb_flag_diff",
-     "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
     }
    ],
    "vol_factors": [
-    {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": 0.72
-    },
     {
      "key": "pace_sum",
      "label": "Combined pace (plays/game)",
      "sigma_pts": -0.24
     },
     {
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": 0.23
+    },
+    {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": -0.1
+     "sigma_pts": -0.08
     },
     {
      "key": "abs_expected_margin",
@@ -4103,7 +4103,7 @@
      "starts": 3,
      "new": true,
      "inexperienced": false,
-     "flag": 1,
+     "flag": 0,
      "reason": "new starter vs. the QB the team's stats came from"
     },
     "away": {
@@ -4206,11 +4206,11 @@
     }
    },
    "model": {
-    "margin": 13.88,
-    "model_margin": 15.01,
+    "margin": 13.89,
+    "model_margin": 15.05,
     "total": 55.4,
-    "sigma": 15.45,
-    "home_win_prob": 0.8155,
+    "sigma": 15.52,
+    "home_win_prob": 0.8145,
     "baseline_margin": 4.53
    },
    "market": {
@@ -4225,27 +4225,27 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": 8.33
+     "points": 8.38
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": 2.59
+     "points": 2.56
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": -0.98
+     "points": -1.02
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": -0.77
+     "points": -0.75
     },
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": 0.64
+     "points": 0.63
     },
     {
      "key": "talent_diff",
@@ -4255,12 +4255,12 @@
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": 0.41
+     "points": 0.42
     },
     {
      "key": "net_explosiveness_diff",
      "label": "Net explosiveness gap",
-     "points": -0.35
+     "points": -0.34
     },
     {
      "key": "rush_matchup",
@@ -4275,7 +4275,7 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
@@ -4287,22 +4287,22 @@
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.2
-    },
-    {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
+     "sigma_pts": -0.21
     },
     {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
-     "sigma_pts": 0.06
+     "sigma_pts": 0.07
+    },
+    {
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": -0.06
     },
     {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": 0.04
+     "sigma_pts": 0.03
     },
     {
      "key": "abs_talent_gap",
@@ -4420,11 +4420,11 @@
     }
    },
    "model": {
-    "margin": -4.04,
-    "model_margin": -7.16,
+    "margin": -4.05,
+    "model_margin": -7.21,
     "total": 49.1,
-    "sigma": 16.26,
-    "home_win_prob": 0.4019,
+    "sigma": 15.52,
+    "home_win_prob": 0.397,
     "baseline_margin": 4.53
    },
    "market": {
@@ -4439,12 +4439,12 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": -7.57
+     "points": -7.62
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": -2.42
+     "points": -2.4
     },
     {
      "key": "talent_diff",
@@ -4454,17 +4454,17 @@
     {
      "key": "net_explosiveness_diff",
      "label": "Net explosiveness gap",
-     "points": 1.21
+     "points": 1.19
     },
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": -0.83
+     "points": -0.82
     },
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": -0.79
+     "points": -0.81
     },
     {
      "key": "rush_matchup",
@@ -4489,19 +4489,14 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
     {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": 0.72
-    },
-    {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": 0.44
+     "sigma_pts": 0.46
     },
     {
      "key": "abs_expected_margin",
@@ -4511,17 +4506,22 @@
     {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": -0.12
+     "sigma_pts": -0.1
+    },
+    {
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": -0.06
+    },
+    {
+     "key": "abs_talent_gap",
+     "label": "Size of talent gap",
+     "sigma_pts": 0.04
     },
     {
      "key": "pace_sum",
      "label": "Combined pace (plays/game)",
      "sigma_pts": -0.03
-    },
-    {
-     "key": "abs_talent_gap",
-     "label": "Size of talent gap",
-     "sigma_pts": 0.03
     }
    ],
    "qb": {
@@ -4531,7 +4531,7 @@
      "starts": 4,
      "new": true,
      "inexperienced": false,
-     "flag": 1,
+     "flag": 0,
      "reason": "new starter vs. the QB the team's stats came from"
     },
     "away": {
@@ -4540,7 +4540,7 @@
      "starts": 17,
      "new": true,
      "inexperienced": false,
-     "flag": 1,
+     "flag": 0,
      "reason": "new starter vs. the QB the team's stats came from"
     }
    }
@@ -4634,11 +4634,11 @@
     }
    },
    "model": {
-    "margin": -0.73,
-    "model_margin": -7.43,
+    "margin": -0.64,
+    "model_margin": -7.05,
     "total": 50.7,
-    "sigma": 15.42,
-    "home_win_prob": 0.4811,
+    "sigma": 15.37,
+    "home_win_prob": 0.4835,
     "baseline_margin": 4.53
    },
    "market": {
@@ -4653,37 +4653,37 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": -13.09
+     "points": -13.18
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": -3.53
+     "points": -3.49
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": 1.87
-    },
-    {
-     "key": "net_ppa_diff",
-     "label": "Net EPA per play gap",
-     "points": 1.82
+     "points": 1.93
     },
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": 1.38
+     "points": 1.81
+    },
+    {
+     "key": "net_ppa_diff",
+     "label": "Net EPA per play gap",
+     "points": 1.76
     },
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": -0.74
+     "points": -0.73
     },
     {
      "key": "net_explosiveness_diff",
      "label": "Net explosiveness gap",
-     "points": 0.65
+     "points": 0.64
     },
     {
      "key": "rush_matchup",
@@ -4698,7 +4698,7 @@
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": 0.13
+     "points": 0.14
     },
     {
      "key": "home_field",
@@ -4708,24 +4708,24 @@
    ],
    "vol_factors": [
     {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": 0.29
-    },
-    {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
-     "sigma_pts": -0.23
+     "sigma_pts": -0.24
     },
     {
-     "key": "expected_total",
-     "label": "Expected total points",
-     "sigma_pts": -0.08
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": 0.23
     },
     {
      "key": "pace_sum",
      "label": "Combined pace (plays/game)",
      "sigma_pts": 0.08
+    },
+    {
+     "key": "expected_total",
+     "label": "Expected total points",
+     "sigma_pts": -0.07
     },
     {
      "key": "havoc_allowed_sum",
@@ -4735,7 +4735,7 @@
     {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
-     "sigma_pts": 0.04
+     "sigma_pts": 0.05
     }
    ],
    "qb": {
@@ -4848,11 +4848,11 @@
     }
    },
    "model": {
-    "margin": 6.54,
-    "model_margin": 8.15,
+    "margin": 6.88,
+    "model_margin": 9.54,
     "total": 57.5,
-    "sigma": 15.54,
-    "home_win_prob": 0.663,
+    "sigma": 15.19,
+    "home_win_prob": 0.6748,
     "baseline_margin": 4.53
    },
    "market": {
@@ -4867,32 +4867,27 @@
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": 3.74
+     "points": 3.7
     },
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": 2.34
-    },
-    {
-     "key": "qb_flag_diff",
-     "label": "QB situation (new/inexperienced starter)",
-     "points": -1.39
+     "points": 2.35
     },
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": 0.98
+     "points": 0.97
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": -0.84
+     "points": -0.81
     },
     {
      "key": "net_explosiveness_diff",
      "label": "Net explosiveness gap",
-     "points": -0.51
+     "points": -0.5
     },
     {
      "key": "talent_diff",
@@ -4902,7 +4897,7 @@
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": -0.29
+     "points": -0.3
     },
     {
      "key": "home_field",
@@ -4918,14 +4913,14 @@
      "key": "rush_matchup",
      "label": "Run game matchup",
      "points": 0.04
+    },
+    {
+     "key": "qb_flag_diff",
+     "label": "QB situation (new/inexperienced starter)",
+     "points": 0.01
     }
    ],
    "vol_factors": [
-    {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": 0.29
-    },
     {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
@@ -4937,19 +4932,24 @@
      "sigma_pts": -0.07
     },
     {
+     "key": "abs_talent_gap",
+     "label": "Size of talent gap",
+     "sigma_pts": 0.06
+    },
+    {
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": -0.06
+    },
+    {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
      "sigma_pts": -0.05
     },
     {
-     "key": "abs_talent_gap",
-     "label": "Size of talent gap",
-     "sigma_pts": 0.05
-    },
-    {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": 0.04
+     "sigma_pts": 0.03
     }
    ],
    "qb": {
@@ -4959,7 +4959,7 @@
      "starts": 21,
      "new": true,
      "inexperienced": false,
-     "flag": 1,
+     "flag": 0,
      "reason": "new starter vs. the QB the team's stats came from"
     },
     "away": {
@@ -5062,11 +5062,11 @@
     }
    },
    "model": {
-    "margin": -0.07,
-    "model_margin": -4.79,
+    "margin": -0.18,
+    "model_margin": -5.22,
     "total": 58.6,
-    "sigma": 14.69,
-    "home_win_prob": 0.4981,
+    "sigma": 14.57,
+    "home_win_prob": 0.4951,
     "baseline_margin": 4.53
    },
    "market": {
@@ -5081,42 +5081,42 @@
     {
      "key": "talent_diff",
      "label": "Roster talent gap",
-     "points": -6.52
+     "points": -6.5
     },
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": -2.78
-    },
-    {
-     "key": "net_explosiveness_diff",
-     "label": "Net explosiveness gap",
-     "points": -1.46
+     "points": -2.8
     },
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -1.39
+     "points": -1.8
+    },
+    {
+     "key": "net_explosiveness_diff",
+     "label": "Net explosiveness gap",
+     "points": -1.43
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": 1.28
+     "points": 1.27
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": 1.19
+     "points": 1.15
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": 0.66
+     "points": 0.69
     },
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": -0.65
+     "points": -0.67
     },
     {
      "key": "net_havoc_diff",
@@ -5138,17 +5138,17 @@
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.73
-    },
-    {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": 0.29
+     "sigma_pts": -0.76
     },
     {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
-     "sigma_pts": -0.24
+     "sigma_pts": -0.25
+    },
+    {
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": 0.23
     },
     {
      "key": "pace_sum",
@@ -5158,12 +5158,12 @@
     {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
-     "sigma_pts": -0.1
+     "sigma_pts": -0.11
     },
     {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": -0.03
+     "sigma_pts": -0.02
     }
    ],
    "qb": {
@@ -5277,10 +5277,10 @@
    },
    "model": {
     "margin": 6.56,
-    "model_margin": 8.25,
+    "model_margin": 8.23,
     "total": 53.6,
-    "sigma": 14.77,
-    "home_win_prob": 0.6715,
+    "sigma": 14.85,
+    "home_win_prob": 0.6706,
     "baseline_margin": 4.53
    },
    "market": {
@@ -5295,47 +5295,47 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": 4.01
+     "points": 4.04
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": 1.6
+     "points": 1.59
     },
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": -0.79
+     "points": -0.81
     },
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": 0.64
+     "points": 0.63
     },
     {
      "key": "talent_diff",
      "label": "Roster talent gap",
-     "points": -0.58
+     "points": -0.57
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": -0.45
+     "points": -0.47
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": -0.31
+     "points": -0.3
     },
     {
      "key": "net_explosiveness_diff",
      "label": "Net explosiveness gap",
-     "points": -0.28
+     "points": -0.27
     },
     {
      "key": "rush_matchup",
      "label": "Run game matchup",
-     "points": -0.2
+     "points": -0.21
     },
     {
      "key": "home_field",
@@ -5345,39 +5345,39 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.19
+     "sigma_pts": -0.2
     },
     {
      "key": "pace_sum",
      "label": "Combined pace (plays/game)",
-     "sigma_pts": -0.17
-    },
-    {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
+     "sigma_pts": -0.18
     },
     {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
-     "sigma_pts": -0.1
-    },
-    {
-     "key": "expected_total",
-     "label": "Expected total points",
-     "sigma_pts": -0.05
+     "sigma_pts": -0.11
     },
     {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
-     "sigma_pts": 0.05
+     "sigma_pts": 0.06
+    },
+    {
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": -0.06
+    },
+    {
+     "key": "expected_total",
+     "label": "Expected total points",
+     "sigma_pts": -0.04
     }
    ],
    "qb": {
@@ -5493,8 +5493,8 @@
     "margin": -4.06,
     "model_margin": 0.25,
     "total": 57.5,
-    "sigma": 15.13,
-    "home_win_prob": 0.3942,
+    "sigma": 15.19,
+    "home_win_prob": 0.3946,
     "baseline_margin": 4.53
    },
    "market": {
@@ -5509,42 +5509,42 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": -4.38
+     "points": -4.41
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": -3.25
+     "points": -3.22
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": 1.63
+     "points": 1.57
     },
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": 0.61
+     "points": 0.63
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": 0.58
+     "points": 0.61
     },
     {
      "key": "net_explosiveness_diff",
      "label": "Net explosiveness gap",
-     "points": 0.52
+     "points": 0.51
     },
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": -0.41
+     "points": -0.4
     },
     {
      "key": "rush_matchup",
      "label": "Run game matchup",
-     "points": 0.32
+     "points": 0.33
     },
     {
      "key": "home_field",
@@ -5559,14 +5559,14 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.24
+     "sigma_pts": -0.25
     },
     {
      "key": "pace_sum",
@@ -5581,16 +5581,16 @@
     {
      "key": "qb_flag_sum",
      "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
-    },
-    {
-     "key": "expected_total",
-     "label": "Expected total points",
-     "sigma_pts": 0.05
+     "sigma_pts": -0.06
     },
     {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
+     "sigma_pts": 0.05
+    },
+    {
+     "key": "expected_total",
+     "label": "Expected total points",
      "sigma_pts": 0.04
     }
    ],
@@ -5704,11 +5704,11 @@
     }
    },
    "model": {
-    "margin": 22.86,
-    "model_margin": 23.95,
+    "margin": 22.89,
+    "model_margin": 24.05,
     "total": 57.5,
-    "sigma": 15.37,
-    "home_win_prob": 0.9316,
+    "sigma": 15.45,
+    "home_win_prob": 0.9307,
     "baseline_margin": 4.53
    },
    "market": {
@@ -5723,32 +5723,32 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": 19.29
+     "points": 19.42
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": 5.51
+     "points": 5.45
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": -3.93
+     "points": -3.8
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": -2.47
+     "points": -2.56
     },
     {
      "key": "net_explosiveness_diff",
      "label": "Net explosiveness gap",
-     "points": 1.16
+     "points": 1.14
     },
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": -0.2
+     "points": -0.21
     },
     {
      "key": "net_havoc_diff",
@@ -5773,29 +5773,29 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
     {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
-     "sigma_pts": 0.26
+     "sigma_pts": 0.28
     },
     {
      "key": "pace_sum",
      "label": "Combined pace (plays/game)",
-     "sigma_pts": -0.24
+     "sigma_pts": -0.25
     },
     {
      "key": "qb_flag_sum",
      "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
+     "sigma_pts": -0.06
     },
     {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": 0.06
+     "sigma_pts": 0.05
     },
     {
      "key": "abs_talent_gap",
@@ -5918,11 +5918,11 @@
     }
    },
    "model": {
-    "margin": 15.65,
-    "model_margin": 13.11,
+    "margin": 15.32,
+    "model_margin": 11.78,
     "total": 50.9,
-    "sigma": 15.46,
-    "home_win_prob": 0.8443,
+    "sigma": 15.11,
+    "home_win_prob": 0.8446,
     "baseline_margin": 4.53
    },
    "market": {
@@ -5937,32 +5937,27 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": 7.71
+     "points": 7.76
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": 2.53
+     "points": 2.51
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": -2.28
+     "points": -2.2
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": -1.4
-    },
-    {
-     "key": "qb_flag_diff",
-     "label": "QB situation (new/inexperienced starter)",
-     "points": 1.38
+     "points": -1.45
     },
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": 1.0
+     "points": 0.99
     },
     {
      "key": "talent_diff",
@@ -5972,7 +5967,7 @@
     {
      "key": "net_explosiveness_diff",
      "label": "Net explosiveness gap",
-     "points": 0.28
+     "points": 0.27
     },
     {
      "key": "rush_matchup",
@@ -5988,18 +5983,18 @@
      "key": "home_field",
      "label": "Home field",
      "points": 0.08
+    },
+    {
+     "key": "qb_flag_diff",
+     "label": "QB situation (new/inexperienced starter)",
+     "points": 0.01
     }
    ],
    "vol_factors": [
     {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": 0.29
-    },
-    {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.26
+     "sigma_pts": -0.27
     },
     {
      "key": "abs_expected_margin",
@@ -6007,9 +6002,14 @@
      "sigma_pts": 0.1
     },
     {
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": -0.06
+    },
+    {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": -0.06
+     "sigma_pts": -0.05
     },
     {
      "key": "abs_talent_gap",
@@ -6038,7 +6038,7 @@
      "starts": 35,
      "new": true,
      "inexperienced": false,
-     "flag": 1,
+     "flag": 0,
      "reason": "new starter vs. the QB the team's stats came from"
     }
    }
@@ -6132,11 +6132,11 @@
     }
    },
    "model": {
-    "margin": 14.01,
-    "model_margin": 18.54,
+    "margin": 14.13,
+    "model_margin": 19.01,
     "total": 57.5,
-    "sigma": 15.34,
-    "home_win_prob": 0.8195,
+    "sigma": 15.26,
+    "home_win_prob": 0.8227,
     "baseline_margin": 4.53
    },
    "market": {
@@ -6151,37 +6151,37 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": 12.9
+     "points": 12.99
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": 4.41
+     "points": 4.37
     },
     {
      "key": "home_field",
      "label": "Home field",
-     "points": -2.46
-    },
-    {
-     "key": "net_ppa_diff",
-     "label": "Net EPA per play gap",
-     "points": -1.98
+     "points": -2.44
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": -1.9
+     "points": -1.97
+    },
+    {
+     "key": "net_ppa_diff",
+     "label": "Net EPA per play gap",
+     "points": -1.91
     },
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": 1.38
+     "points": 1.81
     },
     {
      "key": "talent_diff",
      "label": "Roster talent gap",
-     "points": 1.34
+     "points": 1.33
     },
     {
      "key": "net_explosiveness_diff",
@@ -6208,12 +6208,12 @@
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.43
+     "sigma_pts": -0.45
     },
     {
      "key": "qb_flag_sum",
      "label": "New or inexperienced QB in game",
-     "sigma_pts": 0.29
+     "sigma_pts": 0.23
     },
     {
      "key": "abs_expected_margin",
@@ -6223,7 +6223,7 @@
     {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": 0.02
+     "sigma_pts": 0.01
     },
     {
      "key": "pace_sum",
@@ -6346,11 +6346,11 @@
     }
    },
    "model": {
-    "margin": 22.45,
-    "model_margin": 28.28,
+    "margin": 22.48,
+    "model_margin": 28.42,
     "total": 44.5,
-    "sigma": 14.59,
-    "home_win_prob": 0.938,
+    "sigma": 14.69,
+    "home_win_prob": 0.937,
     "baseline_margin": 4.53
    },
    "market": {
@@ -6365,37 +6365,37 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": 22.41
+     "points": 22.56
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": 6.37
+     "points": 6.3
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": -3.54
+     "points": -3.42
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": -2.33
+     "points": -2.42
     },
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": 0.72
+     "points": 0.71
     },
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": 0.5
+     "points": 0.52
     },
     {
      "key": "talent_diff",
      "label": "Roster talent gap",
-     "points": -0.36
+     "points": -0.35
     },
     {
      "key": "net_explosiveness_diff",
@@ -6415,39 +6415,39 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
     {
      "key": "pace_sum",
      "label": "Combined pace (plays/game)",
-     "sigma_pts": -0.46
+     "sigma_pts": -0.47
     },
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.35
+     "sigma_pts": -0.37
     },
     {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
-     "sigma_pts": 0.25
+     "sigma_pts": 0.27
     },
     {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": -0.14
-    },
-    {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
+     "sigma_pts": -0.12
     },
     {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
-     "sigma_pts": 0.05
+     "sigma_pts": 0.06
+    },
+    {
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": -0.06
     }
    ],
    "qb": {
@@ -6560,11 +6560,11 @@
     }
    },
    "model": {
-    "margin": 15.04,
-    "model_margin": 18.15,
+    "margin": 15.06,
+    "model_margin": 18.22,
     "total": 47.5,
-    "sigma": 15.0,
-    "home_win_prob": 0.8419,
+    "sigma": 15.09,
+    "home_win_prob": 0.8407,
     "baseline_margin": 4.53
    },
    "market": {
@@ -6579,42 +6579,42 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": 12.5
+     "points": 12.59
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": 3.59
+     "points": 3.55
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": -1.34
+     "points": -1.3
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": -1.17
+     "points": -1.22
     },
     {
      "key": "net_explosiveness_diff",
      "label": "Net explosiveness gap",
-     "points": -0.52
+     "points": -0.51
     },
     {
      "key": "rush_matchup",
      "label": "Run game matchup",
-     "points": 0.21
+     "points": 0.22
     },
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": 0.18
+     "points": 0.17
     },
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": 0.15
+     "points": 0.16
     },
     {
      "key": "home_field",
@@ -6629,24 +6629,19 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.32
-    },
-    {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
+     "sigma_pts": -0.34
     },
     {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": -0.11
+     "sigma_pts": -0.09
     },
     {
      "key": "abs_expected_margin",
@@ -6659,9 +6654,14 @@
      "sigma_pts": 0.06
     },
     {
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": -0.06
+    },
+    {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
-     "sigma_pts": 0.04
+     "sigma_pts": 0.05
     }
    ],
    "qb": {
@@ -6774,11 +6774,11 @@
     }
    },
    "model": {
-    "margin": 24.95,
-    "model_margin": 26.29,
+    "margin": 24.63,
+    "model_margin": 25.02,
     "total": 45.7,
-    "sigma": 15.76,
-    "home_win_prob": 0.9433,
+    "sigma": 15.45,
+    "home_win_prob": 0.9445,
     "baseline_margin": 4.53
    },
    "market": {
@@ -6793,42 +6793,37 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": 22.3
+     "points": 22.45
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": 5.78
+     "points": 5.71
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": -4.67
+     "points": -4.52
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": -3.45
+     "points": -3.57
     },
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": 1.86
+     "points": 1.83
     },
     {
      "key": "talent_diff",
      "label": "Roster talent gap",
-     "points": -1.58
-    },
-    {
-     "key": "qb_flag_diff",
-     "label": "QB situation (new/inexperienced starter)",
-     "points": 1.38
+     "points": -1.57
     },
     {
      "key": "rush_matchup",
      "label": "Run game matchup",
-     "points": -0.12
+     "points": -0.13
     },
     {
      "key": "net_explosiveness_diff",
@@ -6844,38 +6839,43 @@
      "key": "home_field",
      "label": "Home field",
      "points": 0.08
+    },
+    {
+     "key": "qb_flag_diff",
+     "label": "QB situation (new/inexperienced starter)",
+     "points": 0.01
     }
    ],
    "vol_factors": [
     {
      "key": "pace_sum",
      "label": "Combined pace (plays/game)",
-     "sigma_pts": -0.32
+     "sigma_pts": -0.33
     },
     {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
-     "sigma_pts": 0.31
-    },
-    {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": 0.29
+     "sigma_pts": 0.32
     },
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": 0.21
+     "sigma_pts": 0.22
     },
     {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": -0.13
+     "sigma_pts": -0.11
+    },
+    {
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": -0.06
     },
     {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
-     "sigma_pts": 0.02
+     "sigma_pts": 0.03
     }
    ],
    "qb": {
@@ -6894,7 +6894,7 @@
      "starts": 8,
      "new": true,
      "inexperienced": false,
-     "flag": 1,
+     "flag": 0,
      "reason": "new starter vs. the QB the team's stats came from"
     }
    }
@@ -6988,11 +6988,11 @@
     }
    },
    "model": {
-    "margin": 4.84,
-    "model_margin": 8.87,
+    "margin": 5.19,
+    "model_margin": 10.24,
     "total": 49.2,
-    "sigma": 15.19,
-    "home_win_prob": 0.625,
+    "sigma": 14.83,
+    "home_win_prob": 0.6367,
     "baseline_margin": 4.53
    },
    "market": {
@@ -7007,12 +7007,7 @@
     {
      "key": "talent_diff",
      "label": "Roster talent gap",
-     "points": 4.26
-    },
-    {
-     "key": "qb_flag_diff",
-     "label": "QB situation (new/inexperienced starter)",
-     "points": -1.39
+     "points": 4.25
     },
     {
      "key": "net_success_diff",
@@ -7022,17 +7017,17 @@
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": 0.55
+     "points": 0.57
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": 0.48
+     "points": 0.46
     },
     {
      "key": "net_explosiveness_diff",
      "label": "Net explosiveness gap",
-     "points": -0.44
+     "points": -0.43
     },
     {
      "key": "net_havoc_diff",
@@ -7042,12 +7037,12 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": 0.23
+     "points": 0.24
     },
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": -0.22
+     "points": -0.23
     },
     {
      "key": "rush_matchup",
@@ -7058,14 +7053,14 @@
      "key": "home_field",
      "label": "Home field",
      "points": 0.08
+    },
+    {
+     "key": "qb_flag_diff",
+     "label": "QB situation (new/inexperienced starter)",
+     "points": 0.01
     }
    ],
    "vol_factors": [
-    {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": 0.29
-    },
     {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
@@ -7074,7 +7069,7 @@
     {
      "key": "pace_sum",
      "label": "Combined pace (plays/game)",
-     "sigma_pts": -0.11
+     "sigma_pts": -0.12
     },
     {
      "key": "havoc_allowed_sum",
@@ -7082,13 +7077,18 @@
      "sigma_pts": -0.1
     },
     {
-     "key": "expected_total",
-     "label": "Expected total points",
-     "sigma_pts": -0.07
-    },
-    {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
+     "sigma_pts": -0.08
+    },
+    {
+     "key": "expected_total",
+     "label": "Expected total points",
+     "sigma_pts": -0.06
+    },
+    {
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
      "sigma_pts": -0.06
     }
    ],
@@ -7099,7 +7099,7 @@
      "starts": 24,
      "new": true,
      "inexperienced": false,
-     "flag": 1,
+     "flag": 0,
      "reason": "new starter vs. the QB the team's stats came from"
     },
     "away": {
@@ -7203,10 +7203,10 @@
    },
    "model": {
     "margin": 5.32,
-    "model_margin": 3.27,
+    "model_margin": 3.26,
     "total": 48.3,
-    "sigma": 15.24,
-    "home_win_prob": 0.6364,
+    "sigma": 15.34,
+    "home_win_prob": 0.6356,
     "baseline_margin": 4.53
    },
    "market": {
@@ -7221,17 +7221,17 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": -0.67
+     "points": -0.68
     },
     {
      "key": "net_explosiveness_diff",
      "label": "Net explosiveness gap",
-     "points": 0.57
+     "points": 0.56
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": -0.48
+     "points": -0.47
     },
     {
      "key": "net_havoc_diff",
@@ -7251,7 +7251,7 @@
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": -0.22
+     "points": -0.23
     },
     {
      "key": "home_field",
@@ -7271,19 +7271,14 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
     {
      "key": "pace_sum",
      "label": "Combined pace (plays/game)",
-     "sigma_pts": 0.14
-    },
-    {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
+     "sigma_pts": 0.15
     },
     {
      "key": "abs_expected_margin",
@@ -7293,16 +7288,21 @@
     {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": -0.08
+     "sigma_pts": -0.07
     },
     {
-     "key": "havoc_allowed_sum",
-     "label": "Turnover/disruption proneness",
-     "sigma_pts": 0.03
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": -0.06
     },
     {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
+     "sigma_pts": 0.04
+    },
+    {
+     "key": "havoc_allowed_sum",
+     "label": "Turnover/disruption proneness",
      "sigma_pts": 0.03
     }
    ],
@@ -7419,8 +7419,8 @@
     "margin": -3.57,
     "model_margin": -3.77,
     "total": 54.6,
-    "sigma": 14.98,
-    "home_win_prob": 0.4059,
+    "sigma": 15.05,
+    "home_win_prob": 0.4063,
     "baseline_margin": 4.53
    },
    "market": {
@@ -7435,42 +7435,42 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": -6.74
+     "points": -6.78
     },
     {
      "key": "talent_diff",
      "label": "Roster talent gap",
-     "points": -2.01
+     "points": -2.0
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": 1.17
+     "points": 1.13
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": 1.08
+     "points": 1.12
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": -0.71
+     "points": -0.7
     },
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": -0.68
+     "points": -0.67
     },
     {
      "key": "net_explosiveness_diff",
      "label": "Net explosiveness gap",
-     "points": -0.51
+     "points": -0.5
     },
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": 0.13
+     "points": 0.14
     },
     {
      "key": "rush_matchup",
@@ -7485,39 +7485,39 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
     {
      "key": "pace_sum",
      "label": "Combined pace (plays/game)",
-     "sigma_pts": -0.2
+     "sigma_pts": -0.21
     },
     {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
-     "sigma_pts": -0.17
-    },
-    {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
+     "sigma_pts": -0.18
     },
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": 0.06
+     "sigma_pts": 0.07
+    },
+    {
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": -0.06
     },
     {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": 0.03
+     "sigma_pts": 0.02
     },
     {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
-     "sigma_pts": 0.01
+     "sigma_pts": 0.02
     }
    ],
    "qb": {
@@ -7630,11 +7630,11 @@
     }
    },
    "model": {
-    "margin": 7.06,
-    "model_margin": 8.76,
+    "margin": 6.72,
+    "model_margin": 7.39,
     "total": 57.4,
-    "sigma": 15.43,
-    "home_win_prob": 0.6764,
+    "sigma": 15.05,
+    "home_win_prob": 0.6725,
     "baseline_margin": 4.53
    },
    "market": {
@@ -7649,7 +7649,7 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": 6.11
+     "points": 6.16
     },
     {
      "key": "talent_diff",
@@ -7657,34 +7657,29 @@
      "points": -1.99
     },
     {
-     "key": "qb_flag_diff",
-     "label": "QB situation (new/inexperienced starter)",
-     "points": 1.38
-    },
-    {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": -0.86
+     "points": -0.83
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": 0.82
+     "points": 0.81
     },
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": -0.73
+     "points": -0.75
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": -0.72
+     "points": -0.75
     },
     {
      "key": "net_explosiveness_diff",
      "label": "Net explosiveness gap",
-     "points": 0.62
+     "points": 0.61
     },
     {
      "key": "rush_matchup",
@@ -7700,38 +7695,43 @@
      "key": "home_field",
      "label": "Home field",
      "points": 0.08
+    },
+    {
+     "key": "qb_flag_diff",
+     "label": "QB situation (new/inexperienced starter)",
+     "points": 0.01
     }
    ],
    "vol_factors": [
-    {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": 0.29
-    },
     {
      "key": "pace_sum",
      "label": "Combined pace (plays/game)",
      "sigma_pts": -0.24
     },
     {
-     "key": "expected_total",
-     "label": "Expected total points",
-     "sigma_pts": 0.11
-    },
-    {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
-     "sigma_pts": -0.09
+     "sigma_pts": -0.1
+    },
+    {
+     "key": "expected_total",
+     "label": "Expected total points",
+     "sigma_pts": 0.09
+    },
+    {
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": -0.06
     },
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.03
+     "sigma_pts": -0.04
     },
     {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
-     "sigma_pts": 0.01
+     "sigma_pts": 0.02
     }
    ],
    "qb": {
@@ -7750,7 +7750,7 @@
      "starts": 3,
      "new": true,
      "inexperienced": false,
-     "flag": 1,
+     "flag": 0,
      "reason": "new starter vs. the QB the team's stats came from"
     }
    }
@@ -7844,11 +7844,11 @@
     }
    },
    "model": {
-    "margin": -7.41,
-    "model_margin": -10.16,
+    "margin": -7.42,
+    "model_margin": -10.2,
     "total": 56.0,
-    "sigma": 14.78,
-    "home_win_prob": 0.3079,
+    "sigma": 14.83,
+    "home_win_prob": 0.3083,
     "baseline_margin": 4.53
    },
    "market": {
@@ -7863,37 +7863,37 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": -14.1
+     "points": -14.2
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": -4.99
+     "points": -4.93
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": 2.21
+     "points": 2.14
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": 1.87
+     "points": 1.93
     },
     {
      "key": "talent_diff",
      "label": "Roster talent gap",
-     "points": -1.44
+     "points": -1.43
     },
     {
      "key": "net_explosiveness_diff",
      "label": "Net explosiveness gap",
-     "points": 1.05
+     "points": 1.03
     },
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": 0.54
+     "points": 0.56
     },
     {
      "key": "home_field",
@@ -7913,24 +7913,24 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.39
-    },
-    {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
+     "sigma_pts": -0.41
     },
     {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
-     "sigma_pts": -0.08
+     "sigma_pts": -0.09
+    },
+    {
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": -0.06
     },
     {
      "key": "pace_sum",
@@ -7938,14 +7938,14 @@
      "sigma_pts": -0.05
     },
     {
-     "key": "expected_total",
-     "label": "Expected total points",
-     "sigma_pts": 0.03
-    },
-    {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
      "sigma_pts": 0.03
+    },
+    {
+     "key": "expected_total",
+     "label": "Expected total points",
+     "sigma_pts": 0.02
     }
    ],
    "qb": {
@@ -8058,11 +8058,11 @@
     }
    },
    "model": {
-    "margin": 11.7,
-    "model_margin": 9.31,
+    "margin": 11.72,
+    "model_margin": 9.36,
     "total": 51.9,
-    "sigma": 14.84,
-    "home_win_prob": 0.7848,
+    "sigma": 14.91,
+    "home_win_prob": 0.784,
     "baseline_margin": 4.53
    },
    "market": {
@@ -8077,32 +8077,32 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": 5.82
+     "points": 5.86
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": -1.71
+     "points": -1.65
     },
     {
      "key": "net_explosiveness_diff",
      "label": "Net explosiveness gap",
-     "points": 1.11
+     "points": 1.09
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": -0.9
+     "points": -0.94
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": 0.78
+     "points": 0.77
     },
     {
      "key": "talent_diff",
      "label": "Roster talent gap",
-     "points": -0.77
+     "points": -0.76
     },
     {
      "key": "pass_matchup",
@@ -8120,13 +8120,13 @@
      "points": 0.08
     },
     {
-     "key": "rush_matchup",
-     "label": "Run game matchup",
-     "points": -0.0
-    },
-    {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
+     "points": 0.01
+    },
+    {
+     "key": "rush_matchup",
+     "label": "Run game matchup",
      "points": -0.0
     }
    ],
@@ -8134,12 +8134,7 @@
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.5
-    },
-    {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
+     "sigma_pts": -0.52
     },
     {
      "key": "pace_sum",
@@ -8147,19 +8142,24 @@
      "sigma_pts": 0.09
     },
     {
-     "key": "expected_total",
-     "label": "Expected total points",
-     "sigma_pts": -0.05
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": -0.06
     },
     {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
-     "sigma_pts": 0.04
+     "sigma_pts": 0.05
+    },
+    {
+     "key": "expected_total",
+     "label": "Expected total points",
+     "sigma_pts": -0.04
     },
     {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
-     "sigma_pts": 0.01
+     "sigma_pts": 0.02
     }
    ],
    "qb": {
@@ -8272,11 +8272,11 @@
     }
    },
    "model": {
-    "margin": -13.46,
-    "model_margin": -10.35,
+    "margin": -13.57,
+    "model_margin": -10.77,
     "total": 45.2,
-    "sigma": 15.2,
-    "home_win_prob": 0.1878,
+    "sigma": 15.17,
+    "home_win_prob": 0.1855,
     "baseline_margin": 4.53
    },
    "market": {
@@ -8291,32 +8291,32 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": -12.8
+     "points": -12.88
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": -3.61
+     "points": -3.57
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": 2.31
+     "points": 2.39
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": 2.1
-    },
-    {
-     "key": "net_havoc_diff",
-     "label": "Havoc (disruption) gap",
-     "points": -1.72
+     "points": 2.03
     },
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -1.39
+     "points": -1.8
+    },
+    {
+     "key": "net_havoc_diff",
+     "label": "Havoc (disruption) gap",
+     "points": -1.7
     },
     {
      "key": "talent_diff",
@@ -8331,7 +8331,7 @@
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": 0.26
+     "points": 0.27
     },
     {
      "key": "home_field",
@@ -8346,34 +8346,34 @@
    ],
    "vol_factors": [
     {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": 0.29
-    },
-    {
      "key": "pace_sum",
      "label": "Combined pace (plays/game)",
      "sigma_pts": -0.28
     },
     {
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": 0.23
+    },
+    {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.16
+     "sigma_pts": -0.17
     },
     {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": -0.14
+     "sigma_pts": -0.12
     },
     {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
-     "sigma_pts": 0.05
+     "sigma_pts": 0.06
     },
     {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
-     "sigma_pts": 0.05
+     "sigma_pts": 0.06
     }
    ],
    "qb": {
@@ -8487,10 +8487,10 @@
    },
    "model": {
     "margin": 4.38,
-    "model_margin": 4.01,
+    "model_margin": 4.0,
     "total": 47.3,
-    "sigma": 15.04,
-    "home_win_prob": 0.6145,
+    "sigma": 15.14,
+    "home_win_prob": 0.6138,
     "baseline_margin": 4.53
    },
    "market": {
@@ -8505,37 +8505,37 @@
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": 1.99
+     "points": 1.97
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": -0.85
+     "points": -0.82
     },
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": 0.72
+     "points": 0.71
     },
     {
      "key": "net_explosiveness_diff",
      "label": "Net explosiveness gap",
-     "points": -0.7
+     "points": -0.68
     },
     {
      "key": "talent_diff",
      "label": "Roster talent gap",
-     "points": -0.65
+     "points": -0.64
     },
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": -0.49
+     "points": -0.5
     },
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": -0.27
+     "points": -0.28
     },
     {
      "key": "rush_matchup",
@@ -8555,24 +8555,24 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
     {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
-     "sigma_pts": -0.15
-    },
-    {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
+     "sigma_pts": -0.16
     },
     {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": -0.11
+     "sigma_pts": -0.09
+    },
+    {
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": -0.06
     },
     {
      "key": "abs_talent_gap",
@@ -8700,11 +8700,11 @@
     }
    },
    "model": {
-    "margin": 11.55,
-    "model_margin": 17.69,
+    "margin": 11.56,
+    "model_margin": 17.73,
     "total": 54.6,
-    "sigma": 14.97,
-    "home_win_prob": 0.7798,
+    "sigma": 15.03,
+    "home_win_prob": 0.779,
     "baseline_margin": 4.53
    },
    "market": {
@@ -8719,27 +8719,27 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": 12.79
+     "points": 12.88
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": 3.11
+     "points": 3.08
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": -2.1
+     "points": -2.03
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": -1.8
+     "points": -1.86
     },
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": 0.78
+     "points": 0.77
     },
     {
      "key": "talent_diff",
@@ -8749,7 +8749,7 @@
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": -0.59
+     "points": -0.61
     },
     {
      "key": "net_explosiveness_diff",
@@ -8762,46 +8762,46 @@
      "points": 0.08
     },
     {
+     "key": "qb_flag_diff",
+     "label": "QB situation (new/inexperienced starter)",
+     "points": 0.01
+    },
+    {
      "key": "rush_matchup",
      "label": "Run game matchup",
      "points": 0.0
-    },
-    {
-     "key": "qb_flag_diff",
-     "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
     }
    ],
    "vol_factors": [
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.26
-    },
-    {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
+     "sigma_pts": -0.27
     },
     {
      "key": "pace_sum",
      "label": "Combined pace (plays/game)",
-     "sigma_pts": -0.05
+     "sigma_pts": -0.06
+    },
+    {
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": -0.06
     },
     {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
-     "sigma_pts": 0.02
-    },
-    {
-     "key": "expected_total",
-     "label": "Expected total points",
-     "sigma_pts": 0.01
+     "sigma_pts": 0.03
     },
     {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
      "sigma_pts": 0.01
+    },
+    {
+     "key": "expected_total",
+     "label": "Expected total points",
+     "sigma_pts": 0.0
     }
    ],
    "qb": {
@@ -8914,11 +8914,11 @@
     }
    },
    "model": {
-    "margin": 20.67,
-    "model_margin": 15.17,
+    "margin": 21.14,
+    "model_margin": 17.05,
     "total": 48.5,
-    "sigma": 15.76,
-    "home_win_prob": 0.9052,
+    "sigma": 15.29,
+    "home_win_prob": 0.9166,
     "baseline_margin": 4.53
    },
    "market": {
@@ -8933,27 +8933,32 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": 8.58
+     "points": 8.64
     },
     {
      "key": "talent_diff",
      "label": "Roster talent gap",
-     "points": 3.12
+     "points": 3.11
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": -2.16
+     "points": -2.09
+    },
+    {
+     "key": "qb_flag_diff",
+     "label": "QB situation (new/inexperienced starter)",
+     "points": 1.81
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": 1.73
+     "points": 1.72
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": -0.73
+     "points": -0.76
     },
     {
      "key": "net_havoc_diff",
@@ -8963,12 +8968,12 @@
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": -0.19
+     "points": -0.2
     },
     {
      "key": "net_explosiveness_diff",
      "label": "Net explosiveness gap",
-     "points": -0.1
+     "points": -0.09
     },
     {
      "key": "rush_matchup",
@@ -8979,18 +8984,18 @@
      "key": "home_field",
      "label": "Home field",
      "points": 0.08
-    },
-    {
-     "key": "qb_flag_diff",
-     "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
     }
    ],
    "vol_factors": [
     {
+     "key": "abs_expected_margin",
+     "label": "Size of expected margin",
+     "sigma_pts": 0.24
+    },
+    {
      "key": "qb_flag_sum",
      "label": "New or inexperienced QB in game",
-     "sigma_pts": 0.72
+     "sigma_pts": 0.23
     },
     {
      "key": "pace_sum",
@@ -8998,19 +9003,14 @@
      "sigma_pts": -0.21
     },
     {
-     "key": "abs_expected_margin",
-     "label": "Size of expected margin",
-     "sigma_pts": 0.21
-    },
-    {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.2
+     "sigma_pts": -0.21
     },
     {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": -0.11
+     "sigma_pts": -0.09
     },
     {
      "key": "abs_talent_gap",
@@ -9025,7 +9025,7 @@
      "starts": 8,
      "new": true,
      "inexperienced": false,
-     "flag": 1,
+     "flag": 0,
      "reason": "new starter vs. the QB the team's stats came from"
     },
     "away": {
@@ -9128,11 +9128,11 @@
     }
    },
    "model": {
-    "margin": 5.58,
-    "model_margin": 5.82,
+    "margin": 5.49,
+    "model_margin": 5.45,
     "total": 55.0,
-    "sigma": 15.71,
-    "home_win_prob": 0.6388,
+    "sigma": 15.65,
+    "home_win_prob": 0.6371,
     "baseline_margin": 4.53
    },
    "market": {
@@ -9145,29 +9145,29 @@
    },
    "factors": [
     {
-     "key": "elo_diff",
-     "label": "Elo rating gap",
-     "points": 1.43
-    },
-    {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -1.39
+     "points": -1.8
+    },
+    {
+     "key": "elo_diff",
+     "label": "Elo rating gap",
+     "points": 1.44
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": 0.87
+     "points": 0.86
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": 0.43
+     "points": 0.45
     },
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": 0.37
+     "points": 0.38
     },
     {
      "key": "talent_diff",
@@ -9177,7 +9177,7 @@
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": -0.23
+     "points": -0.22
     },
     {
      "key": "net_explosiveness_diff",
@@ -9204,7 +9204,7 @@
     {
      "key": "qb_flag_sum",
      "label": "New or inexperienced QB in game",
-     "sigma_pts": 0.29
+     "sigma_pts": 0.23
     },
     {
      "key": "pace_sum",
@@ -9214,12 +9214,12 @@
     {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
-     "sigma_pts": -0.12
+     "sigma_pts": -0.13
     },
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.07
+     "sigma_pts": -0.08
     },
     {
      "key": "abs_talent_gap",
@@ -9229,7 +9229,7 @@
     {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": 0.03
+     "sigma_pts": 0.02
     }
    ],
    "qb": {
@@ -9343,10 +9343,10 @@
    },
    "model": {
     "margin": 6.12,
-    "model_margin": 6.47,
+    "model_margin": 6.49,
     "total": 52.2,
-    "sigma": 15.07,
-    "home_win_prob": 0.6576,
+    "sigma": 15.15,
+    "home_win_prob": 0.6569,
     "baseline_margin": 4.53
    },
    "market": {
@@ -9361,22 +9361,22 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": 1.9
+     "points": 1.92
     },
     {
      "key": "talent_diff",
      "label": "Roster talent gap",
-     "points": -1.46
+     "points": -1.45
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": 0.84
+     "points": 0.83
     },
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": 0.68
+     "points": 0.7
     },
     {
      "key": "net_explosiveness_diff",
@@ -9386,7 +9386,7 @@
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": -0.31
+     "points": -0.32
     },
     {
      "key": "net_havoc_diff",
@@ -9411,29 +9411,29 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
     {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
-    },
-    {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
-     "sigma_pts": -0.11
+     "sigma_pts": -0.12
     },
     {
-     "key": "expected_total",
-     "label": "Expected total points",
-     "sigma_pts": -0.05
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": -0.06
     },
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
      "sigma_pts": -0.05
+    },
+    {
+     "key": "expected_total",
+     "label": "Expected total points",
+     "sigma_pts": -0.04
     },
     {
      "key": "abs_talent_gap",
@@ -9556,11 +9556,11 @@
     }
    },
    "model": {
-    "margin": -6.21,
-    "model_margin": 3.65,
+    "margin": -6.31,
+    "model_margin": 3.27,
     "total": 53.6,
-    "sigma": 15.58,
-    "home_win_prob": 0.3451,
+    "sigma": 15.52,
+    "home_win_prob": 0.3422,
     "baseline_margin": 4.53
    },
    "market": {
@@ -9575,17 +9575,17 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": 2.3
+     "points": 2.32
     },
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -1.39
+     "points": -1.8
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": -1.24
+     "points": -1.23
     },
     {
      "key": "talent_diff",
@@ -9595,7 +9595,7 @@
     {
      "key": "net_explosiveness_diff",
      "label": "Net explosiveness gap",
-     "points": 0.5
+     "points": 0.49
     },
     {
      "key": "net_havoc_diff",
@@ -9610,12 +9610,12 @@
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": -0.11
+     "points": -0.12
     },
     {
      "key": "rush_matchup",
      "label": "Run game matchup",
-     "points": 0.08
+     "points": 0.09
     },
     {
      "key": "home_field",
@@ -9632,12 +9632,12 @@
     {
      "key": "qb_flag_sum",
      "label": "New or inexperienced QB in game",
-     "sigma_pts": 0.29
+     "sigma_pts": 0.23
     },
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.12
+     "sigma_pts": -0.13
     },
     {
      "key": "abs_expected_margin",
@@ -9645,19 +9645,19 @@
      "sigma_pts": -0.11
     },
     {
+     "key": "abs_talent_gap",
+     "label": "Size of talent gap",
+     "sigma_pts": 0.06
+    },
+    {
      "key": "pace_sum",
      "label": "Combined pace (plays/game)",
      "sigma_pts": 0.05
     },
     {
-     "key": "abs_talent_gap",
-     "label": "Size of talent gap",
-     "sigma_pts": 0.05
-    },
-    {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": 0.04
+     "sigma_pts": 0.03
     }
    ],
    "qb": {
@@ -9770,11 +9770,11 @@
     }
    },
    "model": {
-    "margin": 1.05,
-    "model_margin": -3.3,
+    "margin": 1.04,
+    "model_margin": -3.33,
     "total": 46.8,
-    "sigma": 15.61,
-    "home_win_prob": 0.5268,
+    "sigma": 15.42,
+    "home_win_prob": 0.5269,
     "baseline_margin": 4.53
    },
    "market": {
@@ -9789,7 +9789,7 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": -7.21
+     "points": -7.26
     },
     {
      "key": "talent_diff",
@@ -9799,12 +9799,12 @@
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": 0.59
+     "points": 0.58
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": -0.57
+     "points": -0.55
     },
     {
      "key": "net_explosiveness_diff",
@@ -9817,14 +9817,14 @@
      "points": -0.26
     },
     {
+     "key": "net_points_diff",
+     "label": "Scoring margin gap",
+     "points": -0.19
+    },
+    {
      "key": "pass_matchup",
      "label": "Pass game matchup",
      "points": 0.18
-    },
-    {
-     "key": "net_points_diff",
-     "label": "Scoring margin gap",
-     "points": -0.18
     },
     {
      "key": "home_field",
@@ -9839,14 +9839,14 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
     {
      "key": "qb_flag_sum",
      "label": "New or inexperienced QB in game",
-     "sigma_pts": 0.72
+     "sigma_pts": 0.53
     },
     {
      "key": "pace_sum",
@@ -9856,12 +9856,12 @@
     {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
-     "sigma_pts": -0.22
+     "sigma_pts": -0.23
     },
     {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": -0.06
+     "sigma_pts": -0.05
     },
     {
      "key": "havoc_allowed_sum",
@@ -9871,7 +9871,7 @@
     {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
-     "sigma_pts": 0.04
+     "sigma_pts": 0.05
     }
    ],
    "qb": {
@@ -9984,11 +9984,11 @@
     }
    },
    "model": {
-    "margin": -15.39,
-    "model_margin": -19.54,
+    "margin": -15.4,
+    "model_margin": -19.62,
     "total": 50.3,
-    "sigma": 14.66,
-    "home_win_prob": 0.1469,
+    "sigma": 14.72,
+    "home_win_prob": 0.1476,
     "baseline_margin": 4.53
    },
    "market": {
@@ -10003,37 +10003,37 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": -21.11
+     "points": -21.25
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": -5.44
+     "points": -5.38
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": 3.65
+     "points": 3.53
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": 3.07
+     "points": 3.18
     },
     {
      "key": "talent_diff",
      "label": "Roster talent gap",
-     "points": -2.34
+     "points": -2.33
     },
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": -1.61
+     "points": -1.59
     },
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": -0.52
+     "points": -0.54
     },
     {
      "key": "net_explosiveness_diff",
@@ -10053,14 +10053,14 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.44
+     "sigma_pts": -0.46
     },
     {
      "key": "pace_sum",
@@ -10068,24 +10068,24 @@
      "sigma_pts": -0.23
     },
     {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
-    },
-    {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
      "sigma_pts": 0.1
     },
     {
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": -0.06
+    },
+    {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": -0.02
+     "sigma_pts": -0.01
     },
     {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
-     "sigma_pts": 0.0
+     "sigma_pts": 0.01
     }
    ],
    "qb": {
@@ -10198,11 +10198,11 @@
     }
    },
    "model": {
-    "margin": 7.07,
-    "model_margin": 5.78,
+    "margin": 6.97,
+    "model_margin": 5.4,
     "total": 55.2,
-    "sigma": 15.34,
-    "home_win_prob": 0.6776,
+    "sigma": 15.27,
+    "home_win_prob": 0.6761,
     "baseline_margin": 4.53
    },
    "market": {
@@ -10217,7 +10217,12 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": 5.5
+     "points": 5.53
+    },
+    {
+     "key": "qb_flag_diff",
+     "label": "QB situation (new/inexperienced starter)",
+     "points": -1.8
     },
     {
      "key": "talent_diff",
@@ -10225,34 +10230,29 @@
      "points": -1.68
     },
     {
-     "key": "qb_flag_diff",
-     "label": "QB situation (new/inexperienced starter)",
-     "points": -1.39
-    },
-    {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": -1.27
+     "points": -1.22
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": 1.07
+     "points": 1.06
     },
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": 0.96
+     "points": 0.95
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": -0.92
+     "points": -0.95
     },
     {
      "key": "net_explosiveness_diff",
      "label": "Net explosiveness gap",
-     "points": -0.57
+     "points": -0.56
     },
     {
      "key": "rush_matchup",
@@ -10262,7 +10262,7 @@
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": -0.25
+     "points": -0.26
     },
     {
      "key": "home_field",
@@ -10274,7 +10274,7 @@
     {
      "key": "qb_flag_sum",
      "label": "New or inexperienced QB in game",
-     "sigma_pts": 0.29
+     "sigma_pts": 0.23
     },
     {
      "key": "pace_sum",
@@ -10284,12 +10284,12 @@
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.12
+     "sigma_pts": -0.13
     },
     {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
-     "sigma_pts": -0.09
+     "sigma_pts": -0.1
     },
     {
      "key": "abs_talent_gap",
@@ -10299,7 +10299,7 @@
     {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": 0.01
+     "sigma_pts": 0.0
     }
    ],
    "qb": {
@@ -10412,11 +10412,11 @@
     }
    },
    "model": {
-    "margin": 20.49,
-    "model_margin": 20.46,
+    "margin": 20.6,
+    "model_margin": 20.91,
     "total": 52.8,
-    "sigma": 16.01,
-    "home_win_prob": 0.8997,
+    "sigma": 15.97,
+    "home_win_prob": 0.9014,
     "baseline_margin": 4.53
    },
    "market": {
@@ -10431,37 +10431,37 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": 11.7
+     "points": 11.78
     },
     {
      "key": "talent_diff",
      "label": "Roster talent gap",
-     "points": 2.42
-    },
-    {
-     "key": "net_success_diff",
-     "label": "Net success rate gap",
-     "points": 1.66
+     "points": 2.41
     },
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": 1.38
+     "points": 1.81
+    },
+    {
+     "key": "net_success_diff",
+     "label": "Net success rate gap",
+     "points": 1.65
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": -1.05
+     "points": -1.08
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": -0.89
+     "points": -0.86
     },
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": 0.58
+     "points": 0.57
     },
     {
      "key": "net_explosiveness_diff",
@@ -10471,7 +10471,7 @@
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": -0.24
+     "points": -0.25
     },
     {
      "key": "rush_matchup",
@@ -10488,12 +10488,12 @@
     {
      "key": "qb_flag_sum",
      "label": "New or inexperienced QB in game",
-     "sigma_pts": 0.29
+     "sigma_pts": 0.23
     },
     {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
-     "sigma_pts": 0.21
+     "sigma_pts": 0.22
     },
     {
      "key": "pace_sum",
@@ -10508,7 +10508,7 @@
     {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": -0.04
+     "sigma_pts": -0.03
     },
     {
      "key": "abs_talent_gap",
@@ -10626,11 +10626,11 @@
     }
    },
    "model": {
-    "margin": -7.01,
-    "model_margin": -8.54,
+    "margin": -7.02,
+    "model_margin": -8.56,
     "total": 54.4,
-    "sigma": 14.69,
-    "home_win_prob": 0.3166,
+    "sigma": 14.74,
+    "home_win_prob": 0.3171,
     "baseline_margin": 4.53
    },
    "market": {
@@ -10645,22 +10645,22 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": -12.4
+     "points": -12.48
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": -2.63
+     "points": -2.61
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": 2.2
+     "points": 2.12
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": 1.73
+     "points": 1.79
     },
     {
      "key": "talent_diff",
@@ -10670,7 +10670,7 @@
     {
      "key": "net_explosiveness_diff",
      "label": "Net explosiveness gap",
-     "points": -0.56
+     "points": -0.55
     },
     {
      "key": "net_havoc_diff",
@@ -10680,7 +10680,7 @@
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": 0.37
+     "points": 0.38
     },
     {
      "key": "rush_matchup",
@@ -10695,19 +10695,14 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.52
-    },
-    {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
+     "sigma_pts": -0.55
     },
     {
      "key": "abs_expected_margin",
@@ -10720,14 +10715,19 @@
      "sigma_pts": 0.06
     },
     {
-     "key": "expected_total",
-     "label": "Expected total points",
-     "sigma_pts": -0.03
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": -0.06
     },
     {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
-     "sigma_pts": 0.02
+     "sigma_pts": 0.03
+    },
+    {
+     "key": "expected_total",
+     "label": "Expected total points",
+     "sigma_pts": -0.02
     }
    ],
    "qb": {
@@ -10841,10 +10841,10 @@
    },
    "model": {
     "margin": -9.06,
-    "model_margin": -6.22,
+    "model_margin": -6.23,
     "total": 52.6,
-    "sigma": 15.27,
-    "home_win_prob": 0.2766,
+    "sigma": 15.37,
+    "home_win_prob": 0.2778,
     "baseline_margin": 4.53
    },
    "market": {
@@ -10859,27 +10859,27 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": -9.31
+     "points": -9.38
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": -2.56
+     "points": -2.53
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": 2.43
-    },
-    {
-     "key": "net_havoc_diff",
-     "label": "Havoc (disruption) gap",
-     "points": -1.78
+     "points": 2.35
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": 1.73
+     "points": 1.79
+    },
+    {
+     "key": "net_havoc_diff",
+     "label": "Havoc (disruption) gap",
+     "points": -1.76
     },
     {
      "key": "talent_diff",
@@ -10887,14 +10887,14 @@
      "points": -1.46
     },
     {
+     "key": "pass_matchup",
+     "label": "Pass game matchup",
+     "points": 0.22
+    },
+    {
      "key": "net_explosiveness_diff",
      "label": "Net explosiveness gap",
      "points": -0.21
-    },
-    {
-     "key": "pass_matchup",
-     "label": "Pass game matchup",
-     "points": 0.21
     },
     {
      "key": "rush_matchup",
@@ -10909,19 +10909,14 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
     {
      "key": "qb_flag_sum",
      "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
-    },
-    {
-     "key": "expected_total",
-     "label": "Expected total points",
-     "sigma_pts": -0.05
+     "sigma_pts": -0.06
     },
     {
      "key": "pace_sum",
@@ -10936,6 +10931,11 @@
     {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
+     "sigma_pts": -0.05
+    },
+    {
+     "key": "expected_total",
+     "label": "Expected total points",
      "sigma_pts": -0.04
     },
     {
@@ -11054,11 +11054,11 @@
     }
    },
    "model": {
-    "margin": 7.65,
-    "model_margin": 12.59,
+    "margin": 7.64,
+    "model_margin": 12.56,
     "total": 56.2,
-    "sigma": 14.48,
-    "home_win_prob": 0.7012,
+    "sigma": 14.5,
+    "home_win_prob": 0.7009,
     "baseline_margin": 4.53
    },
    "market": {
@@ -11073,32 +11073,32 @@
     {
      "key": "talent_diff",
      "label": "Roster talent gap",
-     "points": 5.38
+     "points": 5.37
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": 2.47
+     "points": 2.45
     },
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": 0.96
+     "points": 0.97
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": -0.96
+     "points": -0.93
     },
     {
      "key": "net_explosiveness_diff",
      "label": "Net explosiveness gap",
-     "points": 0.8
+     "points": 0.78
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": -0.58
+     "points": -0.6
     },
     {
      "key": "rush_matchup",
@@ -11123,24 +11123,19 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.66
-    },
-    {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
+     "sigma_pts": -0.69
     },
     {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
-     "sigma_pts": -0.09
+     "sigma_pts": -0.11
     },
     {
      "key": "abs_expected_margin",
@@ -11148,9 +11143,14 @@
      "sigma_pts": -0.08
     },
     {
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": -0.06
+    },
+    {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": 0.06
+     "sigma_pts": 0.05
     },
     {
      "key": "pace_sum",
@@ -11268,11 +11268,11 @@
     }
    },
    "model": {
-    "margin": 7.51,
-    "model_margin": 7.54,
+    "margin": 7.15,
+    "model_margin": 6.12,
     "total": 50.6,
-    "sigma": 15.32,
-    "home_win_prob": 0.6879,
+    "sigma": 14.97,
+    "home_win_prob": 0.6837,
     "baseline_margin": 4.53
    },
    "market": {
@@ -11290,24 +11290,19 @@
      "points": 1.4
     },
     {
-     "key": "qb_flag_diff",
-     "label": "QB situation (new/inexperienced starter)",
-     "points": 1.38
-    },
-    {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": 1.16
+     "points": 1.15
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": -0.92
+     "points": -0.95
     },
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": -0.38
+     "points": -0.39
     },
     {
      "key": "net_havoc_diff",
@@ -11322,12 +11317,12 @@
     {
      "key": "rush_matchup",
      "label": "Run game matchup",
-     "points": 0.24
+     "points": 0.25
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": -0.22
+     "points": -0.21
     },
     {
      "key": "net_explosiveness_diff",
@@ -11338,28 +11333,33 @@
      "key": "home_field",
      "label": "Home field",
      "points": 0.08
+    },
+    {
+     "key": "qb_flag_diff",
+     "label": "QB situation (new/inexperienced starter)",
+     "points": 0.01
     }
    ],
    "vol_factors": [
     {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": 0.29
-    },
-    {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.22
+     "sigma_pts": -0.23
     },
     {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
-     "sigma_pts": -0.08
+     "sigma_pts": -0.09
     },
     {
-     "key": "expected_total",
-     "label": "Expected total points",
-     "sigma_pts": -0.05
+     "key": "abs_talent_gap",
+     "label": "Size of talent gap",
+     "sigma_pts": 0.06
+    },
+    {
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": -0.06
     },
     {
      "key": "pace_sum",
@@ -11367,9 +11367,9 @@
      "sigma_pts": -0.05
     },
     {
-     "key": "abs_talent_gap",
-     "label": "Size of talent gap",
-     "sigma_pts": 0.05
+     "key": "expected_total",
+     "label": "Expected total points",
+     "sigma_pts": -0.04
     }
    ],
    "qb": {
@@ -11388,7 +11388,7 @@
      "starts": 6,
      "new": true,
      "inexperienced": false,
-     "flag": 1,
+     "flag": 0,
      "reason": "new starter vs. the QB the team's stats came from"
     }
    }
@@ -11482,11 +11482,11 @@
     }
    },
    "model": {
-    "margin": 9.59,
-    "model_margin": 6.85,
+    "margin": 9.6,
+    "model_margin": 6.89,
     "total": 62.9,
-    "sigma": 15.25,
-    "home_win_prob": 0.7353,
+    "sigma": 15.29,
+    "home_win_prob": 0.7349,
     "baseline_margin": 4.53
    },
    "market": {
@@ -11501,37 +11501,37 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": 4.66
+     "points": 4.69
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": -1.45
+     "points": -1.4
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": -1.02
+     "points": -1.06
     },
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": 0.84
+     "points": 0.83
     },
     {
      "key": "net_explosiveness_diff",
      "label": "Net explosiveness gap",
-     "points": -0.55
+     "points": -0.54
     },
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": -0.46
+     "points": -0.48
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": 0.41
+     "points": 0.4
     },
     {
      "key": "talent_diff",
@@ -11551,34 +11551,34 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.63
+     "sigma_pts": -0.66
     },
     {
      "key": "pace_sum",
      "label": "Combined pace (plays/game)",
-     "sigma_pts": 0.52
-    },
-    {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
+     "sigma_pts": 0.53
     },
     {
      "key": "expected_total",
      "label": "Expected total points",
-     "sigma_pts": 0.11
+     "sigma_pts": 0.09
+    },
+    {
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": -0.06
     },
     {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
-     "sigma_pts": 0.04
+     "sigma_pts": 0.05
     },
     {
      "key": "abs_expected_margin",
@@ -11696,11 +11696,11 @@
     }
    },
    "model": {
-    "margin": 23.84,
-    "model_margin": 21.87,
+    "margin": 23.86,
+    "model_margin": 21.96,
     "total": 51.4,
-    "sigma": 15.12,
-    "home_win_prob": 0.9427,
+    "sigma": 15.19,
+    "home_win_prob": 0.9419,
     "baseline_margin": 4.53
    },
    "market": {
@@ -11715,22 +11715,22 @@
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": 14.5
+     "points": 14.6
     },
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": 4.87
+     "points": 4.82
     },
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": -3.3
+     "points": -3.19
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": -2.33
+     "points": -2.41
     },
     {
      "key": "talent_diff",
@@ -11740,12 +11740,12 @@
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": 0.96
+     "points": 0.95
     },
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": 0.53
+     "points": 0.54
     },
     {
      "key": "home_field",
@@ -11765,24 +11765,19 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
     {
-     "key": "pace_sum",
-     "label": "Combined pace (plays/game)",
-     "sigma_pts": -0.28
-    },
-    {
      "key": "abs_expected_margin",
      "label": "Size of expected margin",
-     "sigma_pts": 0.28
+     "sigma_pts": 0.3
     },
     {
-     "key": "qb_flag_sum",
-     "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
+     "key": "pace_sum",
+     "label": "Combined pace (plays/game)",
+     "sigma_pts": -0.29
     },
     {
      "key": "havoc_allowed_sum",
@@ -11790,14 +11785,19 @@
      "sigma_pts": -0.13
     },
     {
-     "key": "expected_total",
-     "label": "Expected total points",
-     "sigma_pts": 0.01
+     "key": "qb_flag_sum",
+     "label": "New or inexperienced QB in game",
+     "sigma_pts": -0.06
     },
     {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
      "sigma_pts": -0.01
+    },
+    {
+     "key": "expected_total",
+     "label": "Expected total points",
+     "sigma_pts": 0.0
     }
    ],
    "qb": {
@@ -11910,11 +11910,11 @@
     }
    },
    "model": {
-    "margin": -4.08,
-    "model_margin": 0.17,
+    "margin": -4.07,
+    "model_margin": 0.2,
     "total": 52.3,
-    "sigma": 14.8,
-    "home_win_prob": 0.3913,
+    "sigma": 14.85,
+    "home_win_prob": 0.3919,
     "baseline_margin": 4.53
    },
    "market": {
@@ -11929,7 +11929,7 @@
     {
      "key": "net_success_diff",
      "label": "Net success rate gap",
-     "points": -3.58
+     "points": -3.54
     },
     {
      "key": "talent_diff",
@@ -11939,27 +11939,27 @@
     {
      "key": "net_ppa_diff",
      "label": "Net EPA per play gap",
-     "points": 0.6
+     "points": 0.58
     },
     {
      "key": "net_havoc_diff",
      "label": "Havoc (disruption) gap",
-     "points": -0.37
+     "points": -0.36
     },
     {
      "key": "elo_diff",
      "label": "Elo rating gap",
-     "points": -0.27
+     "points": -0.28
     },
     {
      "key": "net_points_diff",
      "label": "Scoring margin gap",
-     "points": 0.17
+     "points": 0.18
     },
     {
      "key": "pass_matchup",
      "label": "Pass game matchup",
-     "points": -0.16
+     "points": -0.17
     },
     {
      "key": "net_explosiveness_diff",
@@ -11979,14 +11979,14 @@
     {
      "key": "qb_flag_diff",
      "label": "QB situation (new/inexperienced starter)",
-     "points": -0.0
+     "points": 0.01
     }
    ],
    "vol_factors": [
     {
      "key": "havoc_allowed_sum",
      "label": "Turnover/disruption proneness",
-     "sigma_pts": -0.37
+     "sigma_pts": -0.38
     },
     {
      "key": "abs_expected_margin",
@@ -11996,17 +11996,17 @@
     {
      "key": "qb_flag_sum",
      "label": "New or inexperienced QB in game",
-     "sigma_pts": -0.14
-    },
-    {
-     "key": "expected_total",
-     "label": "Expected total points",
-     "sigma_pts": 0.04
+     "sigma_pts": -0.06
     },
     {
      "key": "abs_talent_gap",
      "label": "Size of talent gap",
-     "sigma_pts": 0.04
+     "sigma_pts": 0.05
+    },
+    {
+     "key": "expected_total",
+     "label": "Expected total points",
+     "sigma_pts": 0.03
     },
     {
      "key": "pace_sum",

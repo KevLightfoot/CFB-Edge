@@ -25,3 +25,7 @@ Every `--retrain` run appends an entry here automatically. Add a `--note "what y
 ## v6 — 2026-10-29 (season 2026, before week 9)
 - Trained on 5641 games; backtest margin MAE 12.1 (market 12.03)
 - Note: added QB flag
+
+## v7 — 2026-10-29 (season 2026, before week 9)
+- Trained on 5641 games; backtest margin MAE 12.09 (market 12.03)
+- Note: QB flag: inexperienced only
